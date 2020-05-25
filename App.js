@@ -39,6 +39,7 @@ const App: () => React$Node = () => {
             </View>
           )}
           <View style={styles.body}>
+            <Text style={{ fontWeight: 'bold', textAlign: 'center' }}>Hello, Bold text</Text>
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
