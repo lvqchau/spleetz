@@ -1,0 +1,6 @@
+module Pods_spleetz {
+  umbrella header "Pods-spleetz-umbrella.h"
+
+  export *
+  module * { export * }
+}
