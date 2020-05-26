@@ -9,6 +9,7 @@
 import React from 'react';
 import { setCustomText } from 'react-native-global-props/src';
 
+import SplitScreen from './src/containers/Split/SplitScreen'
 import AccountScreen from './src/containers/Account/AccountScreen'
 // import AppNavigator from './src/navigator/AppNavigator';
 
@@ -23,7 +24,7 @@ class App extends React.Component {
     }
     setCustomText(customTextProps);
     return (
-      <AccountScreen/>
+      <SplitScreen/>
     )
   }
 };
