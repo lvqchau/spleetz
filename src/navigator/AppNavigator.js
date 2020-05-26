@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import AccountScreen from "../containers/Account/screens/AccountScreen";
+import AccountScreen from "../containers/Account/screens/AccountScreen/AccountScreen";
 
 const TabNavigator = createBottomTabNavigator(
 	{

@@ -1,9 +1,8 @@
 import React from 'react';
 import { setCustomText } from 'react-native-global-props/src';
 
-import AccountScreen from './src/containers/Account/screens/AccountScreen'
-// import MainAccount from './src/containers/Account/screens/MainAccount';
-// import AppNavigator from './src/navigator/AppNavigator';
+import MainAccount from './src/containers/Account/screens/MainAccount';
+import { SafeAreaView } from 'react-navigation';
 
 class App extends React.Component {
   render() {
@@ -16,7 +15,7 @@ class App extends React.Component {
     }
     setCustomText(customTextProps);
     return (
-      <AccountScreen/>
+      <MainAccount />
     )
   }
 };

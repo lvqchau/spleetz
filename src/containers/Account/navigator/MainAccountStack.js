@@ -1,7 +1,9 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import FriendScreen from '../screens/FriendScreen';
-import AccountScreen from '../screens/AccountScreen';
-import StatScreen from '../screens/StatScreen';
+import React from 'react'
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import FriendScreen from '../screens/FriendScreen/FriendScreen';
+import AccountScreen from '../screens/AccountScreen/AccountScreen';
+import StatScreen from '../screens/StatisticScreen/StatScreen';
+import EditProfileModal from '../screens/AccountScreen/EditProfileModal';
 
 const Stack = createStackNavigator();
 
@@ -9,40 +11,26 @@ export default function MainAccountStack() {
   return (
     <Stack.Navigator
       initialRouteName="Account"
-      headerMode="screen"
       screenOptions={{
-        headerTintColor: 'white',
-        headerStyle: { backgroundColor: 'tomato' },
+        headerShown: false
       }}
     >
       <Stack.Screen
         name="Account"
         component={AccountScreen}
-        options={{
-          title: 'Account',
-        }}
       />
       <Stack.Screen
         name="Friendlist"
         component={FriendScreen}
-        options={{
-          title: 'Friendlist',
-        }}
       />
       <Stack.Screen
         name="Statistics"
         component={StatScreen}
-        options={{
-          title: 'Statistics',
-        }}
       />
-      {/* <Stack.Screen
-        name="Settings"
-        component={Settings}
-        options={{
-          gestureEnabled: false,
-        }}
-      /> */}
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileModal}
+      />
     </Stack.Navigator>
   );
 }
