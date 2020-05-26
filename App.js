@@ -1,16 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import { setCustomText } from 'react-native-global-props/src';
 
-import AccountScreen from './src/containers/Account/AccountScreen'
-// import AppNavigator from './src/navigator/AppNavigator';
+import MainAccount from './src/containers/Account/screens/MainAccount';
+import { SafeAreaView } from 'react-navigation';
 
 class App extends React.Component {
   render() {
@@ -23,7 +15,7 @@ class App extends React.Component {
     }
     setCustomText(customTextProps);
     return (
-      <AccountScreen/>
+      <MainAccount />
     )
   }
 };

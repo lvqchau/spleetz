@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native"
-import COLORS from '../../assets/colors'
+import { StyleSheet, Dimensions } from "react-native"
+import COLORS from '../../../../assets/colors'
 
 export default StyleSheet.create({
   accountContainer: {
-    marginTop: 60
+    marginTop: 20
   },
   topContainer: {
     flexDirection: 'row',
@@ -27,23 +27,16 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginBottom: 25
   },
-  avatar: {
-    width: 90,
-    height: 90,
-    borderRadius: 90/2,
-    marginRight: 25
-  },
   borderLight: {
     paddingVertical: 15,
     flexDirection: 'row',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: COLORS.lightgray,
+    borderColor: COLORS.lightgray
   },
   overviewContainer: {
     paddingVertical: 0,
     justifyContent: 'space-between',
-    marginBottom: 25
   },
   centeredText: {
     flex: 1,
@@ -63,6 +56,14 @@ export default StyleSheet.create({
     height: '100%',
     backgroundColor: COLORS.lightgray
   },
+  accountOptions: {
+    color: COLORS.aqua,
+    fontWeight: '600',
+    paddingLeft: 25,
+    paddingVertical: 15,
+    backgroundColor: 'rgba(1, 1, 1, 0.03)'
+
+  },
   rowTouchContainer: {
     flexDirection: 'row',
     paddingVertical: 15,
@@ -72,9 +73,18 @@ export default StyleSheet.create({
     paddingLeft: 20,
     fontSize: 18,
     fontWeight: '600',
-    color: COLORS.darkblue,
+    color: COLORS.darkblue
   },
   logoutText: {
     color: COLORS.salmon
+  },
+  notiContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 25
+  },
+  notiHolder: {
+    paddingHorizontal: 0
   }
 });
