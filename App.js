@@ -1,15 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
 import { setCustomText } from 'react-native-global-props/src';
 
-import AccountScreen from './src/containers/Account/AccountScreen'
+import AccountScreen from './src/containers/Account/screens/AccountScreen'
+// import MainAccount from './src/containers/Account/screens/MainAccount';
 // import AppNavigator from './src/navigator/AppNavigator';
 
 class App extends React.Component {

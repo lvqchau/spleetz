@@ -1,41 +1,41 @@
 import React, { Component } from 'react'
-import { SafeAreaView, View, Text, Image, TouchableOpacity, Animated, ScrollView, Dimensions, TouchableHighlight } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons
  from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from './Account.component.style.js';
-import COLORS from '../../assets/colors'
+import COLORS from '../../../assets/colors'
+import { withNavigation } from 'react-navigation';
 
-const { width, height } = Dimensions.get('window');
-
-export default class AccountScreen extends Component {
-
+class AccountScreen extends Component {
+  
   constructor(props) {
     super(props)
-    this.state = {
-      backgroundColor: 'rgba(0,0,0,0.1)'
-    }
   }
 
   render() {
-    const {backgroundColor} = this.state.backgroundColor
+    const { navigation } = this.props
     return (
-      <SafeAreaView style={styles.accountContainer}>
+      <ScrollView style={styles.accountContainer}>
         {/* Info containing name, phone, email */}
         <View style={styles.infoContainer}>
           <View style={styles.topContainer}>
             <View style={styles.avatarContainer}>
               <Image
                 style={styles.avatar}
-                source={require('../../assets/images/avatar_2.png')}
+                source={require('../../../assets/images/avatar_2.png')}
               />
               <View>
                 <Text style={styles.fullName}>John Smith</Text>
                 <Text style={styles.lightText}>jnsmith</Text>
               </View>
             </View>
-            <AntDesign name="edit" size={24} color={COLORS.darkblue}/>
+            <TouchableOpacity
+              onPress={()=>{}}
+            >
+              <AntDesign name="edit" size={24} color={COLORS.darkblue}/>
+            </TouchableOpacity>
           </View>
           <View style={{flexDirection: 'row', marginBottom: 10}}>
             <AntDesign style={{marginRight: 10}} name="phone" size={20} color={COLORS.lightgray}/>
@@ -65,7 +65,7 @@ export default class AccountScreen extends Component {
           <TouchableHighlight
             style={styles.rowTouchContainer}
             underlayColor={'rgba(186,186,186,0.1)'}
-            onPress={()=>{}}
+            onPress={() => navigation.navigate('Statistics')}
             >
             <>
               <MaterialCommunityIcons name="wallet-outline" size={24} color={COLORS.aqua}/>
@@ -75,7 +75,7 @@ export default class AccountScreen extends Component {
           <TouchableHighlight
             style={styles.rowTouchContainer}
             underlayColor={'rgba(186,186,186,0.1)'}
-            onPress={()=>{}}
+            onPress={() => navigation.navigate('Statistics')}
             >
             <>
               <AntDesign name="barschart" size={24} color={COLORS.aqua}/>
@@ -85,7 +85,7 @@ export default class AccountScreen extends Component {
           <TouchableHighlight
             style={styles.rowTouchContainer}
             underlayColor={'rgba(186,186,186,0.1)'}
-            onPress={()=>{}}
+            onPress={() => navigation.navigate('Friendlist')}
             >
             <>
               <MaterialCommunityIcons name="account-multiple-outline" size={24} color={COLORS.aqua}/>
@@ -95,7 +95,7 @@ export default class AccountScreen extends Component {
           <TouchableHighlight
             style={styles.rowTouchContainer}
             underlayColor={'rgba(186,186,186,0.1)'}
-            onPress={()=>{}}
+            onPress={() => navigation.navigate('Friendlist')}
             >
             <>
               <AntDesign name="setting" size={24} color={COLORS.aqua}/>
@@ -117,7 +117,9 @@ export default class AccountScreen extends Component {
             </View>
           </TouchableHighlight>
         </View>
-      </SafeAreaView>
+      </ScrollView>
     )
   }
 }
+
+export default AccountScreen

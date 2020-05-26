@@ -1,9 +1,9 @@
 import { StyleSheet } from "react-native"
-import COLORS from '../../assets/colors'
+import COLORS from '../../../assets/colors'
 
 export default StyleSheet.create({
   accountContainer: {
-    marginTop: 60
+    marginTop: 50
   },
   topContainer: {
     flexDirection: 'row',
