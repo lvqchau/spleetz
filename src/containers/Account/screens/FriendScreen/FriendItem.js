@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Linking } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -8,7 +8,8 @@ import COLORS from '../../../../assets/colors'
 
 class FriendItem extends React.Component {
   render() {
-    const { name, style } = this.props
+    const { user, style } = this.props
+    const { name, phone } = user
     return (
       <View style={[style, styles.item]}>
         <View style={styles.infoContainer}>
@@ -21,7 +22,7 @@ class FriendItem extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={styles.phone}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>{Linking.openURL(`tel:${phone}`);}}>
             <Ionicons name="ios-call" size={28} color={COLORS.aqua} />
           </TouchableOpacity>
         </View>

@@ -53,7 +53,7 @@ class FriendScreen extends React.Component {
           <FlatList
           showsVerticalScrollIndicator={false}
           data={data}
-          renderItem={({index, item}) => <FriendItem name={item.name} style={{marginVertical: 5}} />}
+          renderItem={({item}) => <FriendItem user={item} style={{marginVertical: 5}} />}
           keyExtractor={item => item.id}
         />
         </View>

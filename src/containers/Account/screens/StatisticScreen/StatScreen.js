@@ -121,7 +121,6 @@ const styles = StyleSheet.create({
     color: COLORS.salmon
   },
   statNumbers: {
-    
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 3,
+    elevation: 3
   }
 })
 

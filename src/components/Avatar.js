@@ -5,9 +5,9 @@ class Avatar extends React.Component {
 
   constructor(props) {
     super(props)
-    if (this.props.source === "" || !this.props.source) {
+    if (this.props.source === '' || !this.props.source) {
       this.state = { 
-        image: require("../assets/images/null_avatar.png")
+        image: require('../assets/images/null_avatar.png')
       }
     } else {
       this.state = { 
@@ -19,7 +19,7 @@ class Avatar extends React.Component {
 
   onError = (err) => {
     this.setState({ 
-      image: require("../assets/images/null_avatar.png")
+      image: require('../assets/images/null_avatar.png')
     })
   }
 
