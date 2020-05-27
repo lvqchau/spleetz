@@ -1,8 +1,7 @@
 import React from 'react'
 // import MainAccountStack from '../navigator/MainAccountStack'
 import { NavigationContainer } from '@react-navigation/native'
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import RootAccountStack from '../navigator/RootAccountStack';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import MainAccountStack from '../navigator/MainAccountStack';
 
 const MyTheme = {
@@ -14,11 +13,11 @@ const MyTheme = {
 class MainAccount extends React.Component {
   render() {
     return (
-      <SafeAreaProvider>
-        <NavigationContainer theme={MyTheme}>
+      // <SafeAreaView>
+        // {/* <NavigationContainer > */}
           <MainAccountStack/>
-        </NavigationContainer>
-      </SafeAreaProvider>
+        // {/* </NavigationContainer> */}
+      // </SafeAreaView>
     )
   }
 }

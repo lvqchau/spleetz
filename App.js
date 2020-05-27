@@ -5,6 +5,9 @@ import MainAccount from './src/containers/Account/screens/MainAccount';
 import { SafeAreaView } from 'react-navigation';
 import Avatar from './src/components/Avatar';
 import NotificationScreen from './src/containers/Notification/screens/NotificationScreen';
+import MyTabs from './src/navigator/AppNavigator';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AppNavigator from './src/navigator/AppNavigator';
 
 class App extends React.Component {
   render() {
@@ -17,8 +20,11 @@ class App extends React.Component {
     }
     setCustomText(customTextProps);
     return (
-      <MainAccount/>
+      // <MainAccount/>
       // <NotificationScreen />
+      <AppNavigator/>
+        // <MyTabs/>
+      
     )
   }
 };

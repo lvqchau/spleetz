@@ -1,65 +1,59 @@
-import React from "react";
-import { createAppContainer } from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AccountScreen from '../containers/Account/screens/AccountScreen/AccountScreen';
+import NotificationScreen from '../containers/Notification/screens/NotificationScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import MainAccount from '../containers/Account/screens/MainAccount';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+const Tab = createBottomTabNavigator();
 
-import AccountScreen from "../containers/Account/screens/AccountScreen/AccountScreen";
-
-const TabNavigator = createBottomTabNavigator(
-	{
-		DebtDetail: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <MaterialCommunityIcons name="receipt" size={24} color="#00D0CB" />
-			}
-		},
-		Chat: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="chat" size={24} color="#FF6B6A" />
-			}
-		},
-		Bill: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="md-qr-scanner" size={24} color="#00D0CB" />
-			}
-		},
-		Notification: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="ios-chatbubbles" size={24} color="#FF6B6A" />
-			}
-		},
-		Account: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <MaterialCommunityIcons name="account-circle" size={24} color="#00D0CB" />
-			}
-		}
+const MyTheme = {
+  colors: {
+    background: '#fff'
 	},
-	{
-		tabBarOptions: {
-			showLabel: false
-		}
-	}
-);
+	borderTopWidth: 0
+};
 
-export default createAppContainer(TabNavigator);
-
-
-// import React, { Component } from 'react';
-// import { View } from 'react-native';
-
-// class AppNavigator extends Component {
-// 	render() {
-// 		return (
-// 			<View>
-				
-// 			</View>
-// 		);
-// 	}
-// }
-
-// export default AppNavigator;
+export default function MyTabs() {
+	return (
+		<SafeAreaProvider>
+			<NavigationContainer style={{borderWidth: 0}}theme={{colors: {background: "white"}}}>
+				<Tab.Navigator
+					initialRouteName="Home"
+					tabBarOptions={{
+						activeTintColor: '#e91e63',
+					}}
+				>
+					<Tab.Screen 
+						name="Home" 
+						component={MainAccount} 
+						options={{
+							tabBarIcon: ({ color, size }) => (
+								<MaterialIcons name="home" color={color} size={size} />
+							),
+						}}
+						/>
+					<Tab.Screen 
+						name="Profile" 
+						component={AccountScreen} 
+						options={{
+							tabBarIcon: ({ color, size }) => (
+								<MaterialIcons name="account-circle" color={color} size={size} />
+							),
+						}}
+						/>
+					<Tab.Screen 
+						name="Notification" 
+						component={NotificationScreen} 
+						options={{
+							tabBarIcon: ({ color, size }) => (
+								<MaterialIcons name="notifications" color={color} size={size} />
+							),
+						}}
+						/>
+				</Tab.Navigator>
+			</NavigationContainer>
+		</SafeAreaProvider>
+	);
+}
