@@ -1,7 +1,6 @@
 import React from 'react'
-import { Text, TouchableOpacity, SafeAreaView, View, StyleSheet, Dimensions } from 'react-native'
+import { Text, TouchableOpacity, SafeAreaView, View, StyleSheet, Dimensions, TextInput, FlatList, ScrollView } from 'react-native'
 import HeaderNavigator from '../../components/HeaderNavigator'
-import { ScrollView, TextInput, FlatList } from 'react-native-gesture-handler'
 import COLORS from '../../../../assets/colors';
 import FriendItem from './FriendItem';
 import { data } from './FriendData'

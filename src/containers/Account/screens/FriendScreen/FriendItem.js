@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Linking } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableOpacity, View, Text, StyleSheet, Linking } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import Avatar from '../../../../components/Avatar'

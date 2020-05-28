@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native'
-import { ScrollView, RefreshControl } from 'react-native-gesture-handler';
+import { ScrollView, View, Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native'
 import { LineChart, PieChart, BarChart } from "react-native-chart-kit";
 
 import HeaderNavigator from '../../components/HeaderNavigator';

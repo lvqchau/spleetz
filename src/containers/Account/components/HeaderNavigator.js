@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, StyleSheet, Text, Dimensions } from 'react-native'
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import COLORS from '../../../assets/colors'
 
 class HeaderNavigator extends React.Component {

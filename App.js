@@ -1,6 +1,6 @@
 import React from 'react';
 import { setCustomText } from 'react-native-global-props/src';
-import {Image} from 'react-native'
+import {Image, Text} from 'react-native'
 import MainAccount from './src/containers/Account/screens/MainAccount';
 import { SafeAreaView } from 'react-navigation';
 import Avatar from './src/components/Avatar';
@@ -17,8 +17,8 @@ class App extends React.Component {
     }
     setCustomText(customTextProps);
     return (
-      <MainAccount/>
-      // <NotificationScreen />
+      //<MainAccount/>
+			<NotificationScreen />
     )
   }
 };
