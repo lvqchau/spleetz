@@ -1,6 +1,5 @@
 import React from 'react'
-import { View, Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native'
-import { ScrollView, RefreshControl } from 'react-native-gesture-handler';
+import { ScrollView, View, Text, SafeAreaView, StyleSheet, Dimensions } from 'react-native'
 import { LineChart, PieChart, BarChart } from "react-native-chart-kit";
 
 import HeaderNavigator from '../../components/HeaderNavigator';
@@ -121,7 +120,6 @@ const styles = StyleSheet.create({
     color: COLORS.salmon
   },
   statNumbers: {
-    
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    elevation: 3,
+    elevation: 3
   }
 })
 

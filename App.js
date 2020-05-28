@@ -1,21 +1,67 @@
 import React from 'react';
 import { setCustomText } from 'react-native-global-props/src';
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import MainAccount from './src/containers/Account/screens/MainAccount';
-import { SafeAreaView } from 'react-navigation';
+import COLORS from './src/assets/colors';
+import { navigationRef } from './src/navigator/RootNavigation';
+import AppNavigator from './src/navigator/AppNavigator';
+import AccessStack from './src/navigator/AccessNavigator';
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white',
+    text: COLORS.darkblue,
+    primary: COLORS.aqua
+  }
+};
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      userToken: null,
+      isSignout: true
+    }
+  }
+
+  _stateChange = (e) => {
+    console.log(navigationRef.current.getCurrentRoute().name)
+  }
+
+  _authedUser = (userToken, isSignout) => {
+    this.setState({
+      userToken,
+      isSignout
+    })
+  }
+
   render() {
-    const customTextProps = { 
-      style: { 
-        fontFamily: 'Quicksand',
+    const customTextProps = {
+      style: {
+        fontFamily: 'Montserrat',
         fontSize: 16,
         fontWeight: '500'
       }
     }
     setCustomText(customTextProps);
     return (
-      <MainAccount />
+      <SafeAreaProvider>
+        <NavigationContainer 
+          theme={MyTheme}
+          ref={navigationRef}
+          onStateChange={(e) => this._stateChange(e)}
+        >
+        {this.state.userToken === null 
+          ? <AccessStack _authedUser={this._authedUser}/>
+          : <AppNavigator _authedUser={this._authedUser}/>
+        }
+        </NavigationContainer>
+      </SafeAreaProvider>
     )
   }
 };

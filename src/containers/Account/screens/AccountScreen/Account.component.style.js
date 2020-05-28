@@ -3,7 +3,7 @@ import COLORS from '../../../../assets/colors'
 
 export default StyleSheet.create({
   accountContainer: {
-    marginTop: 20
+    paddingTop: 20
   },
   topContainer: {
     flexDirection: 'row',

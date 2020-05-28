@@ -16,7 +16,7 @@ class AccountScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
+    const { navigation, _authedUser } = this.props
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScrollView style={styles.accountContainer}>
@@ -109,7 +109,7 @@ class AccountScreen extends React.Component {
             <TouchableHighlight
               style={{ flex: 1 }}
               underlayColor={'rgba(186,186,186,0.1)'}
-              onPress={() => { }}
+              onPress={() => _authedUser(null, true)}
             >
               <View style={styles.rowTouchContainer}>
                 <AntDesign name="logout" size={24} color={COLORS.salmon} />

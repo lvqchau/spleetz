@@ -1,7 +1,6 @@
 import React from 'react'
-import { Text, TouchableOpacity, SafeAreaView, View, StyleSheet, Dimensions } from 'react-native'
+import { Text, TouchableOpacity, SafeAreaView, View, StyleSheet, Dimensions, TextInput, FlatList, ScrollView } from 'react-native'
 import HeaderNavigator from '../../components/HeaderNavigator'
-import { ScrollView, TextInput, FlatList } from 'react-native-gesture-handler'
 import COLORS from '../../../../assets/colors';
 import FriendItem from './FriendItem';
 import { data } from './FriendData'
@@ -53,7 +52,7 @@ class FriendScreen extends React.Component {
           <FlatList
           showsVerticalScrollIndicator={false}
           data={data}
-          renderItem={({index, item}) => <FriendItem name={item.name} style={{marginVertical: 5}} />}
+          renderItem={({item}) => <FriendItem user={item} style={{marginVertical: 5}} />}
           keyExtractor={item => item.id}
         />
         </View>

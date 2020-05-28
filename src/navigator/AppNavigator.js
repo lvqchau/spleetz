@@ -1,65 +1,74 @@
-import React from "react";
-import { createAppContainer } from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import AccountScreen from "../containers/Account/screens/AccountScreen/AccountScreen";
+import NotificationScreen from '../containers/Notification/screens/NotificationScreen';
+import MessageScreen from '../containers/Message/screens/MessageScreen';
+import DebtScreen from '../containers/Debt/DebtScreen';
+import { navigationRef } from './RootNavigation';
+import AccountNavigator from '../containers/Account/navigator/AccountNavigator';
 
-const TabNavigator = createBottomTabNavigator(
-	{
-		DebtDetail: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <MaterialCommunityIcons name="receipt" size={24} color="#00D0CB" />
-			}
-		},
-		Chat: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="chat" size={24} color="#FF6B6A" />
-			}
-		},
-		Bill: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="md-qr-scanner" size={24} color="#00D0CB" />
-			}
-		},
-		Notification: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="ios-chatbubbles" size={24} color="#FF6B6A" />
-			}
-		},
-		Account: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <MaterialCommunityIcons name="account-circle" size={24} color="#00D0CB" />
-			}
-		}
-	},
-	{
-		tabBarOptions: {
-			showLabel: false
-		}
+const Tab = createBottomTabNavigator();
+
+export default class MyTabs extends React.Component {
+	render() {
+		return (
+			<Tab.Navigator
+				initialRouteName="Bill"
+			>
+				<Tab.Screen
+					name="Bill"
+					component={DebtScreen}
+					options={{
+						tabBarIcon: ({ color, size }) => (
+							<MaterialIcons name="account-balance-wallet" color={color} size={size} />
+						),
+					}}
+				/>
+				<Tab.Screen
+					name="Chat"
+					component={MessageScreen}
+					options={{
+						tabBarIcon: ({ color, size }) => (
+							<Ionicons name="ios-chatbubbles" color={color} size={size} />
+						),
+					}}
+				/>
+				<Tab.Screen
+					name="Camera"
+					component={MessageScreen}
+					options={{
+						tabBarIcon: ({ color, size }) => (
+							<MaterialIcons name="crop-free" color={color} size={size} />
+						),
+					}}
+				/>
+				<Tab.Screen
+					name="Notification"
+					component={NotificationScreen}
+					options={{
+						tabBarIcon: ({ color, size }) => (
+							<MaterialIcons name="notifications" color={color} size={size} />
+						)
+					}}
+				/>
+				<Tab.Screen
+					name="Profile"
+					listeners={{
+						tabPress: e => {
+							navigationRef.current.navigate('Profile');
+						},
+					}}
+					options={{
+						tabBarIcon: ({ color, size }) => (
+							<MaterialIcons name="account-circle" color={color} size={size} />
+						),
+					}}
+				>
+					{props => <AccountNavigator {...props} _authedUser={this.props._authedUser}/>}
+				</Tab.Screen>
+			</Tab.Navigator>
+		)
 	}
-);
-
-export default createAppContainer(TabNavigator);
-
-
-// import React, { Component } from 'react';
-// import { View } from 'react-native';
-
-// class AppNavigator extends Component {
-// 	render() {
-// 		return (
-// 			<View>
-				
-// 			</View>
-// 		);
-// 	}
-// }
-
-// export default AppNavigator;
+}
