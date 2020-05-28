@@ -8,6 +8,7 @@ import DebtContainer from './DebtContainer'
 import BillContainer from './BillContainer'
 
 import COLORS from '../../assets/colors'
+import styles from './Debt.component.style'
 
 const { width, height } = Dimensions.get('window')
 
@@ -149,7 +150,6 @@ const mockData = {
 	],
 	bill: 'Hello'
 }
-
 export default class DebtScreen extends Component {
 
   constructor(props) {
@@ -158,19 +158,31 @@ export default class DebtScreen extends Component {
 			backgroundColor: 'rgba(0,0,0,0.1)',
 			isDebt: true
     }
-  }itemitem
+  }
 
   render() {
 		const {backgroundColor, isDebt} = this.state
 		const {debt, bill} = mockData
     return (
       <SafeAreaView  style={{flex: 1}}>
-        <View>
-					<TouchableHighlight onPress={()=> this.setState({isDebt: true})}>
-						<Text>Debt</Text>
+        <View style={styles.topButtonContainer}>
+					<TouchableHighlight 
+					style={
+						isDebt ? {...styles.debtButton, ...styles.choseButton} : {...styles.debtButton, ...styles.normalButton}
+					} 
+					onPress={()=> this.setState({isDebt: true})}>
+						<Text style={
+							isDebt ? styles.choseButtonText : styles.normalButtonText
+						}>Debt</Text>
 					</TouchableHighlight>
-					<TouchableHighlight onPress={()=> this.setState({isDebt: false})}>
-						<Text>Bill</Text>
+					<TouchableHighlight 
+						style={
+							isDebt ? {...styles.billButton, ...styles.normalButton} : {...styles.billButton, ...styles.choseButton}
+						} 
+						onPress={()=> this.setState({isDebt: false})}>
+						<Text style={
+							isDebt ? styles.normalButtonText : styles.choseButtonText
+						}>Bill</Text>
 					</TouchableHighlight>
 				</View>
 				{isDebt ? 
