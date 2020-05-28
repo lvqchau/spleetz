@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
 
-export default class MessageScreen extends Component {
+class MessageScreen extends Component {
   render() {
     return (
-      <View>
-        <Text>Message</Text>
-      </View>
+      <SafeAreaView>
+        <Text>Message Screen</Text>
+      </SafeAreaView>
     )
   }
 }
+
+export default MessageScreen

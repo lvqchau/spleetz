@@ -7,30 +7,36 @@ import EditProfileModal from '../screens/AccountScreen/EditProfileModal';
 
 const Stack = createStackNavigator();
 
-export default function MainAccountStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Account"
-      screenOptions={{
-        headerShown: false
-      }}
-    >
-      <Stack.Screen
-        name="Account"
-        component={AccountScreen}
-      />
-      <Stack.Screen
-        name="Friendlist"
-        component={FriendScreen}
-      />
-      <Stack.Screen
-        name="Statistics"
-        component={StatScreen}
-      />
-      <Stack.Screen
-        name="EditProfile"
-        component={EditProfileModal}
-      />
-    </Stack.Navigator>
-  );
+export default class MainAccountStack extends React.Component {
+  render() {
+    return (
+      <Stack.Navigator
+        initialRouteName="Account"
+        screenOptions={{
+          headerShown: false
+        }}
+      >
+        <Stack.Screen
+          name="Account"
+          component={AccountScreen}
+          resetStack={this.resetStack}
+        />
+        <Stack.Screen
+          name="Friendlist"
+          component={FriendScreen}
+          resetStack={this.resetStack}
+        />
+        <Stack.Screen
+          name="Statistics"
+          component={StatScreen}
+          resetStack={this.resetStack}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfileModal}
+          resetStack={this.resetStack}
+        />
+      </Stack.Navigator>
+    )
+  }
 }
