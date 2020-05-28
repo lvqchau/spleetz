@@ -3,7 +3,7 @@ import COLORS from '../../assets/colors'
 
 export default StyleSheet.create({
   splitContainer: {
-    marginTop: 60
+    marginTop: 25
 	},
 	titleContainer: {
 		flexDirection: 'row',

@@ -1,24 +1,64 @@
 import React, { Component } from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
+import displayPrice from '../../utils/displayPrice'
+import COLORS from '../../assets/colors'
 
 export default class BillItem extends Component {
 	state = {}
-  render() {
+	render() {
 		const { data } = this.props
-    return (
-			<View>
-				<Text>{data.name}</Text>
-				<Text>{data.quantity}</Text>
-				<Text>{data.price}</Text>
-				{data.borrower && data.borrower.map((borrower, index) => 
-					<View key={index}>
-						<Image
-							source={require('../../assets/images/avatar_2.png')}
-						/>
+		return (
+			<View style={{ flex: 1, marginBottom: 5}}>
+				<View style={{
+					flexDirection: 'row',
+					marginBottom: 5
+				}}>
+					<Text style={{ flex: 1, fontWeight: '700', color: COLORS.white }}>{data.quantity}</Text>
+					<Text style={{ flex: 5, color: COLORS.white }}>{data.name}</Text>
+					<Text style={{ 
+						flex: 2, 
+						fontFamily: 'Montserrat',
+						fontWeight: '700',
+						color: COLORS.white, 
+						textAlign: 'right', 
+						alignItems: 'stretch' 
+					}}>{displayPrice(data.price)}</Text>
+				</View>
+				<View style={{
+					flexDirection: 'row',
+					alignItems: 'center',
+					flex: 1
+				}}>
+					<View style={{ flex: 1 }}></View>
+					<View style={{ flex: 6, marginRight: 5 }}>
+						<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+							{data.borrower && data.borrower.map((borrower, index) =>
+								<View key={index}>
+									<Image
+										style={{
+											width: 32,
+											height: 32,
+											borderRadius: 32 / 2,
+											borderColor: COLORS.white,
+											borderWidth: 1,
+											marginRight: 5
+										}}
+										source={require('../../assets/images/avatar_2.png')}
+									/>
+								</View>
+							)}
+						</ScrollView>
 					</View>
-				)}
+					<View style={{flex: 1}}>
+						<TouchableOpacity onPress={()=>{}}>
+							<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.yellow}/>
+						</TouchableOpacity>
+					</View>
+				</View>
 			</View>
-    )
-  }
+		)
+	}
 }
 

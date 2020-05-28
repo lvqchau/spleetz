@@ -172,11 +172,12 @@ const mockData = {
 				avatar: '../../../assets/images/avatar_2.png',
 				name: 'John Smithhhhhhhhhhhhhhhhhhhhhhhh'
 			},
-			createdDate: '28.08.2020000000',
+			createdDate: '28.08.2020',
+			location: '24 Nguyen Trai, Q1',
 			status: 0, //complete, unfinished
-			category: 'Housinggggggggggggg',
+			category: 'house',
 			deadline: '10.09.2020',
-			total: '200.000.000.000.000',
+			total: '200.000.000',
 			borrower: [
 				{
 					avatar: '../../../assets/images/avatar_2.png',
@@ -216,8 +217,9 @@ const mockData = {
 				name: 'Trieu Thanh'
 			},
 			createdDate: '28.07.2020',
+			location: '25 Nguyen Trai, Q1',
 			status: 1, //complete, unfinished
-			category: 'Housing',
+			category: 'house',
 			deadline: '20.08.2020',
 			total: '100.000.000',
 			borrowers: [
@@ -253,8 +255,9 @@ const mockData = {
 				name: 'John Smith'
 			},
 			createdDate: '28.08.2020',
+			location: '24 Nguyen Trai, Q1',
 			status: 0, //complete, unfinished
-			category: 'Food',
+			category: 'shop',
 			deadline: '10.09.2020',
 			total: '200.000.000',
 			borrower: [
@@ -296,8 +299,9 @@ const mockData = {
 				name: 'Trieu Thanh'
 			},
 			createdDate: '28.07.2020',
+			location: '25 Nguyễn Trãi, phường Nguyễn Cư Trinh, Quận 1, Thành phố Hồ Chí Minh',
 			status: 1, //complete, unfinished
-			category: 'Housing',
+			category: 'shop',
 			deadline: '20.08.2020',
 			total: '100.000',
 			borrowers: [
@@ -333,8 +337,9 @@ const mockData = {
 				name: 'John Smith'
 			},
 			createdDate: '28.08.2020',
+			location: '24 Nguyen Trai, Q1',
 			status: 0, //complete, unfinished
-			category: 'Food',
+			category: 'food',
 			deadline: '10.09.2020',
 			total: '200.000.000',
 			borrower: [
@@ -376,8 +381,9 @@ const mockData = {
 				name: 'Trieu Thanh'
 			},
 			createdDate: '28.07.2020',
+			location: '25 Nguyen Trai, Q1',
 			status: 1, //complete, unfinished
-			category: 'Housing',
+			category: 'shop',
 			deadline: '20.08.2020',
 			total: '100.000.000',
 			borrowers: [
@@ -413,8 +419,9 @@ const mockData = {
 				name: 'John Smith'
 			},
 			createdDate: '28.08.2020',
+			location: '24 Nguyen Trai, Q1',
 			status: 0, //complete, unfinished
-			category: 'Food',
+			category: 'food',
 			deadline: '10.09.2020',
 			total: '200.000.000',
 			borrower: [
@@ -456,8 +463,9 @@ const mockData = {
 				name: 'Trieu Thanh'
 			},
 			createdDate: '28.07.2020',
+			location: '25 Nguyen Trai, Q1',
 			status: 1, //complete, unfinished
-			category: 'Housing',
+			category: 'house',
 			deadline: '20.08.2020',
 			total: '100.000.000',
 			borrowers: [
