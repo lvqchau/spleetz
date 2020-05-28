@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { SafeAreaView, StyleSheet, Text, FlatList } from 'react-native'
+import { SafeAreaView, StyleSheet, FlatList } from 'react-native'
 import { data } from './NotiData'
-import NotiItem from './NotiItem'
+import NotiItem from '../components/NotiItem'
 import LinearGradient from 'react-native-linear-gradient';
 class NotificationScreen extends Component {
   render() {

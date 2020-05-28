@@ -7,7 +7,7 @@ import EditProfileModal from '../screens/AccountScreen/EditProfileModal';
 
 const Stack = createStackNavigator();
 
-export default class MainAccountStack extends React.Component {
+export default class AccountNavigator extends React.Component {
   render() {
     return (
       <Stack.Navigator
@@ -18,23 +18,20 @@ export default class MainAccountStack extends React.Component {
       >
         <Stack.Screen
           name="Account"
-          component={AccountScreen}
-          resetStack={this.resetStack}
-        />
+        >
+          {props => <AccountScreen {...props}  _authedUser={this.props._authedUser}/>}
+        </Stack.Screen>
         <Stack.Screen
           name="Friendlist"
           component={FriendScreen}
-          resetStack={this.resetStack}
         />
         <Stack.Screen
           name="Statistics"
           component={StatScreen}
-          resetStack={this.resetStack}
         />
         <Stack.Screen
           name="EditProfile"
           component={EditProfileModal}
-          resetStack={this.resetStack}
         />
       </Stack.Navigator>
     )

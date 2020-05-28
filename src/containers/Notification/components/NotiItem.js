@@ -5,8 +5,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import Avatar from '../../../components/Avatar'
 import COLORS from '../../../assets/colors'
+import displayPrice from '../../../utils/displayPrice'
 
 class NotiItem extends React.Component {
+  
+  
   render() {
     const { noti } = this.props
     return (
@@ -21,7 +24,7 @@ class NotiItem extends React.Component {
           </View>
         </View>
         <View style={styles.debtContainer}>
-          <Text style={styles.debtText}>100000</Text>
+          <Text style={styles.debtText}>{displayPrice(100000)}</Text>
           <View style={styles.choices}>
             <TouchableOpacity style={styles.choiceCircle}>
               <Ionicons name="ios-checkmark-circle" size={28} color={COLORS.green}/>

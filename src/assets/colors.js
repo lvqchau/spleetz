@@ -8,7 +8,8 @@ const COLORS = {
 	red: '#FA4342',
 	darkgray: '#BDBCBD',
 	turquoise: '#16E6D6',
-	white: '#FFFFFF'
+    white: '#FFFFFF',
+    light: '#F0F0F0'
 }
 
 export default COLORS
