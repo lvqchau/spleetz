@@ -1,5 +1,8 @@
 import React from 'react'
-import { View, StyleSheet, Text, Dimensions } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
 import Avatar from '../../../components/Avatar'
 import COLORS from '../../../assets/colors'
 
@@ -8,9 +11,9 @@ class NotiItem extends React.Component {
     const { noti } = this.props
     return (
       <View style={styles.itemContainer}>
-        <View style={styles.userInfo}>
+        <View style={styles.userContainer}>
           <Avatar style={{ marginRight: 15 }} size={42} source={""} />
-          <View>
+          <View style={styles.userDetail}>
             <Text style={styles.username}>{noti.user.name}
               <Text> {noti.role === "payer" ? "repaid" : "requested"}</Text>
             </Text>
@@ -18,7 +21,15 @@ class NotiItem extends React.Component {
           </View>
         </View>
         <View style={styles.debtContainer}>
-          <Text style={styles.debtText}>10000</Text>
+          <Text style={styles.debtText}>100000</Text>
+          <View style={styles.choices}>
+            <TouchableOpacity style={styles.choiceCircle}>
+              <Ionicons name="ios-checkmark-circle" size={28} color={COLORS.green}/>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.choiceCircle}>
+              <Ionicons name="ios-close-circle" size={28} color={COLORS.salmon}/>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     )
@@ -27,6 +38,7 @@ class NotiItem extends React.Component {
 
 const styles = StyleSheet.create({
   itemContainer: {
+    flex: 1,
     borderRadius: 12,
     padding: 15,
     minHeight: 70,
@@ -41,22 +53,33 @@ const styles = StyleSheet.create({
     elevation: 2
   },
   username: {
-    fontWeight: '600'
+    fontWeight: '600',
+    marginBottom: 5
   },
-  userInfo: {
+  userDetail: {
+    flex: 1
+  },
+  userContainer: {
     flexDirection: 'row',
-    flex: 2
+    flex: 3
   },
   timestamp: {
     color: COLORS.gray,
     fontSize: 14
   },
   debtContainer: {
-    flex: 1, 
-    alignItems: 'flex-end'
+    flex: 1,
+    alignItems: 'flex-end',
+    justifyContent: 'space-between'
   },
   debtText: {
     color: COLORS.aqua
+  },
+  choices: {
+    flexDirection: 'row'
+  },
+  choiceCircle: {
+    marginLeft: 5
   }
 })
 

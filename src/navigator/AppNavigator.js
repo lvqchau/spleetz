@@ -1,65 +1,98 @@
-import React from "react";
-import { createAppContainer } from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import AccountScreen from "../containers/Account/screens/AccountScreen/AccountScreen";
+import NotificationScreen from '../containers/Notification/screens/NotificationScreen';
+import MainAccount from '../containers/Account/screens/MainAccount';
+import MessageScreen from '../containers/Message/screens/MessageScreen';
+import { navigationRef } from './RootNavigation';
+import COLORS from '../assets/colors';
 
-const TabNavigator = createBottomTabNavigator(
-	{
-		DebtDetail: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <MaterialCommunityIcons name="receipt" size={24} color="#00D0CB" />
-			}
-		},
-		Chat: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="chat" size={24} color="#FF6B6A" />
-			}
-		},
-		Bill: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="md-qr-scanner" size={24} color="#00D0CB" />
-			}
-		},
-		Notification: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <Ionicons name="ios-chatbubbles" size={24} color="#FF6B6A" />
-			}
-		},
-		Account: {
-			screen: AccountScreen,
-			navigationOptions: {
-				tabBarIcon: () => <MaterialCommunityIcons name="account-circle" size={24} color="#00D0CB" />
-			}
-		}
-	},
-	{
-		tabBarOptions: {
-			showLabel: false
-		}
+const Tab = createBottomTabNavigator();
+
+const MyTheme = {
+	...DefaultTheme,
+	colors: {
+		...DefaultTheme.colors,
+		background: 'white',
+		text: COLORS.darkblue,
+		primary: COLORS.aqua
 	}
-);
+};
 
-export default createAppContainer(TabNavigator);
+export default class MyTabs extends React.Component {
 
+	_reset = (e) => {
+		console.log(navigationRef.current.getCurrentRoute().name)
+	}
 
-// import React, { Component } from 'react';
-// import { View } from 'react-native';
-
-// class AppNavigator extends Component {
-// 	render() {
-// 		return (
-// 			<View>
-				
-// 			</View>
-// 		);
-// 	}
-// }
-
-// export default AppNavigator;
+	render() {
+		return (
+			<SafeAreaProvider>
+				<NavigationContainer 
+					theme={MyTheme}  
+					onStateChange={(e)=>this._reset(e)}
+					ref={navigationRef}
+					>
+					<Tab.Navigator
+						initialRouteName="Bill"
+					>
+						<Tab.Screen
+							name="Bill"
+							component={MainAccount}
+							options={{
+								tabBarIcon: ({ color, size }) => (
+									<MaterialIcons name="account-balance-wallet" color={color} size={size} />
+								),
+							}}
+							listeners={{
+								tabPress: e => {
+									navigationRef.current.navigate('Bill');
+								},
+							}}
+						/>
+						<Tab.Screen
+							name="Chat"
+							component={MessageScreen}
+							options={{
+								tabBarIcon: ({ color, size }) => (
+									<Ionicons name="ios-chatbubbles" color={color} size={size} />
+								),
+							}}
+						/>
+						<Tab.Screen
+							name="Camera"
+							component={MessageScreen}
+							options={{
+								tabBarIcon: ({ color, size }) => (
+									<MaterialIcons name="crop-free" color={color} size={size} />
+								),
+							}}
+						/>
+						<Tab.Screen
+							name="Notification"
+							component={NotificationScreen}
+							options={{
+								tabBarIcon: ({ color, size }) => (
+									<MaterialIcons name="notifications" color={color} size={size}/>
+								)
+							}}
+						/>
+						<Tab.Screen
+							name="Profile"
+							component={MessageScreen}
+							options={{
+								tabBarIcon: ({ color, size }) => (
+									<MaterialIcons name="account-circle" color={color} size={size} />
+								),
+							}}
+						/>
+					</Tab.Navigator>
+				</NavigationContainer>
+			</SafeAreaProvider>
+		)
+	}
+}
