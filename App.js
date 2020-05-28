@@ -19,7 +19,8 @@ class App extends React.Component {
     setCustomText(customTextProps);
     return (
       //<MainAccount/>
-			<NotificationScreen />
+			//<NotificationScreen />
+			<DebtScreen/>
     )
   }
 };
