@@ -15,7 +15,7 @@ const MyTheme = {
     ...DefaultTheme.colors,
     background: 'white',
     text: COLORS.darkblue,
-    primary: COLORS.aqua
+    primary: COLORS.salmon
   }
 };
 
@@ -43,7 +43,7 @@ class App extends React.Component {
   render() {
     const customTextProps = {
       style: {
-        fontFamily: 'Montserrat',
+        fontFamily: 'Quicksand',
         fontSize: 16,
         fontWeight: '500'
       }

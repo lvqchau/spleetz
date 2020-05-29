@@ -1,50 +1,71 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
+import { Animated, TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
+import Entypo from 'react-native-vector-icons/Entypo'
+import LinearGradient from 'react-native-linear-gradient'
+
 import Avatar from '../../components/Avatar'
 import COLORS from '../../assets/colors'
+import displayPrice from '../../utils/displayPrice'
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 class BillContainer extends Component {
-
   renderBillItem = (item, index) => {
-    const { id, owner, createdDate, status, category,
-      deadline, total, borrowers, items } = item
-    const { avatar, name } = owner
+    const { createdDate, location, status } = item
+    let colorGrad = COLORS.gradientGreen
+    if (index % 3 === 0) colorGrad = COLORS.gradientPurple
+    else if (index % 2 === 0) colorGrad = COLORS.gradientPink
+
     return (
-      <TouchableOpacity>
-        <View style={styles.billItem}>
+      <>
+        <View style={[styles.badge, {backgroundColor: status ? COLORS.green : 'red'}]}></View>
+        <LinearGradient
+          end={{ x: 1, y: 0 }}
+          start={{ x: 0, y: 1 }}
+          colors={colorGrad}
+          style={styles.billItem}
+        >
           <View style={styles.billTop}>
-            <View style={styles.userContainer}>
-              <Avatar
-                style={{ marginRight: 15 }}
-                size={42}
-                source={""} />
-              <Text style={{flex: 2}}>{name}</Text>
+            <View style={{
+              flex: 5
+            }}>
+              <Text style={{
+                fontSize: 12,
+                fontWeight: '700',
+                color: COLORS.white
+              }}>{createdDate}</Text>
+              <Text style={{
+                fontSize: 18,
+                color: COLORS.white
+              }}>{location}</Text>
             </View>
-            <View style={styles.categoryContainer}>
-              <Text>{category}</Text>
+            <View style={{
+              flex: 1,
+              alignItems: 'flex-end'
+            }}>
+              <TouchableOpacity
+                onPress={() => this.setState({ openModal: true })}
+              >
+                <Entypo name="resize-full-screen" size={24} color={COLORS.white} />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.billBot}>
-            <View style={styles.totalView}>
-              <Text style={styles.normalTitle}>Total</Text>
-              <Text style={styles.amountText}>{total} VND</Text>
-            </View>
-            <View style={styles.statusView}>
-              <Text style={[styles.normalTitle, styles.smallTitle]}>Created Date</Text>
-              <Text style={styles.statusText}>{createdDate}</Text>
-            </View>
-            <View style={styles.statusView}>
-              <Text style={[styles.normalTitle, styles.smallTitle]}>Status</Text>
-              {
-                status ?
-                  <Text style={[styles.statusText, styles.successText]}>Resolved</Text>
-                  :
-                  <Text style={[styles.statusText, styles.unsuccessText]}>Unresolved</Text>
-              }
-            </View>
+            <Text
+              style={{
+                fontFamily: 'Montserrat',
+                fontWeight: '700',
+                fontSize: 28,
+                bottom: -5,
+                color: COLORS.white
+              }}>{displayPrice(1050000)}</Text>
+            <Avatar
+              style={{ borderColor: COLORS.white, borderWidth: 1 }}
+              size={32}
+              source={""} />
           </View>
-        </View>
-      </TouchableOpacity>
+        </LinearGradient>
+      </>
     )
   }
 
@@ -52,7 +73,7 @@ class BillContainer extends Component {
     const { data } = this.props
     return (
       <SafeAreaView style={styles.billContainer}>
-        <FlatList
+        <AnimatedFlatList
           data={data}
           renderItem={({ index, item }) => this.renderBillItem(item, index)}
           keyExtractor={item => item.id}
@@ -63,6 +84,17 @@ class BillContainer extends Component {
 }
 
 const styles = StyleSheet.create({
+  badge: {
+    position: 'absolute',
+    width: 14,
+    height: 14,
+    top: 5,
+    left: 20,
+    zIndex: 10,
+    borderRadius: 14 / 2,
+    borderWidth: 2,
+    borderColor: COLORS.white
+  },
   billContainer: {
     flex: 1,
   },
@@ -70,25 +102,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     borderRadius: 12,
     padding: 10,
-    minHeight: 70,
+    minHeight: 130,
     flexDirection: 'column',
-    backgroundColor: 'white',
-    shadowColor: "#000",
-    marginVertical: 10,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 2
+    marginBottom: 20
   },
   billTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
     marginBottom: 10,
     flex: 1
   },
   billBot: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
     flex: 1
   },
   userContainer: {
