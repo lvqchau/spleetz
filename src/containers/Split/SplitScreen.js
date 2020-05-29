@@ -148,7 +148,7 @@ export default class SplitScreen extends Component {
 						height: 68,
 						justifyContent: 'center',
 						alignItems: 'center',
-						borderRadius: 6
+						borderRadius: 10
 					}}>
 					{
 						category === 'others' ?

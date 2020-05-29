@@ -44,7 +44,7 @@ export default class MyTabs extends React.Component {
 					component={SplitScreen}
 					options={{
 						tabBarIcon: ({ color, size }) => (
-							<MaterialIcons name="crop-free" color={color} size={size} />
+							<MaterialIcons name="receipt" color={color} size={size} />
 						)
 					}}
 				/>

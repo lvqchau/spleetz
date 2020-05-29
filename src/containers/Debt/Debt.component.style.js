@@ -17,6 +17,13 @@ export default StyleSheet.create({
 		fontSize: 18,
 		color: COLORS.white
 	},
+	yearText: {
+		position: 'absolute',
+		fontSize: 14,
+		top: 5,
+		left: -25,
+		transform: [{ rotate: '270deg'}]
+	},
 	monthText: {
 		textTransform: 'uppercase'
 	},
@@ -77,7 +84,7 @@ export default StyleSheet.create({
 	debtStatus: {
 		fontFamily: 'Quicksand',
 		fontWeight: '600',
-		color: COLORS.darkgray,
+		color: COLORS.gray,
 		marginTop: 7,
 		fontSize: 14
 	},
@@ -91,25 +98,23 @@ export default StyleSheet.create({
 		color: '#000000'
 	},
 	topButton: {
-		width: 161,
-		height: 39,
+		paddingVertical: 8,
 		alignItems: 'center',
-		justifyContent: 'space-around',
-		flexDirection: 'column'
+		justifyContent: 'center'
 	},
 	debtButton: {
 		borderTopLeftRadius: 6,
-		borderBottomLeftRadius: 6,
+		borderBottomLeftRadius: 6
 	},
 	billButton: {
 		borderTopRightRadius: 6,
-		borderBottomRightRadius: 6,
+		borderBottomRightRadius: 6
 	},
 	topButtonContainer: {
 		flexDirection: 'row',
-		justifyContent: 'center',
 		marginTop: 20,
-		marginBottom: 20
+		marginBottom: 20,
+		paddingHorizontal: 25
 	},
 	normalButtonText: {
 		color: '#A2A2A2',

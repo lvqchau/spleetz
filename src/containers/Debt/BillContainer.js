@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 14,
     height: 14,
-    top: 5,
+    top: 0,
     left: 20,
     zIndex: 10,
     borderRadius: 14 / 2,
@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     padding: 10,
     minHeight: 130,
     flexDirection: 'column',
-    marginBottom: 20
+    marginTop: 5,
+    marginBottom: 15
   },
   billTop: {
     flexDirection: 'row',
