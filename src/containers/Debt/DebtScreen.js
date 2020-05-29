@@ -177,7 +177,7 @@ const mockData = {
 			createdDate: '28.08.2020',
 			location: '24 Nguyen Trai, Q1',
 			status: 0, //complete, unfinished
-			category: 'house',
+			category: 'others',
 			deadline: '10.09.2020',
 			total: '200.000.000',
 			borrower: [
@@ -503,7 +503,6 @@ export default class DebtScreen extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			backgroundColor: 'rgba(0,0,0,0.1)',
 			isDebt: false
 		}
 	}
@@ -520,7 +519,11 @@ export default class DebtScreen extends Component {
 					start={{ x: 1, y: 1 }}
 					end={{ x: 0, y: 1 }}
 					colors={!isDebt ? COLORS.gradientGreen : COLORS.gradientLight}
-					style={[styles.topButton, type === "debt" ? styles.debtButton : styles.billButton]}
+					style={[styles.topButton, type === "debt" ? [styles.debtButton, {shadowColor: COLORS.black,
+						shadowOffset: { width: 0, height: 0 },
+						shadowOpacity: 0.2,
+						shadowRadius: 3,
+						elevation: 2,}] : [styles.billButton]]}
 				>
 					<Text style={!isDebt ? [styles.normalButtonText, styles.choseButtonText] : [styles.normalButtonText]}>{type}</Text>
 				</LinearGradient>

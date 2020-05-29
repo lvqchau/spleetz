@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
+import { TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -7,11 +7,9 @@ import Avatar from '../../components/Avatar'
 import COLORS from '../../assets/colors'
 import displayPrice from '../../utils/displayPrice'
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
-
 class BillContainer extends Component {
   renderBillItem = (item, index) => {
-    const { createdDate, location, status } = item
+    const { createdDate, location, status, category } = item
     let colorGrad = COLORS.gradientGreen
     if (index % 3 === 0) colorGrad = COLORS.gradientPurple
     else if (index % 2 === 0) colorGrad = COLORS.gradientPink
@@ -36,7 +34,8 @@ class BillContainer extends Component {
               }}>{createdDate}</Text>
               <Text style={{
                 fontSize: 18,
-                color: COLORS.white
+                color: COLORS.white,
+                marginBottom: 10
               }}>{location}</Text>
             </View>
             <View style={{
@@ -64,6 +63,7 @@ class BillContainer extends Component {
               size={32}
               source={""} />
           </View>
+          <Text style={styles.categoryText}>{category}</Text>
         </LinearGradient>
       </>
     )
@@ -73,7 +73,7 @@ class BillContainer extends Component {
     const { data } = this.props
     return (
       <SafeAreaView style={styles.billContainer}>
-        <AnimatedFlatList
+        <FlatList
           data={data}
           renderItem={({ index, item }) => this.renderBillItem(item, index)}
           keyExtractor={item => item.id}
@@ -119,6 +119,18 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     flex: 1
   },
+	categoryText: {
+    position: 'absolute',
+    bottom: -12,
+    right: -5,
+    fontSize: 40,
+    fontFamily: 'Montserrat',
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    color: COLORS.white,
+    opacity: .5,
+    zIndex: -1
+	},
   userContainer: {
     flexDirection: 'row',
     alignItems: 'center',
