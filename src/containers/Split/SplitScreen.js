@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import styles from './Split.component.style.js'
 import COLORS from '../../assets/colors'
 import BillContainer from './BillContainer'
+import displayPrice from '../../utils/displayPrice.js'
 
 const { width, height } = Dimensions.get('window')
 const mockData = [
@@ -193,10 +194,10 @@ export default class SplitScreen extends Component {
 				styles.splitContainer, {
 					position: 'relative',
 					flexDirection: 'column',
-					flex: 1
+					flex: 1,
+					marginHorizontal: 25
 				}]}>
 				<View style={{
-					paddingHorizontal: 25,
 					flex: 1
 				}}>
 					<View style={{
@@ -241,6 +242,13 @@ export default class SplitScreen extends Component {
 						<BillContainer data={mockData}></BillContainer>
 					</View>
 				</View>
+				<Text style={{
+					fontFamily: 'Montserrat',
+					fontWeight: '700',
+					fontSize: 32,
+					paddingBottom: 10,
+					color: COLORS.salmon
+				}}>{displayPrice(1000000)}</Text>
 				<TouchableOpacity
 					activeOpacity={.7}
 					onPress={() => { }}
@@ -252,7 +260,7 @@ export default class SplitScreen extends Component {
 						style={{
 							position: 'absolute',
 							bottom: 10,
-							right: 25,
+							right: 0,
 							width: 54,
 							height: 54,
 							borderRadius: 54 / 2,
@@ -262,7 +270,6 @@ export default class SplitScreen extends Component {
 						<MaterialCommunityIcons size={32} name="camera" color={COLORS.white} style={{ height: 32, width: 32 }} />
 					</LinearGradient>
 				</TouchableOpacity>
-
 			</SafeAreaView>
 		)
 	}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, Modal, TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
+import { Animated, TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -11,12 +11,14 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
 class BillContainer extends Component {
   renderBillItem = (item, index) => {
-    const { createdDate, location } = item
+    const { createdDate, location, status } = item
     let colorGrad = COLORS.gradientGreen
     if (index % 3 === 0) colorGrad = COLORS.gradientPurple
     else if (index % 2 === 0) colorGrad = COLORS.gradientPink
-    
+
     return (
+      <>
+        <View style={[styles.badge, {backgroundColor: status ? COLORS.green : 'red'}]}></View>
         <LinearGradient
           end={{ x: 1, y: 0 }}
           start={{ x: 0, y: 1 }}
@@ -42,7 +44,7 @@ class BillContainer extends Component {
               alignItems: 'flex-end'
             }}>
               <TouchableOpacity
-                onPress={()=>this.setState({openModal: true})}
+                onPress={() => this.setState({ openModal: true })}
               >
                 <Entypo name="resize-full-screen" size={24} color={COLORS.white} />
               </TouchableOpacity>
@@ -63,6 +65,7 @@ class BillContainer extends Component {
               source={""} />
           </View>
         </LinearGradient>
+      </>
     )
   }
 
@@ -81,11 +84,16 @@ class BillContainer extends Component {
 }
 
 const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
+  badge: {
+    position: 'absolute',
+    width: 14,
+    height: 14,
+    top: 5,
+    left: 20,
+    zIndex: 10,
+    borderRadius: 14 / 2,
+    borderWidth: 2,
+    borderColor: COLORS.white
   },
   billContainer: {
     flex: 1,
@@ -96,12 +104,11 @@ const styles = StyleSheet.create({
     padding: 10,
     minHeight: 130,
     flexDirection: 'column',
-    marginVertical: 10
+    marginBottom: 20
   },
   billTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // alignItems: 'center',
     marginBottom: 10,
     flex: 1
   },

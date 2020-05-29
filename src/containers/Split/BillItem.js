@@ -16,7 +16,7 @@ export default class BillItem extends Component {
 					marginBottom: 5
 				}}>
 					<Text style={{ flex: 1, fontWeight: '700', color: COLORS.white }}>{data.quantity}</Text>
-					<Text style={{ flex: 5, color: COLORS.white }}>{data.name}</Text>
+					<Text style={{ flex: 5, fontWeight: '700', color: COLORS.white }}>{data.name}</Text>
 					<Text style={{ 
 						flex: 2, 
 						fontFamily: 'Montserrat',

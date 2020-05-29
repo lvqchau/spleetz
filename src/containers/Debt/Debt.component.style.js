@@ -1,10 +1,54 @@
 import { StyleSheet } from "react-native"
 import COLORS from '../../assets/colors'
 
-export default StyleSheet.create({
+export default StyleSheet.create({	
   flexRow: {
-		flexDirection: 'row',
-		// marginBottom: 5
+		flexDirection: 'row'
+	},
+	dateContainer: {
+		width: 60,
+		height: 60,
+		borderRadius: 6,
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	dateText: {
+		fontWeight: '700',
+		fontSize: 18,
+		color: COLORS.white
+	},
+	monthText: {
+		textTransform: 'uppercase'
+	},
+	debtContainer: {
+		flex: 4,
+		position: 'relative',
+		marginBottom: 20,
+		borderRadius: 6,
+		shadowColor: COLORS.black,
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.2,
+		shadowRadius: 3,
+		elevation: 2,
+		padding: 10,
+		backgroundColor: COLORS.white
+	},
+	triangleCorner: {
+		position: 'absolute',
+		right: 0,
+		bottom: 0,
+		width: 20, 
+		height: 20
+	},
+	triangle: {
+		zIndex: 1000,
+		flex: 1,
+		width: 0,
+		height: 0,
+		borderBottomWidth: 20,
+		borderBottomColor: COLORS.white,
+		borderLeftWidth: 20,
+		borderLeftColor: 'transparent'
 	},
 	avatarContainer: {
 		width: 30,
@@ -24,17 +68,21 @@ export default StyleSheet.create({
 		borderRadius: 30/2
 	},
 	addressText: {
-		fontFamily: 'Quicksand-Bold',
+		fontFamily: 'Quicksand',
 		fontSize: 16,
-		fontWeight: 'bold',
+		fontWeight: '600',
 		color: '#0F0000',
-		marginLeft: 7
+		marginLeft: 2
 	},
 	debtStatus: {
-		fontFamily: 'Quicksand-Bold',
-		fontWeight: 'bold',
+		fontFamily: 'Quicksand',
+		fontWeight: '600',
 		color: COLORS.darkgray,
-		marginTop: 7
+		marginTop: 7,
+		fontSize: 14
+	},
+	moneyInfo: {
+		color: COLORS.salmon
 	},
 	debtInfo: {
 		fontFamily: 'Quicksand-Bold',
@@ -50,12 +98,12 @@ export default StyleSheet.create({
 		flexDirection: 'column'
 	},
 	debtButton: {
-		borderTopLeftRadius: 40,
-		borderBottomLeftRadius: 40,
+		borderTopLeftRadius: 6,
+		borderBottomLeftRadius: 6,
 	},
 	billButton: {
-		borderTopRightRadius: 40,
-		borderBottomRightRadius: 40,
+		borderTopRightRadius: 6,
+		borderBottomRightRadius: 6,
 	},
 	topButtonContainer: {
 		flexDirection: 'row',
@@ -63,15 +111,13 @@ export default StyleSheet.create({
 		marginTop: 20,
 		marginBottom: 20
 	},
-	choseButton: {
-		backgroundColor: COLORS.aqua
-	},
 	normalButtonText: {
-		color: '#000000',
+		color: '#A2A2A2',
 		textAlignVertical: 'center',
 		fontFamily: 'Montserrat',
 		fontSize: 17,
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		textTransform: 'capitalize'
 	},
 	choseButtonText: {
 		color: COLORS.white

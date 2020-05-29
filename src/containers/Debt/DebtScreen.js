@@ -5,6 +5,9 @@ import DebtContainer from './DebtContainer'
 import BillContainer from './BillContainer'
 
 import styles from './Debt.component.style'
+import LinearGradient from 'react-native-linear-gradient'
+import COLORS from '../../assets/colors'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 const mockData = {
 	debt: [
@@ -207,7 +210,7 @@ const mockData = {
 						}
 					]
 				}
-	
+
 			]
 		},
 		{
@@ -289,7 +292,7 @@ const mockData = {
 						}
 					]
 				}
-	
+
 			]
 		},
 		{
@@ -371,7 +374,7 @@ const mockData = {
 						}
 					]
 				}
-	
+
 			]
 		},
 		{
@@ -453,7 +456,7 @@ const mockData = {
 						}
 					]
 				}
-	
+
 			]
 		},
 		{
@@ -502,36 +505,34 @@ export default class DebtScreen extends Component {
 		super(props)
 		this.state = {
 			backgroundColor: 'rgba(0,0,0,0.1)',
-			isDebt: true
+			isDebt: false
 		}
 	}
 
+	renderGradientButton = (type) => {
+		if (type === "debt") isDebt = this.state.isDebt
+		else isDebt = !this.state.isDebt
+		return (
+			<TouchableOpacity onPress={() => this.setState({ isDebt })}>
+				<LinearGradient
+					start={{ x: 1, y: 1 }}
+					end={{ x: 0, y: 1 }}
+					colors={!isDebt ? COLORS.gradientGreen : COLORS.gradientLight}
+					style={[styles.topButton, type === "debt" ? styles.debtButton : styles.billButton]}
+				>
+					<Text style={!isDebt ? [styles.normalButtonText, styles.choseButtonText] : [styles.normalButtonText]}>{type}</Text>
+				</LinearGradient>
+			</TouchableOpacity>
+		)
+	}
+
 	render() {
-		const { isDebt } = this.state
 		const { debt, bill } = mockData
 		return (
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.topButtonContainer}>
-					<TouchableOpacity
-						activeOpacity={.7}
-						style={[styles.topButton,
-						isDebt ? [styles.debtButton, styles.choseButton] : [styles.debtButton, styles.normalButton]
-						]}
-						onPress={() => this.setState({ isDebt: true })}>
-						<Text style={
-							isDebt ? [styles.normalButtonText, styles.choseButtonText] : styles.normalButtonText
-						}>Debt</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						activeOpacity={.7}
-						style={[styles.topButton,
-						isDebt ? [styles.billButton, styles.normalButton] : [styles.billButton, styles.choseButton]
-						]}
-						onPress={() => this.setState({ isDebt: false })}>
-						<Text style={
-							isDebt ? styles.normalButtonText : [styles.normalButtonText, styles.choseButtonText]
-						}>Bill</Text>
-					</TouchableOpacity>
+					{this.renderGradientButton('debt')}
+					{this.renderGradientButton('bill')}
 				</View>
 				{isDebt ?
 					<DebtContainer data={debt}></DebtContainer>
