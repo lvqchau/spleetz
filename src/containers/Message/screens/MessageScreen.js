@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions, StatusBar, ScrollView, View, SafeAreaView, TouchableOpacity, Text } from 'react-native'
+import { ScrollView, View, SafeAreaView, TouchableOpacity, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -7,14 +7,41 @@ import COLORS from '../../../assets/colors'
 import styles from './Message.component.style'
 class MessageScreen extends Component {
   render() {
-    const { width, height } = Dimensions.get('window')
-    const { sWidth, sHeight } = Dimensions.get('screen')
-    console.log(width, sWidth, height, sHeight, StatusBar.currentHeight)
     return (
-      <SafeAreaView forceInset={{ bottom: 'always' }} style={styles.messageScreenContainer}>
+      <SafeAreaView style={styles.messageScreenContainer}>
         <View style={styles.messageContainer}>
           <View style={styles.scrollContainer}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
+              <Text>Message</Text>
               <Text>Message</Text>
               <Text>Message</Text>
               <Text>Message</Text>
@@ -24,7 +51,20 @@ class MessageScreen extends Component {
             </ScrollView>
           </View>
           <View style={styles.sendContainer}>
-            <Text>SendBox</Text>
+            <View style={styles.sendBox}>
+              <TouchableOpacity style={styles.fileIcon}>
+                <Ionicons name="md-add" size={24} color={COLORS.white}/>
+              </TouchableOpacity>
+              <View style={styles.messageInput}>
+                <ScrollView contentContainerStyle={{flexGrow: 1, alignItems: 'center'}} horizontal={true} showsHorizontalScrollIndicator={false}>
+                  {/* Input field, temporary Text tag */}
+                  <Text numberOfLines={1}>Message...</Text>
+                </ScrollView>
+              </View>
+              <TouchableOpacity style={styles.sendIcon}>
+                <Ionicons name="md-send" size={30} color={COLORS.turquoise}/>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         <LinearGradient 
