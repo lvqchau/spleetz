@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, Dimensions } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import LinearGradient from 'react-native-linear-gradient'
 
 import styles from './Split.component.style.js'
@@ -242,34 +243,64 @@ export default class SplitScreen extends Component {
 						<BillContainer data={mockData}></BillContainer>
 					</View>
 				</View>
-				<Text style={{
+				{/* <Text style={{
 					fontFamily: 'Montserrat',
 					fontWeight: '700',
 					fontSize: 32,
 					paddingBottom: 10,
 					color: COLORS.salmon
-				}}>{displayPrice(1000000)}</Text>
-				<TouchableOpacity
-					activeOpacity={.7}
-					onPress={() => { }}
-				>
-					<LinearGradient
-						start={{ x: 1, y: 1 }}
-						end={{ x: 1, y: 0 }}
-						colors={COLORS.gradientGreen}
-						style={{
-							position: 'absolute',
-							bottom: 10,
-							right: 0,
-							width: 54,
-							height: 54,
-							borderRadius: 54 / 2,
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}>
-						<MaterialCommunityIcons size={32} name="camera" color={COLORS.white} style={{ height: 32, width: 32 }} />
-					</LinearGradient>
-				</TouchableOpacity>
+				}}>{displayPrice(1000000)}</Text> */}
+				<View style={{
+					position: 'absolute',
+					bottom: 10,
+					right: 0,
+					flexDirection: 'row',
+				}}>
+					<TouchableOpacity
+						activeOpacity={.7}
+						onPress={() => { }}
+					>
+						<LinearGradient
+							start={{ x: 1, y: 1 }}
+							end={{ x: 1, y: 0 }}
+							colors={[COLORS.aqua, COLORS.aqua]}
+							style={{
+								width: 54,
+								height: 54,
+								marginRight: 15,
+								borderRadius: 54 / 2,
+								justifyContent: 'center',
+								alignItems: 'center'
+							}}>
+							<MaterialCommunityIcons size={30} name="camera" color={COLORS.white} style={{ height: 30 }} />
+						</LinearGradient>
+					</TouchableOpacity>
+					<TouchableOpacity
+						activeOpacity={.7}
+						onPress={() => { }}
+					>
+						<LinearGradient
+							start={{ x: 1, y: 1 }}
+							end={{ x: 1, y: 0 }}
+							colors={[COLORS.salmon, COLORS.salmon]}
+							style={{
+								height: 54,
+								paddingHorizontal: 20,
+								borderRadius: 54 / 2,
+								justifyContent: 'center',
+								alignItems: 'center',
+								flexDirection: 'row'
+							}}>
+							<Text style={{
+								color: COLORS.white,
+								fontSize: 20,
+								fontWeight: '700',
+								marginRight: 5
+							}}>Checkout</Text>
+							<AntDesign size={30} name="arrowright" color={COLORS.white} style={{ height: 30 }} />
+						</LinearGradient>
+					</TouchableOpacity>
+					</View>
 			</SafeAreaView>
 		)
 	}

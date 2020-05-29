@@ -5,13 +5,13 @@ import COLORS from '../../../assets/colors'
 
 class HeaderNavigator extends React.Component {
   render() {
-    const { navigation, name } = this.props
+    const { navigation, name, style, color } = this.props
     return (
       <View style={styles.headerNavigator}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="ios-arrow-round-back" size={32} color={COLORS.aqua} />
+        <TouchableOpacity onPress={() => {}}>
+          <Ionicons name="ios-arrow-round-back" size={32} color={color} />
         </TouchableOpacity>
-        <Text style={styles.screenName}>{name}</Text>
+        <Text style={[styles.screenName, {...style}]}>{name}</Text>
       </View>
     )
   }
