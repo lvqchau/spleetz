@@ -13,7 +13,8 @@ export default class AccessStack extends React.Component {
             <Stack.Screen
               name="Signin"
               options={{
-                title: 'Sign in'
+								title: 'Sign in',
+								headerShown: false
               }}
             >
               {props => <SignInScreen {...props} _authedUser={_authedUser} />}
@@ -21,7 +22,8 @@ export default class AccessStack extends React.Component {
             <Stack.Screen
               name="Signup"
               options={{
-                title: 'Sign up'
+								title: 'Sign up',
+								headerShown: false
               }}
             >
               {props => <SignUpScreen {...props} _authedUser={_authedUser} />}
