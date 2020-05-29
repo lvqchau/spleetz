@@ -10,7 +10,6 @@ export default class BillContainer extends Component {
 	state = {}
 	render() {
 		const { data } = this.props
-		console.log('bot', getInset('bottom'))
 		return (
 			<LinearGradient
 				colors={COLORS.gradientPurple}

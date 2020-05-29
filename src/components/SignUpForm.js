@@ -26,7 +26,6 @@ export default class SignUpForm extends Component {
 					phoneNumber: ''
 				}}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
-					console.log(values)
 					authedUser('token', false)
 				}}
 			>

@@ -22,7 +22,6 @@ export default class SignInForm extends Component {
 					password: '',
 				}}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
-					console.log(values)
 					authedUser('token', false)
 				}}
 			>
