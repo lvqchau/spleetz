@@ -7,7 +7,6 @@ import BillContainer from './BillContainer'
 import styles from './Debt.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../../assets/colors'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 const mockData = {
 	debt: [
@@ -77,7 +76,7 @@ const mockData = {
 			id: '3',
 			type: 'owe',
 			address: '23 Nguyen Trai, Q1',
-			date: '22/02/2020',
+			date: '22/02/2019',
 			payer: {
 				name: 'Alice',
 				avatar: 'https://api.adorable.io/avatars/285/thanh@adorable.io.png'
@@ -101,7 +100,7 @@ const mockData = {
 			id: '4',
 			type: 'owe',
 			address: '23 Nguyen Trai, Q1',
-			date: '22/02/2020',
+			date: '22/02/2019',
 			payer: {
 				name: 'Alice',
 				avatar: 'https://api.adorable.io/avatars/285/thanh@adorable.io.png'
@@ -125,7 +124,7 @@ const mockData = {
 			id: '5',
 			type: 'split',
 			address: 'Easy Life NVCU',
-			date: '21/02/2020',
+			date: '21/02/2018',
 			borrower: [
 				{
 					id: '1',
@@ -148,7 +147,7 @@ const mockData = {
 			id: '6',
 			type: 'split',
 			address: 'Easy Life NVCU',
-			date: '21/02/2020',
+			date: '21/02/2018',
 			borrower: [
 				{
 					id: '1',
@@ -513,7 +512,10 @@ export default class DebtScreen extends Component {
 		if (type === "debt") isDebt = this.state.isDebt
 		else isDebt = !this.state.isDebt
 		return (
-			<TouchableOpacity onPress={() => this.setState({ isDebt })}>
+			<TouchableOpacity 
+				activeOpacity={.7}
+				style={{flex: 1}}
+				onPress={() => this.setState({ isDebt })}>
 				<LinearGradient
 					start={{ x: 1, y: 1 }}
 					end={{ x: 0, y: 1 }}
