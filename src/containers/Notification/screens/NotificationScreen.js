@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Animated, SafeAreaView, StyleSheet, Dimensions, FlatList } from 'react-native'
 import { data } from './NotiData'
 import NotiItem from '../components/NotiItem'
-import LinearGradient from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient'
+
+import COLORS from '../../../assets/colors'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 class NotificationScreen extends Component {
@@ -22,9 +24,9 @@ class NotificationScreen extends Component {
     return (
       // <LinearGradient colors={['#3FE1EF', '#24AAD8', '#007FFF']}>
       <LinearGradient 
-        end={{ x: 0, y: 1 }}
-        start={{ x: 1, y: 1 }}
-        colors={['#FF764D', '#FF7464', '#FE655A']}
+        end={{ x: 1, y: 1 }}
+        start={{ x: 1, y: 0 }}
+        colors={COLORS.gradientPink}
       >
         <SafeAreaView>
           <AnimatedFlatList

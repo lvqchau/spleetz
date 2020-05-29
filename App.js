@@ -30,7 +30,7 @@ class App extends React.Component {
   }
 
   _stateChange = (e) => {
-    console.log(navigationRef.current.getCurrentRoute().name)
+    // console.log(navigationRef.current.getCurrentRoute().name)
   }
 
   _authedUser = (userToken, isSignout) => {
@@ -58,7 +58,7 @@ class App extends React.Component {
         >
         {this.state.userToken === null 
           ? <AccessStack _authedUser={this._authedUser}/>
-          : <AppNavigator _authedUser={this._authedUser}/>
+          : <AppNavigator _authedUser={this._authedUser}  navigation={this.props.navigation}/>
         }
         </NavigationContainer>
       </SafeAreaProvider>

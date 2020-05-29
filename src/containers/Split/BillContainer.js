@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView, FlatList, Text, Dimensions } from 'react-native'
+import { ScrollView, View, Text, Dimensions } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { getInset } from 'react-native-safe-area-view'
 import BillItem from './BillItem'
@@ -10,10 +10,16 @@ export default class BillContainer extends Component {
 	state = {}
 	render() {
 		const { data } = this.props
-		console.log('bot', getInset('bottom'))
 		return (
+			<View style={{
+				shadowColor: COLORS.black,
+				shadowOffset: { width: 0, height: 0 },
+				shadowOpacity: 0.2,
+				shadowRadius: 3,
+				elevation: 2,
+			}}>
 			<LinearGradient
-				colors={COLORS.gradientPurple}
+				colors={[COLORS.white, COLORS.white]}
 				style={{
 					padding: 10,
 					borderRadius: 6,
@@ -31,9 +37,10 @@ export default class BillContainer extends Component {
 					fontFamily: 'Montserrat',
 					fontWeight: '700',
 					fontSize: 26,
-					color: COLORS.white
+					color: COLORS.salmon
 				}}>{displayPrice(1000000)}</Text>
 			</LinearGradient>
+			</View>
 		)
 	}
 }

@@ -8,7 +8,7 @@ class HeaderNavigator extends React.Component {
     const { navigation, name, style, color } = this.props
     return (
       <View style={styles.headerNavigator}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => {navigation.goBack()}}>
           <Ionicons name="ios-arrow-round-back" size={32} color={color} />
         </TouchableOpacity>
         <Text style={[styles.screenName, {...style}]}>{name}</Text>

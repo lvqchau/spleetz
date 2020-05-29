@@ -26,7 +26,7 @@ class FriendScreen extends React.Component {
     const { searchText, isFocused } = this.state
     return (
       <SafeAreaView style={styles.friendlistContainer}>
-        <HeaderNavigator navigation={navigation} name="Friendlist"/>
+        <HeaderNavigator navigation={navigation} name="Friendlist" color={COLORS.aqua} />
         {/* Search and Add friend */}
         <View style={styles.searchContainer}>
           <TextInput

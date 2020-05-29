@@ -15,13 +15,13 @@ export default class BillItem extends Component {
 					flexDirection: 'row',
 					marginBottom: 5
 				}}>
-					<Text style={{ flex: 1, fontWeight: '700', color: COLORS.white }}>{data.quantity}</Text>
-					<Text style={{ flex: 5, fontWeight: '700', color: COLORS.white }}>{data.name}</Text>
+					<Text style={{ flex: 1, fontWeight: '700', color: COLORS.black }}>{data.quantity}</Text>
+					<Text style={{ flex: 5, fontWeight: '700', color: COLORS.black }}>{data.name}</Text>
 					<Text style={{ 
 						flex: 2, 
 						fontFamily: 'Montserrat',
 						fontWeight: '700',
-						color: COLORS.white, 
+						color: COLORS.black, 
 						textAlign: 'right', 
 						alignItems: 'stretch' 
 					}}>{displayPrice(data.price)}</Text>
@@ -53,7 +53,7 @@ export default class BillItem extends Component {
 					</View>
 					<View style={{flex: 1}}>
 						<TouchableOpacity onPress={()=>{}}>
-							<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.yellow}/>
+							<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.aqua}/>
 						</TouchableOpacity>
 					</View>
 				</View>

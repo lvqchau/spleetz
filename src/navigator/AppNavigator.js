@@ -23,6 +23,11 @@ export default class MyTabs extends React.Component {
 			>
 				<Tab.Screen
 					name="Bill"
+					listeners={{
+						tabPress: e => {
+							navigationRef.current.navigate('Profile');
+						}
+					}}
 					component={DebtScreen}
 					options={{
 						tabBarIcon: ({ color, size }) => (
