@@ -10,26 +10,24 @@ class SignUpScreen extends Component {
   render() {SignUpForm
     const { _authedUser, navigation } = this.props
     return (
-      <SafeAreaView>
-				<ScrollView >
-					<View  style={{alignItems: 'center', height: '100%', flexDirection: 'column', justifyContent: 'center'}}>
-						<Background2></Background2>
+			<ScrollView >
+				<View  style={{alignItems: 'center', height: '100%', flexDirection: 'column', justifyContent: 'center'}}>
+					<Background2></Background2>
+					<Image
+						source = {require('../../../assets/images/Team.png')}
+						style = {styles.teamImage}
+					/>
+					<View style={{flexDirection: 'row'}}>
+						<Text style={styles.slogan}>Welcome to </Text>
 						<Image
-							source = {require('../../../assets/images/Team.png')}
-							style = {styles.teamImage}
+							source = {require('../../../assets/images/logo.png')}
+							style={{width: 65, height: 28}}
 						/>
-						<View style={{flexDirection: 'row'}}>
-							<Text style={styles.slogan}>Welcome to </Text>
-							<Image
-								source = {require('../../../assets/images/logo.png')}
-								style={{width: 65, height: 28}}
-							/>
-						</View>
-		
-						<SignUpForm authedUser={_authedUser} navigation={navigation}/>
 					</View>
-				</ScrollView>
-      </SafeAreaView>
+	
+					<SignUpForm authedUser={_authedUser} navigation={navigation}/>
+				</View>
+			</ScrollView>
     )
   }
 }
