@@ -4,7 +4,7 @@ import COLORS from '../../assets/colors'
 
 const styles = StyleSheet.create({
   label: {
-    color: COLORS.salmon,
+    color: COLORS.black,
     fontSize: 16,
     fontFamily: 'Quicksand-Bold',
     marginBottom: 6,
@@ -50,7 +50,6 @@ export default class Input extends Component {
     })
   }
   isNotFocused () {
-		console.log('hi')
     if (this.props.onBlur) this.props.onBlur()
     this.setState({
       isFocused: false
@@ -59,7 +58,6 @@ export default class Input extends Component {
   render () {
     const { editable = true, label, placeholder, onChange, errorMessage, style, value, styleInputIsFocused, styleInputIsBlur, customStyleInput, multiLine, numberOfLines, keyboardType, iRef, inputComponent: InputComponent = TextInput, ...restProps } = this.props
 		const { isFocused } = this.state
-		console.log(isFocused)
     const styleInput = isFocused === true ? styles.inputIsFocused : styles.inputIsBlur
     const styleInputProp = isFocused === true ? styleInputIsFocused : styleInputIsBlur
     return (

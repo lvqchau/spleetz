@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Formik, Field } from 'formik'
 import Input from './FormModal/Input'
 import {View, TouchableOpacity, TextInput, Text} from 'react-native'
-import styles from '../containers/Access/screens/Signin.Component.style'
+import styles from '../containers/Access/screens/Signin.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../assets/colors'
 

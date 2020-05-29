@@ -19,7 +19,8 @@ const COLORS = {
     gradientPurple: ['#384EC7', '#5B66EA', '#B266D8', '#E682A9'],
     gradientPink: ['#EF6095', '#F26879', '#F4A07A', '#FF9A7B'],
 		gradientGreen: ['#1CA2C1', '#36B8B7', '#19CAB7', '#1AF0D9'],
-		gradientSalmon: ['#FA4342', '#FA523E', '#FF805A']
+		gradientSalmon: ['#FA4342', '#FA523E', '#FF805A'],
+		gradientTurquoise: ['#16E6D6', '#00D0CB']
 }
 
 export default COLORS

@@ -5,7 +5,7 @@ import Background1 from '../../../components/Background1'
 
 import COLORS from '../../../assets/colors'
 
-import styles from './Signin.Component.style'
+import styles from './Signin.component.style'
 
 
 class SignInScreen extends Component {
