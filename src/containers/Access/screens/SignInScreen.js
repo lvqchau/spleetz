@@ -1,24 +1,27 @@
 import React, { Component } from 'react'
-import { SafeAreaView, TouchableOpacity, Text } from 'react-native'
+import { SafeAreaView, TouchableOpacity, Text, Image, View} from 'react-native'
+import SigninForm from '../../../components/SigninForm'
+import Background1 from '../../../components/Background1'
+
+import COLORS from '../../../assets/colors'
+
+import styles from './Signin.component.style'
+
 
 class SignInScreen extends Component {
 
-  navigate = (name) => {
-    this.props.navigation.navigate(name)
-  }
-
   render() {
-    const { _authedUser } = this.props
+		const { _authedUser, navigation } = this.props
+		
     return (
-      <SafeAreaView>
-        {/* Sigining in */}
-        <TouchableOpacity onPress={() => _authedUser('token', false)}>
-          <Text>Signin</Text>
-        </TouchableOpacity>
-        {/* Switch to signup */}
-        <TouchableOpacity onPress={()=>this.navigate('Signup')}>
-          <Text>No account yet?</Text>
-        </TouchableOpacity>
+			<SafeAreaView style={{alignItems: 'center', height: '100%', flexDirection: 'column', justifyContent: 'center'}}>
+				<Background1></Background1>
+				<Image
+					source={require('../../../assets/images/logo.png')}
+					style = {styles.logo}
+				/>
+				<Text style={styles.slogan}>Log in and enjoy<Text style={{color: COLORS.salmon, fontSize: 16, fontFamily: 'Montserrat-Bold'}}> splitting</Text></Text>
+				<SigninForm authedUser={_authedUser} navigation={navigation}/>
       </SafeAreaView>
     )
   }
