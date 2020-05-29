@@ -17,7 +17,7 @@ export default class BillContainer extends Component {
 				style={{
 					padding: 10,
 					borderRadius: 6,
-					height: Dimensions.get('window').height - 330 - getInset('bottom')
+					height: Dimensions.get('window').height - 340 - getInset('bottom')
 				}}
 			>
 				<ScrollView style={{ marginBottom: 5 }}>

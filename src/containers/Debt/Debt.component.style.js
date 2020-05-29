@@ -114,7 +114,12 @@ export default StyleSheet.create({
 		flexDirection: 'row',
 		marginTop: 20,
 		marginBottom: 20,
-		paddingHorizontal: 25
+		paddingHorizontal: 25,
+		shadowColor: COLORS.black,
+		shadowOffset: { width: 0, height: 0 },
+		shadowOpacity: 0.3,
+		shadowRadius: 3,
+		elevation: 2,
 	},
 	normalButtonText: {
 		color: '#A2A2A2',
