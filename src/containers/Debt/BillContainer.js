@@ -6,10 +6,11 @@ import LinearGradient from 'react-native-linear-gradient'
 import Avatar from '../../components/Avatar'
 import COLORS from '../../assets/colors'
 import displayPrice from '../../utils/displayPrice'
+import { ScrollView } from 'react-native-gesture-handler'
 
 class BillContainer extends Component {
   renderBillItem = (item, index) => {
-    const { createdDate, location, status, category } = item
+    const { createdDate, location, status, category, borrowers } = item
     let colorGrad = COLORS.gradientGreen
     if (index % 3 === 0) colorGrad = COLORS.gradientPurple
     else if (index % 2 === 0) colorGrad = COLORS.gradientPink
@@ -35,8 +36,26 @@ class BillContainer extends Component {
               <Text style={{
                 fontSize: 18,
                 color: COLORS.white,
-                marginBottom: 10
+                marginBottom: 5
               }}>{location}</Text>
+              <ScrollView 
+                style={{
+                  width: '60%',
+                  marginBottom: 10
+                }}
+                horizontal={true} 
+                showsHorizontalScrollIndicator={false}>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+                  
+              </ScrollView>
             </View>
             <View style={{
               flex: 1,

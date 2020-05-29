@@ -1,54 +1,80 @@
 import React, { Component } from 'react'
-import { ScrollView, View, SafeAreaView, TouchableOpacity, Text } from 'react-native'
+import { ScrollView, View, SafeAreaView, TouchableOpacity, Text, FlatList } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import COLORS from '../../../assets/colors'
 import styles from './Message.component.style'
+import SendBubble from './component/SendBubble'
+import ReceiveBubble from './component/ReceiveBubble'
+
+const mockData = [
+	{
+		id: '0',
+		time: '6:25 PM',
+		content: `Sub, about the arrangements for Alice's birthday, you can make the cake in time right 1?`,
+		sender: 2
+	}, 
+	{
+		id: '1',
+		time: '6:30 PM',
+		content: `Sub, about the arrangements for Alice's birthday, you can make the cake in time right 1?`,
+		sender: 1
+	}, 
+	{
+		id: '2',
+		time: '6:35 PM',
+		content: `Sub, about the arrangements for Alice's birthday, you can make the cake in time right 2?`,
+		sender: 2
+	}, 
+	{
+		id: '3',
+		time: '6:40 PM',
+		content: `Sub, about the arrangements for Alice's birthday, you can make the cake in time right 3?`,
+		sender: 1
+	}, 
+	{
+		id: '4',
+		time: '6:45 PM',
+		content: `Sub, about the arrangements for Alice's birthday, you can make the cake in time right 4?`,
+		sender: 2
+	}, 
+	{
+		id: '5',
+		time: '6:50 PM',
+		content: `Sub, about the arrangements for Alice's birthday, you can make the cake in time right 5?`,
+		sender: 1
+	}, 
+	{
+		id: '6',
+		time: '6:55 PM',
+		content: `Hello there`,
+		sender: 2
+	},
+	{
+		id: '7',
+		time: '7:00 PM',
+		content: `Hi`,
+		sender: 1
+	},
+]
 class MessageScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.messageScreenContainer}>
         <View style={styles.messageContainer}>
           <View style={styles.scrollContainer}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-              <Text>Message</Text>
-            </ScrollView>
+                <FlatList
+                    style={styles.flexColumn}
+                    data={mockData}
+                    renderItem={({ index, item }) =>
+                    item.sender === 1 
+                        ?	<SendBubble content={item.content} time={item.time}/>
+                        : <ReceiveBubble content={item.content} time={item.time}/> 
+                    }
+                    showsVerticalScrollIndicator={false}
+                    initialScrollIndex={mockData.length -1}
+                    />
           </View>
           <View style={styles.sendContainer}>
             <View style={styles.sendBox}>

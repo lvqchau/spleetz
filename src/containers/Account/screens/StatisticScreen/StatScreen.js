@@ -28,7 +28,7 @@ class StatScreen extends React.Component {
     const { navigation } = this.props
     return (
       <SafeAreaView style={styles.statContainer}>
-        <HeaderNavigator navigation={navigation} name="Statistics" />
+        <HeaderNavigator navigation={navigation} name="Statistics" color={COLORS.aqua} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.statBox}>
             {this.renderHeadings("Money returned", "20000"+" VND")}

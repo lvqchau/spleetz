@@ -243,13 +243,6 @@ export default class SplitScreen extends Component {
 						<BillContainer data={mockData}></BillContainer>
 					</View>
 				</View>
-				{/* <Text style={{
-					fontFamily: 'Montserrat',
-					fontWeight: '700',
-					fontSize: 32,
-					paddingBottom: 10,
-					color: COLORS.salmon
-				}}>{displayPrice(1000000)}</Text> */}
 				<View style={{
 					position: 'absolute',
 					bottom: 10,
@@ -263,7 +256,7 @@ export default class SplitScreen extends Component {
 						<LinearGradient
 							start={{ x: 1, y: 1 }}
 							end={{ x: 1, y: 0 }}
-							colors={[COLORS.aqua, COLORS.aqua]}
+							colors={[COLORS.salmon, COLORS.salmon]}
 							style={{
 								width: 54,
 								height: 54,
@@ -282,7 +275,7 @@ export default class SplitScreen extends Component {
 						<LinearGradient
 							start={{ x: 1, y: 1 }}
 							end={{ x: 1, y: 0 }}
-							colors={[COLORS.salmon, COLORS.salmon]}
+							colors={[COLORS.aqua, COLORS.aqua]}
 							style={{
 								height: 54,
 								paddingHorizontal: 20,

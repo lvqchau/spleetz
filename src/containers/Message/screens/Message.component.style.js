@@ -96,7 +96,52 @@ const styles = StyleSheet.create({
   sendIcon: {
     alignItems: 'flex-end',
     justifyContent: 'center'
-  }
+  },
+	flexColumn: {
+		flexDirection: 'column'
+	},	
+	flexRow: {
+		flexDirection: 'row'
+	},
+	flexEnd: {
+		alignItems: 'flex-end'
+	},
+	flexStart: {
+		alignItems: 'flex-start'
+	},
+	sendBubble: {
+		maxWidth: width * 0.7,
+		minWidth: width * 0.1,
+		paddingVertical: 10,
+		paddingRight: 18,
+		paddingLeft: 22,
+		borderBottomLeftRadius: 40,
+		borderTopLeftRadius: 40,
+		backgroundColor: '#10CBC6'
+	},
+	receiveBubble: {
+		maxWidth: width * 0.7,
+		paddingVertical: 10,
+		minWidth: width * 0.1,
+		paddingRight: 22,
+		paddingLeft: 18,
+		borderBottomRightRadius: 40,
+		borderTopRightRadius: 40,
+		backgroundColor: '#EAEFFC'
+	},
+	chatTime: {
+		fontFamily: 'Quicksand-Bold',
+		fontSize: 13,
+		color: '#CFD3D9',
+		marginBottom: 12
+	},
+		marginTop: 1,
+	chatAvatar: {
+		flexDirection: 'column', 
+		paddingBottom: 30, 
+		justifyContent: 'flex-end', 
+		marginRight: 5,
+	}
 })
 
 export default styles
