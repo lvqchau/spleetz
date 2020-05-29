@@ -3,7 +3,7 @@ const data = [
     id: '100',
     user: {
       avatar: '../../../assets/images/avatar_2.png',
-      name: 'John SmithJdsdsdsdsdsdsohn SmithdsdsdsdsdhJohn SmithhdsdsdhhhhJohn Smith'
+      name: 'John Smith'
     },
     role: 'payer',
     status: 'pending' //pending, reject, done

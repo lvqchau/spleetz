@@ -1,16 +1,48 @@
 import React from 'react';
 import { setCustomText } from 'react-native-global-props/src';
-import {Image, Text} from 'react-native'
-import MainAccount from './src/containers/Account/screens/MainAccount';
-import DebtScreen from './src/containers/Debt/DebtScreen'
-import { SafeAreaView } from 'react-navigation';
-import Avatar from './src/components/Avatar';
-import NotificationScreen from './src/containers/Notification/screens/NotificationScreen';
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import COLORS from './src/assets/colors';
+import { navigationRef } from './src/navigator/RootNavigation';
+import AppNavigator from './src/navigator/AppNavigator';
+import AccessStack from './src/navigator/AccessNavigator';
+
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white',
+    text: COLORS.darkblue,
+    primary: COLORS.salmon
+  }
+};
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      userToken: null,
+      isSignout: true
+    }
+  }
+
+  _stateChange = (e) => {
+    console.log(navigationRef.current.getCurrentRoute().name)
+  }
+
+  _authedUser = (userToken, isSignout) => {
+    this.setState({
+      userToken,
+      isSignout
+    })
+  }
+
   render() {
-    const customTextProps = { 
-      style: { 
+    const customTextProps = {
+      style: {
         fontFamily: 'Quicksand',
         fontSize: 16,
         fontWeight: '500'
@@ -18,9 +50,18 @@ class App extends React.Component {
     }
     setCustomText(customTextProps);
     return (
-      //<MainAccount/>
-			//<NotificationScreen />
-			<DebtScreen/>
+      <SafeAreaProvider>
+        <NavigationContainer 
+          theme={MyTheme}
+          ref={navigationRef}
+          onStateChange={(e) => this._stateChange(e)}
+        >
+        {this.state.userToken === null 
+          ? <AccessStack _authedUser={this._authedUser}/>
+          : <AppNavigator _authedUser={this._authedUser}/>
+        }
+        </NavigationContainer>
+      </SafeAreaProvider>
     )
   }
 };

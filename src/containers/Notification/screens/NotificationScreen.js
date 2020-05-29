@@ -1,10 +1,24 @@
 import React, { Component } from 'react'
-import { SafeAreaView, StyleSheet, Text, FlatList } from 'react-native'
+import { Animated, SafeAreaView, StyleSheet, Dimensions, FlatList } from 'react-native'
 import { data } from './NotiData'
-import NotiItem from './NotiItem'
+import NotiItem from '../components/NotiItem'
 import LinearGradient from 'react-native-linear-gradient';
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 class NotificationScreen extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      containerHeight: Dimensions.get('window').height - 32,
+    }
+  }
+
   render() {
+    const y = new Animated.Value(0);
+    const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y } } }], {
+      useNativeDriver: true,
+    });
     return (
       // <LinearGradient colors={['#3FE1EF', '#24AAD8', '#007FFF']}>
       <LinearGradient 
@@ -13,11 +27,18 @@ class NotificationScreen extends Component {
         colors={['#FF764D', '#FF7464', '#FE655A']}
       >
         <SafeAreaView>
-          <FlatList
+          <AnimatedFlatList
+            bounces={false}
+            scrollEventThrottle={16}
             style={styles.listStyle}
             data={data}
-            renderItem={({ item }) => <NotiItem noti={item} />}
+            renderItem={({ item, index }) => <NotiItem noti={item} index={index} y={y} containerHeight={this.state.containerHeight}/>}
             keyExtractor={item => item.id}
+            {...{ onScroll }}
+            onLayout={(event) => {
+              var { x, y, width, height } = event.nativeEvent.layout;
+              this.setState({ containerHeight: height })
+            }}
           />
         </SafeAreaView>
       </LinearGradient>

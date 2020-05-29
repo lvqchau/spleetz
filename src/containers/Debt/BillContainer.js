@@ -1,379 +1,76 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
+import { Animated, Modal, TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
+import Entypo from 'react-native-vector-icons/Entypo'
+import LinearGradient from 'react-native-linear-gradient'
+
 import Avatar from '../../components/Avatar'
 import COLORS from '../../assets/colors'
+import displayPrice from '../../utils/displayPrice'
 
-const data = [
-  {
-    id: '1',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'John Smithhhhhhhhhhhhhhhhhhhhhhhh'
-    },
-    createdDate: '28.08.2020000000',
-    status: 0, //complete, unfinished
-    category: 'Housinggggggggggggg',
-    deadline: '10.09.2020',
-    total: '200.000.000.000.000',
-    borrower: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Trieu Thanh'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 5, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Trieu Thanh'
-          }
-        ]
-      },
-      {
-        item: { name: 'candy', quantity: 5, price: '10000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList)
 
-    ]
-  },
-  {
-    id: '2',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'Trieu Thanh'
-    },
-    createdDate: '28.07.2020',
-    status: 1, //complete, unfinished
-    category: 'Housing',
-    deadline: '20.08.2020',
-    total: '100.000.000',
-    borrowers: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'John Smith'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 2, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'John Smith'
-          },
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: '3',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'John Smith'
-    },
-    createdDate: '28.08.2020',
-    status: 0, //complete, unfinished
-    category: 'Food',
-    deadline: '10.09.2020',
-    total: '200.000.000',
-    borrower: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Trieu Thanh'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 5, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Trieu Thanh'
-          }
-        ]
-      },
-      {
-        item: { name: 'candy', quantity: 5, price: '10000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
-
-    ]
-  },
-  {
-    id: '4',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'Trieu Thanh'
-    },
-    createdDate: '28.07.2020',
-    status: 1, //complete, unfinished
-    category: 'Housing',
-    deadline: '20.08.2020',
-    total: '100.000',
-    borrowers: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'John Smith'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 2, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'John Smith'
-          },
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: '5',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'John Smith'
-    },
-    createdDate: '28.08.2020',
-    status: 0, //complete, unfinished
-    category: 'Food',
-    deadline: '10.09.2020',
-    total: '200.000.000',
-    borrower: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Trieu Thanh'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 5, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Trieu Thanh'
-          }
-        ]
-      },
-      {
-        item: { name: 'candy', quantity: 5, price: '10000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
-
-    ]
-  },
-  {
-    id: '6',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'Trieu Thanh'
-    },
-    createdDate: '28.07.2020',
-    status: 1, //complete, unfinished
-    category: 'Housing',
-    deadline: '20.08.2020',
-    total: '100.000.000',
-    borrowers: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'John Smith'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 2, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'John Smith'
-          },
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: '7',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'John Smith'
-    },
-    createdDate: '28.08.2020',
-    status: 0, //complete, unfinished
-    category: 'Food',
-    deadline: '10.09.2020',
-    total: '200.000.000',
-    borrower: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Trieu Thanh'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 5, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Trieu Thanh'
-          }
-        ]
-      },
-      {
-        item: { name: 'candy', quantity: 5, price: '10000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
-
-    ]
-  },
-  {
-    id: '8',
-    owner: {
-      avatar: '../../../assets/images/avatar_2.png',
-      name: 'Trieu Thanh'
-    },
-    createdDate: '28.07.2020',
-    status: 1, //complete, unfinished
-    category: 'Housing',
-    deadline: '20.08.2020',
-    total: '100.000.000',
-    borrowers: [
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'John Smith'
-      },
-      {
-        avatar: '../../../assets/images/avatar_2.png',
-        name: 'Quynh Chau'
-      }
-    ],
-    items: [
-      {
-        item: { name: 'gummy', quantity: 2, price: '5000' },
-        borrower: [
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'John Smith'
-          },
-          {
-            avatar: '../../../assets/images/avatar_2.png',
-            name: 'Quynh Chau'
-          }
-        ]
-      }
-    ]
-  }
-]
 class BillContainer extends Component {
-
   renderBillItem = (item, index) => {
-    const { id, owner, createdDate, status, category,
-      deadline, total, borrowers, items } = item
-    const { avatar, name } = owner
+    const { createdDate, location } = item
+    let colorGrad = COLORS.gradientGreen
+    if (index % 3 === 0) colorGrad = COLORS.gradientPurple
+    else if (index % 2 === 0) colorGrad = COLORS.gradientPink
+    
     return (
-      <TouchableOpacity>
-        <View style={styles.billItem}>
+        <LinearGradient
+          end={{ x: 1, y: 0 }}
+          start={{ x: 0, y: 1 }}
+          colors={colorGrad}
+          style={styles.billItem}
+        >
           <View style={styles.billTop}>
-            <View style={styles.userContainer}>
-              <Avatar
-                style={{ marginRight: 15 }}
-                size={42}
-                source={""} />
-              <Text style={{flex: 2}}>{name}</Text>
+            <View style={{
+              flex: 5
+            }}>
+              <Text style={{
+                fontSize: 12,
+                fontWeight: '700',
+                color: COLORS.white
+              }}>{createdDate}</Text>
+              <Text style={{
+                fontSize: 18,
+                color: COLORS.white
+              }}>{location}</Text>
             </View>
-            <View style={styles.categoryContainer}>
-              <Text>{category}</Text>
+            <View style={{
+              flex: 1,
+              alignItems: 'flex-end'
+            }}>
+              <TouchableOpacity
+                onPress={()=>this.setState({openModal: true})}
+              >
+                <Entypo name="resize-full-screen" size={24} color={COLORS.white} />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.billBot}>
-            <View style={styles.totalView}>
-              <Text style={styles.normalTitle}>Total</Text>
-              <Text style={styles.amountText}>{total} VND</Text>
-            </View>
-            <View style={styles.statusView}>
-              <Text style={[styles.normalTitle, styles.smallTitle]}>Created Date</Text>
-              <Text style={styles.statusText}>{createdDate}</Text>
-            </View>
-            <View style={styles.statusView}>
-              <Text style={[styles.normalTitle, styles.smallTitle]}>Status</Text>
-              {
-                status ?
-                  <Text style={[styles.statusText, styles.successText]}>Resolved</Text>
-                  :
-                  <Text style={[styles.statusText, styles.unsuccessText]}>Unresolved</Text>
-              }
-            </View>
+            <Text
+              style={{
+                fontFamily: 'Montserrat',
+                fontWeight: '700',
+                fontSize: 28,
+                bottom: -5,
+                color: COLORS.white
+              }}>{displayPrice(1050000)}</Text>
+            <Avatar
+              style={{ borderColor: COLORS.white, borderWidth: 1 }}
+              size={32}
+              source={""} />
           </View>
-        </View>
-      </TouchableOpacity>
+        </LinearGradient>
     )
   }
 
   render() {
+    const { data } = this.props
     return (
       <SafeAreaView style={styles.billContainer}>
-        <FlatList
+        <AnimatedFlatList
           data={data}
           renderItem={({ index, item }) => this.renderBillItem(item, index)}
           keyExtractor={item => item.id}
@@ -384,6 +81,12 @@ class BillContainer extends Component {
 }
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
   billContainer: {
     flex: 1,
   },
@@ -391,25 +94,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 25,
     borderRadius: 12,
     padding: 10,
-    minHeight: 70,
+    minHeight: 130,
     flexDirection: 'column',
-    backgroundColor: 'white',
-    shadowColor: "#000",
-    marginVertical: 10,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 2
+    marginVertical: 10
   },
   billTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    // alignItems: 'center',
     marginBottom: 10,
     flex: 1
   },
   billBot: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
     flex: 1
   },
   userContainer: {

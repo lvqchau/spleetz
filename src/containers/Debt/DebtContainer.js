@@ -35,7 +35,7 @@ export default class DebtContainer extends Component {
 									<View style={{borderColor: COLORS.darkgray, borderWidth: 1, borderStyle: 'solid', width: 0, height: 96}}></View>
 								</View>
 								<View style={{width: 230}}>
-									<View style={styles.flexRow}>
+									<View style={[styles.flexRow, {marginBottom: 5}]}>
 										<MaterialIcon name='location-on' size={24} color={COLORS.red}></MaterialIcon>
 										<Text style={styles.addressText}>{item.address}</Text>
 									</View>
@@ -64,7 +64,7 @@ export default class DebtContainer extends Component {
 													}
 												/>	
 												{item.borrower.length > 5 ? 
-													<View styles = {styles.moreUserButton}>
+													<View style={styles.moreUserButton}>
 														<Text>{`+${item.borrower.length - 5}`}</Text>
 													</View>
 												: null}

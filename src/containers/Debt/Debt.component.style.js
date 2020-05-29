@@ -3,7 +3,8 @@ import COLORS from '../../assets/colors'
 
 export default StyleSheet.create({
   flexRow: {
-		flexDirection: 'row'
+		flexDirection: 'row',
+		// marginBottom: 5
 	},
 	avatarContainer: {
 		width: 30,
@@ -14,11 +15,13 @@ export default StyleSheet.create({
 		alignItems: 'center'
 	},
 	moreUserButton: {
-		textAlign: 'center',
-		textAlignVertical: 'center',
+		height: 30,
+		width: 30,
+		backgroundColor: COLORS.light,
+		justifyContent: 'center',
+		alignItems: 'center',
 		fontFamily: 'Quicksand-Bold',
-		color: '#6C6C6C',
-		textTransform: 'uppercase'
+		borderRadius: 30/2
 	},
 	addressText: {
 		fontFamily: 'Quicksand-Bold',
@@ -39,19 +42,20 @@ export default StyleSheet.create({
 		fontSize: 14,
 		color: '#000000'
 	},
-	debtButton: {
+	topButton: {
 		width: 161,
 		height: 39,
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		flexDirection: 'column'
+	},
+	debtButton: {
 		borderTopLeftRadius: 40,
 		borderBottomLeftRadius: 40,
-		alignItems: 'center'
 	},
 	billButton: {
-		width: 161,
-		height: 39,
 		borderTopRightRadius: 40,
 		borderBottomRightRadius: 40,
-		alignItems: 'center'
 	},
 	topButtonContainer: {
 		flexDirection: 'row',
@@ -60,30 +64,24 @@ export default StyleSheet.create({
 		marginBottom: 20
 	},
 	choseButton: {
-		backgroundColor: COLORS.turquoise
+		backgroundColor: COLORS.aqua
 	},
-	choseButtonText: {
-		color: COLORS.white,
-		height: '100%',
+	normalButtonText: {
+		color: '#000000',
 		textAlignVertical: 'center',
 		fontFamily: 'Montserrat',
 		fontSize: 17,
 		fontWeight: 'bold'
 	},
+	choseButtonText: {
+		color: COLORS.white
+	},
 	normalButton: {
-		backgroundColor: COLORS.gray,
+		backgroundColor: COLORS.light,
 		shadowColor: "#000",
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 2
-	},
-	normalButtonText: {
-		color: '#000000',
-		height: '100%',
-		textAlignVertical: 'center',
-		fontFamily: 'Montserrat',
-		fontSize: 17,
-		fontWeight: 'bold'
 	}
 })
