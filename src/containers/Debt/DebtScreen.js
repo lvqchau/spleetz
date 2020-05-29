@@ -519,11 +519,7 @@ export default class DebtScreen extends Component {
 					start={{ x: 1, y: 1 }}
 					end={{ x: 0, y: 1 }}
 					colors={!isDebt ? COLORS.gradientGreen : COLORS.gradientLight}
-					style={[styles.topButton, type === "debt" ? [styles.debtButton, {shadowColor: COLORS.black,
-						shadowOffset: { width: 0, height: 0 },
-						shadowOpacity: 0.2,
-						shadowRadius: 3,
-						elevation: 2,}] : [styles.billButton]]}
+					style={[styles.topButton, type === "debt" ? [styles.debtButton] : [styles.billButton]]}
 				>
 					<Text style={!isDebt ? [styles.normalButtonText, styles.choseButtonText] : [styles.normalButtonText]}>{type}</Text>
 				</LinearGradient>
