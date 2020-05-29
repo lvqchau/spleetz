@@ -3,14 +3,12 @@ import COLORS from '../../../assets/colors'
 import { getInset } from 'react-native-safe-area-view'
 
 const { width, height } = Dimensions.get('window')
-const { sWidth, sHeight } = Dimensions.get('screen')
-console.log(width, sWidth, height, sHeight, getInset('bottom'))
 
 const styles = StyleSheet.create({
   messageScreenContainer: {
     position: 'relative',
     backgroundColor: COLORS.white,
-    height: height - 50 - getInset('bottom')
+    height: '100%'
   },
   gradContainer: {
     position: 'absolute',
@@ -36,7 +34,6 @@ const styles = StyleSheet.create({
     top: 15,
     textAlign: 'center',
     fontSize: 20,
-    zIndex: -1,
     color: COLORS.white,
     fontWeight: '700'
   },
@@ -45,7 +42,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 60,
     width,
     bottom: 0,
-    height: height - 70,
+    height: height,
     justifyContent: 'space-between',
     marginTop: 60,
     backgroundColor: COLORS.white,
@@ -57,21 +54,48 @@ const styles = StyleSheet.create({
     flex: 1
   },
   scrollContainer: {
-    paddingTop: 30,
+    paddingTop: 38,
+    paddingBottom: 10,
     paddingHorizontal: 25,
+    flex: 11
   },
   sendContainer: {
-    height: 60,
+    flex: 1,
     paddingHorizontal: 25,
-    paddingVertical: 18,
-    backgroundColor: COLORS.red,
+    paddingVertical: 13,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
     width,
     shadowColor: COLORS.black,
     shadowOffset: { width: 0, height: -1 },
     shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 2,
-    // marginBottom: 70
+    shadowRadius: 7,
+    elevation: 10
+  },
+  sendBox: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.lightblue,
+    borderRadius: 17,
+    paddingHorizontal: 14,
+    paddingVertical: 8
+  },
+  fileIcon: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 32,
+    height: 32,
+    backgroundColor: COLORS.turquoise,
+    borderRadius: 10
+  },
+  messageInput: {
+    flex: 6,
+    justifyContent: 'center',
+    marginHorizontal: 10
+  },
+  sendIcon: {
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   }
 })
 
