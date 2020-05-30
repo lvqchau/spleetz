@@ -96,10 +96,13 @@ export default class SplitScreen extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			backgroundColor: 'rgba(0,0,0,0.1)',
 			isCategory: 'food',
 			isEditing: false
 		}
+	}
+
+	openCamera = () => {
+		this.props.navigation.navigate("Camera")
 	}
 
 	renderCategory = (category, isCategory) => {
@@ -251,7 +254,7 @@ export default class SplitScreen extends Component {
 				}}>
 					<TouchableOpacity
 						activeOpacity={.7}
-						onPress={() => { }}
+						onPress={() => {this.openCamera()}}
 					>
 						<LinearGradient
 							start={{ x: 1, y: 1 }}
@@ -287,8 +290,8 @@ export default class SplitScreen extends Component {
 							<Text style={{
 								color: COLORS.white,
 								fontSize: 20,
-								fontWeight: '700',
-								marginRight: 5
+								marginRight: 5,
+								marginBottom: 5
 							}}>Checkout</Text>
 							<AntDesign size={30} name="arrowright" color={COLORS.white} style={{ height: 30 }} />
 						</LinearGradient>

@@ -75,15 +75,11 @@ export default StyleSheet.create({
 		borderRadius: 30/2
 	},
 	addressText: {
-		fontFamily: 'Quicksand',
 		fontSize: 16,
-		fontWeight: '600',
 		color: '#0F0000',
 		marginLeft: 2
 	},
 	debtStatus: {
-		fontFamily: 'Quicksand',
-		fontWeight: '600',
 		color: COLORS.gray,
 		marginTop: 7,
 		fontSize: 14
@@ -124,9 +120,8 @@ export default StyleSheet.create({
 	normalButtonText: {
 		color: '#A2A2A2',
 		textAlignVertical: 'center',
-		fontFamily: 'Montserrat',
+		fontFamily: 'Montserrat-Bold',
 		fontSize: 17,
-		fontWeight: 'bold',
 		textTransform: 'capitalize'
 	},
 	choseButtonText: {

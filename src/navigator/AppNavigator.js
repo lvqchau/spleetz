@@ -9,69 +9,88 @@ import MessageScreen from '../containers/Message/screens/MessageScreen'
 import DebtScreen from '../containers/Debt/DebtScreen'
 import { navigationRef } from './RootNavigation'
 import AccountNavigator from '../containers/Account/navigator/AccountNavigator'
+import SplitNavigator from '../containers/Split/SplitStack'
 
 const Tab = createBottomTabNavigator()
 
 export default class MyTabs extends React.Component {
+
+	getTabBarVisibility = (route) => {
+		const routeName = route.state
+			? route.state.routes[route.state.index].name
+			: ''
+		if (routeName === 'Camera') {
+			return false
+		}
+		return true
+	}
+
 	render() {
 		return (
 			<Tab.Navigator
-				initialRouteName="Bill"
+				initialRouteName='Bill'
 				tabBarOptions={{
-					showLabel: false
+					showLabel: false,
 				}}
 			>
 				<Tab.Screen
-					name="Bill"
+					name='Bill'
 					listeners={{
 						tabPress: e => {
-							navigationRef.current.navigate('Profile');
+							navigationRef.current.navigate('Profile')
 						}
 					}}
 					component={DebtScreen}
 					options={{
 						tabBarIcon: ({ color, size }) => (
-							<MaterialIcons name="account-balance-wallet" color={color} size={size} />
+							<MaterialIcons name='account-balance-wallet' color={color} size={size} />
 						)
 					}}
 				/>
 				<Tab.Screen
-					name="Chat"
+					name='Chat'
 					component={MessageScreen}
 					options={{
 						tabBarIcon: ({ color, size }) => (
-							<Ionicons name="ios-chatbubbles" color={color} size={size} />
+							<Ionicons name='ios-chatbubbles' color={color} size={size} />
 						)
 					}}
 				/>
 				<Tab.Screen
-					name="Split"
-					component={SplitScreen}
-					options={{
+					name='Split'
+					listeners={{
+						tabPress: e => {
+							navigationRef.current.navigate('Split')
+						}
+					}}
+					options={({ route }) => ({
 						tabBarIcon: ({ color, size }) => (
-							<MaterialIcons name="receipt" color={color} size={size} />
-						)
-					}}
-				/>
+							<MaterialIcons name='receipt' color={color} size={size} />
+						),
+						tabBarVisible: this.getTabBarVisibility(route)
+					})}						
+				>
+					{props => <SplitNavigator {...props}/>}
+				</Tab.Screen>
 				<Tab.Screen
-					name="Notification"
+					name='Notification'
 					component={NotificationScreen}
 					options={{
 						tabBarIcon: ({ color, size }) => (
-							<MaterialIcons name="notifications" color={color} size={size} />
+							<MaterialIcons name='notifications' color={color} size={size} />
 						)
 					}}
 				/>
 				<Tab.Screen
-					name="Profile"
+					name='Profile'
 					listeners={{
 						tabPress: e => {
-							navigationRef.current.navigate('Profile');
+							navigationRef.current.navigate('Profile')
 						}
 					}}
 					options={{
 						tabBarIcon: ({ color, size }) => (
-							<MaterialIcons name="account-circle" color={color} size={size} />
+							<MaterialIcons name='account-circle' color={color} size={size} />
 						)
 					}}
 				>

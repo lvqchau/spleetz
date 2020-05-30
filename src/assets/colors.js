@@ -14,6 +14,7 @@ const COLORS = {
     light: '#F0F0F0',
     purple: '#8900FF',
     yellow: '#FFFF00',
+    dark: '#343434',
     gradientGray: ['#ADADAD', '#ADADAD'],
     // from dark to light
     gradientLight: ['#C1C1C1', '#C4C4C4', '#D8D8D8', '#E6E5E5'],

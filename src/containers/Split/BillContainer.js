@@ -12,11 +12,12 @@ export default class BillContainer extends Component {
 		const { data } = this.props
 		return (
 			<View style={{
+				backgroundColor: COLORS.white,
 				shadowColor: COLORS.black,
 				shadowOffset: { width: 0, height: 0 },
 				shadowOpacity: 0.2,
 				shadowRadius: 3,
-				elevation: 2,
+				elevation: 2
 			}}>
 			<LinearGradient
 				colors={[COLORS.white, COLORS.white]}
@@ -26,7 +27,7 @@ export default class BillContainer extends Component {
 					height: Dimensions.get('window').height - 340 - getInset('bottom')
 				}}
 			>
-				<ScrollView style={{ marginBottom: 5 }}>
+				<ScrollView style={{ marginBottom: 5 }} showsVerticalScrollIndicator={false}>
 					{data && data.map((billItem, index) =>
 						<BillItem key={index} data={billItem}></BillItem>
 					)}
@@ -34,8 +35,7 @@ export default class BillContainer extends Component {
 				<Text style={{
 					alignItems: 'stretch',
 					textAlign: 'right',
-					fontFamily: 'Montserrat',
-					fontWeight: '700',
+					fontFamily: 'Montserrat-Bold',
 					fontSize: 26,
 					color: COLORS.salmon
 				}}>{displayPrice(1000000)}</Text>
