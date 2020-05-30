@@ -153,14 +153,14 @@ export default class MessageListScreen extends Component {
           </View>
         </View>
         <View style={{
-          borderRadius: 20,
+          borderRadius: 30,
           backgroundColor: COLORS.white,
           paddingVertical: 20,
           shadowColor: COLORS.black,
           shadowOffset: { width: 0, height: 0 },
           shadowOpacity: 0.2,
           shadowRadius: 3,
-          elevation: 2,
+          elevation: 3,
           marginBottom: 20*2+10
         }}>
           <FlatList

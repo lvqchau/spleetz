@@ -22,7 +22,14 @@ export default class SearchContainer extends Component {
     const { style } = this.props
     const { searchText, isFocused } = this.state
     return (
-      <View>
+      <View style={{
+        flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+      }}>
+        <EvilIcons name="search" size={28} style={{position: 'absolute', left: 0}}color={isFocused ? COLORS.aqua : COLORS.black} />
         <TextInput
           style={[
             styles.inputStyle, {
@@ -36,13 +43,10 @@ export default class SearchContainer extends Component {
           value={searchText}
           placeholder="Search a friend's name"
         />
-        <View style={{
-          position: 'absolute',
-          top: 8,
-          left: -5
+        {/* <View style={{
         }}>
-          <EvilIcons name="search" size={28} color={isFocused ? COLORS.aqua : COLORS.black} />
-        </View>
+          
+        </View> */}
       </View>
     )
   }
@@ -54,6 +58,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomWidth: 1,
     width: '100%',
-    paddingLeft: 30
+    paddingLeft: 30,
   }
 })
