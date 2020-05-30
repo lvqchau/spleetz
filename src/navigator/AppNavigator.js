@@ -5,11 +5,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import SplitScreen from '../containers/Split/SplitScreen'
 import NotificationScreen from '../containers/Notification/screens/NotificationScreen'
-import MessageScreen from '../containers/Message/screens/MessageScreen'
+import MessageScreen from '../containers/Message/screens/MessageRoomScreen'
 import DebtScreen from '../containers/Debt/DebtScreen'
 import { navigationRef } from './RootNavigation'
 import AccountNavigator from '../containers/Account/navigator/AccountNavigator'
 import SplitNavigator from '../containers/Split/SplitStack'
+import MessageNavigator from '../containers/Message/MessageStack'
 
 const Tab = createBottomTabNavigator()
 
@@ -19,7 +20,7 @@ export default class MyTabs extends React.Component {
 		const routeName = route.state
 			? route.state.routes[route.state.index].name
 			: ''
-		if (routeName === 'Camera') {
+		if (routeName === 'Camera' || routeName === 'Chatroom') {
 			return false
 		}
 		return true
@@ -48,14 +49,22 @@ export default class MyTabs extends React.Component {
 					}}
 				/>
 				<Tab.Screen
-					name='Chat'
-					component={MessageScreen}
-					options={{
+					name='Messages'
+					listeners={{
+						tabPress: e => {
+							navigationRef.current.navigate('Messages')
+						}
+					}}
+					options={({ route }) => ({
 						tabBarIcon: ({ color, size }) => (
 							<Ionicons name='ios-chatbubbles' color={color} size={size} />
-						)
-					}}
-				/>
+						),
+						tabBarVisible: this.getTabBarVisibility(route)
+					})}						
+				>
+					{props => <MessageNavigator {...props}/>}
+				</Tab.Screen>
+				
 				<Tab.Screen
 					name='Split'
 					listeners={{

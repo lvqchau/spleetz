@@ -58,8 +58,14 @@ const mockData = [
 		sender: 1
 	},
 ]
-class MessageScreen extends Component {
+class MessageRoomScreen extends Component {
   render() {
+    const { id, type, groupName, users, date, latestMessage, isRead } = this.props.route.params.item
+    let headerName = "room-name"
+    if (type === "group")
+      headerName = groupName
+    else headerName = users[0].username
+
     return (
       <SafeAreaView style={styles.messageScreenContainer}>
         <View style={styles.messageContainer}>
@@ -100,17 +106,15 @@ class MessageScreen extends Component {
           style={styles.gradContainer}
           >
           <View style={styles.headerNavigator}>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity style={{zIndex: 100}} onPress={() => this.props.navigation.goBack()}>
               <Ionicons name="ios-arrow-round-back" size={32} color={COLORS.white} />
             </TouchableOpacity>
-            <Text style={[styles.userName]}>John Smith</Text>
+            <Text style={[styles.userName]}>{headerName}</Text>
           </View>
-          
         </LinearGradient>
-        
       </SafeAreaView>
     )
   }
 }
 
-export default MessageScreen
+export default MessageRoomScreen
