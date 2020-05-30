@@ -32,6 +32,7 @@ class CameraScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <RNCamera
+          captureAudio={false}
           ref={ref => {
             this.camera = ref;
           }}
