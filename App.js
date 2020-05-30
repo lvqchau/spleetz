@@ -1,13 +1,13 @@
-import React from 'react';
-import { setCustomText } from 'react-native-global-props/src';
-import { DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React from 'react'
+import { setCustomText } from 'react-native-global-props/src'
+import { DefaultTheme, DarkTheme } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import COLORS from './src/assets/colors';
-import { navigationRef } from './src/navigator/RootNavigation';
-import AppNavigator from './src/navigator/AppNavigator';
-import AccessStack from './src/navigator/AccessNavigator';
+import COLORS from './src/assets/colors'
+import { navigationRef } from './src/navigator/RootNavigation'
+import AppNavigator from './src/navigator/AppNavigator'
+import AccessStack from './src/navigator/AccessNavigator'
 
 const MyTheme = {
   ...DefaultTheme,
@@ -25,12 +25,13 @@ class App extends React.Component {
     super(props)
     this.state = {
       userToken: null,
-      isSignout: true
+      isSignout: true,
+      isVisible: true
     }
   }
 
   _stateChange = (e) => {
-    // console.log(navigationRef.current.getCurrentRoute().name)
+    console.log(navigationRef.current.getCurrentRoute().name)
   }
 
   _authedUser = (userToken, isSignout) => {
@@ -43,12 +44,11 @@ class App extends React.Component {
   render() {
     const customTextProps = {
       style: {
-        fontFamily: 'Quicksand',
-        fontSize: 16,
-        fontWeight: '500'
+        fontFamily: 'Quicksand-SemiBold',
+        fontSize: 16
       }
     }
-    setCustomText(customTextProps);
+    setCustomText(customTextProps)
     return (
       <SafeAreaProvider>
         <NavigationContainer 
@@ -58,7 +58,7 @@ class App extends React.Component {
         >
         {this.state.userToken === null 
           ? <AccessStack _authedUser={this._authedUser}/>
-          : <AppNavigator _authedUser={this._authedUser}  navigation={this.props.navigation}/>
+          : <AppNavigator _authedUser={this._authedUser}/> 
         }
         </NavigationContainer>
       </SafeAreaProvider>

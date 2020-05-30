@@ -26,7 +26,7 @@ class NotificationScreen extends Component {
       <LinearGradient 
         end={{ x: 1, y: 1 }}
         start={{ x: 1, y: 0 }}
-        colors={COLORS.gradientPink}
+        colors={COLORS.gradientGreen}
       >
         <SafeAreaView>
           <AnimatedFlatList

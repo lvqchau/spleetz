@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     color: COLORS.aqua
   },
   inputStyle: { 
-    fontFamily: 'Quicksand',
+    fontFamily: 'Quicksand-SemiBold',
     padding: 10,
     borderBottomWidth: 1,
     flex: 8

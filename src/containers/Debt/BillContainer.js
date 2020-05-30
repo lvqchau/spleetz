@@ -71,8 +71,7 @@ class BillContainer extends Component {
           <View style={styles.billBot}>
             <Text
               style={{
-                fontFamily: 'Montserrat',
-                fontWeight: '700',
+                fontFamily: 'Montserrat-Bold',
                 fontSize: 28,
                 bottom: -5,
                 color: COLORS.white
@@ -136,19 +135,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
-    flex: 1
+    flex: 1,
+    zIndex: 2
   },
 	categoryText: {
     position: 'absolute',
     bottom: -12,
     right: -5,
     fontSize: 40,
-    fontFamily: 'Montserrat',
-    fontWeight: '700',
+    fontFamily: 'Montserrat-Bold',
     textTransform: 'uppercase',
     color: COLORS.white,
     opacity: .5,
-    zIndex: -1
+    zIndex: 1
 	},
   userContainer: {
     flexDirection: 'row',
