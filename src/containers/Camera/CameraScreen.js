@@ -10,8 +10,6 @@ const { width, height } = Dimensions.get('window')
 
 class CameraScreen extends React.Component {
   render() {
-    const {navigation} = this.props
-    navigation.setOptions({ tabBarVisible: false })
     return (
       <SafeAreaView style={{
         flex: 1
@@ -32,6 +30,7 @@ class CameraScreen extends React.Component {
           </TouchableOpacity>
         </View>
         <RNCamera
+          captureAudio={false}
           ref={ref => {
             this.camera = ref;
           }}

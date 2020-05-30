@@ -4,6 +4,7 @@ import HeaderNavigator from '../../components/HeaderNavigator'
 import COLORS from '../../../../assets/colors';
 import FriendItem from './FriendItem';
 import { data } from './FriendData'
+import SearchContainer from '../../../../components/SearchContainer';
 
 const { width, height } = Dimensions.get('window')
 
@@ -29,24 +30,13 @@ class FriendScreen extends React.Component {
         <HeaderNavigator navigation={navigation} name="Friendlist" color={COLORS.aqua} />
         {/* Search and Add friend */}
         <View style={styles.searchContainer}>
-          <TextInput
-            style={[
-              styles.inputStyle, {
-                borderBottomColor: isFocused
-                ? COLORS.aqua
-                : COLORS.lightgray
-              }]}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-            onChangeText={searchText => this.handleInput(searchText)}
-            value={searchText}
-            placeholder="Search a friend's name"
-          ></TextInput>
+        <View style={{flex: 8}}>
+          <SearchContainer/>
+        </View>
           <TouchableOpacity style={styles.textButton}>
               <Text style={styles.textAction}>Add</Text>
           </TouchableOpacity>
         </View>
-
         {/* Friendlist */}
         <View style={styles.friendList}>
           <FlatList
