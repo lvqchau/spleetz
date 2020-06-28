@@ -2,5 +2,16 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "SpleetzMongo": {
+    "host": "spleetz-3ddjy.mongodb.net",
+    "port": "",
+    "url": "mongodb+srv://lvqchau:spleetz168@spleetz-3ddjy.mongodb.net/spleetz?retryWrites=true&w=majority",
+    "database": "spleetz",
+    "password": "spleetz168",
+    "name": "SpleetzMongo",
+    "user": "lvqchau",
+    "useNewUrlParser": true,
+    "connector": "mongodb"
   }
 }

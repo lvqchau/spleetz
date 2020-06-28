@@ -1,0 +1,37 @@
+{
+  "name": "Account",
+  "plural": "accounts",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fullname": {
+      "type": "string"
+    },
+    "avatarUrl": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "onlineStatus": {
+      "type": "string",
+      "default": "INACTIVE"
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

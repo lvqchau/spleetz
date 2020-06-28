@@ -1,0 +1,27 @@
+{
+  "name": "DebtDetail",
+  "plural": "debts",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "remindDate": {
+      "type": "date"
+    },
+    "startDate": {
+      "type": "date"
+    },
+    "returnDate": {
+      "type": "date"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -34,5 +34,37 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "Account": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Item": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Message": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Category": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "ChatRoom": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Friendship": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "DebtDetail": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Bill": {
+    "dataSource": "SpleetzMongo",
+    "public": true
   }
 }
