@@ -43,11 +43,15 @@
       "foreignKey": "debtId",
       "through": "Bill"
     },
-    "messages": {
+    "notifications": {
       "type": "hasMany",
-      "model": "Message",
-      "foreignKey": "messageId",
-      "through": "ChatRoom"
+      "model": "Notification",
+      "foreignKey": ""
+    },
+    "friendship": {
+      "type": "hasAndBelongsToMany",
+      "model": "Friendship",
+      "foreignKey": ""
     }
   },
   "acls": [],

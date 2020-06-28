@@ -1,0 +1,47 @@
+{
+  "name": "Notification",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "content": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "required": true,
+      "enum": [
+        "pending",
+        "rejected",
+        "accepted"
+      ],
+      "default": "pending"
+    },
+    "createdAt": {
+      "type": "date",
+      "required": true
+    },
+    "checkedAt": {
+      "type": "date"
+    },
+    "price": {
+      "type": "number"
+    },
+    "type": {
+      "type": "string",
+      "required": true,
+      "enum": [
+        "other",
+        "request",
+        "pay"
+      ],
+      "default": "other"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

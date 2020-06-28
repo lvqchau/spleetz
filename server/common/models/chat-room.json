@@ -1,6 +1,6 @@
 {
   "name": "ChatRoom",
-  "plural": "chats",
+  "plural": "chatrooms",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

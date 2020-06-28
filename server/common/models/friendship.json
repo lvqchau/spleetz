@@ -6,18 +6,23 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "createdAt": {
+      "type": "date",
+      "required": true
+    }
+  },
   "validations": [],
   "relations": {
-    "account": {
+    "friendOne": {
       "type": "belongsTo",
       "model": "Account",
-      "foreignKey": "accountId"
+      "foreignKey": "friendOneId"
     },
-    "friendlist": {
-      "type": "hasMany",
+    "friendTwo": {
+      "type": "belongsTo",
       "model": "Account",
-      "foreignKey": "friendListId"
+      "foreignKey": "friendTwoId"
     }
   },
   "acls": [],
