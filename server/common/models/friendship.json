@@ -8,7 +8,18 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "account": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "accountId"
+    },
+    "friendlist": {
+      "type": "hasMany",
+      "model": "Account",
+      "foreignKey": "friendListId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

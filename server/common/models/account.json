@@ -23,7 +23,12 @@
     },
     "onlineStatus": {
       "type": "string",
-      "default": "INACTIVE"
+      "required": true,
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "default": "inactive"
     },
     "email": {
       "type": "string",
@@ -31,7 +36,20 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "debtDetails": {
+      "type": "hasMany",
+      "model": "DebtDetail",
+      "foreignKey": "debtId",
+      "through": "Bill"
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "Message",
+      "foreignKey": "messageId",
+      "through": "ChatRoom"
+    }
+  },
   "acls": [],
   "methods": {}
 }

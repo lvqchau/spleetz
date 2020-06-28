@@ -15,7 +15,23 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "items": {
+      "type": "hasMany",
+      "model": "Item",
+      "foreignKey": ""
+    },
+    "payer": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "payerId"
+    },
+    "borrower": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "borrowerId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

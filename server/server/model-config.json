@@ -14,25 +14,25 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "SpleetzMongo"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "SpleetzMongo",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "SpleetzMongo",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "SpleetzMongo",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "SpleetzMongo",
     "public": false
   },
   "Account": {

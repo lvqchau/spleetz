@@ -16,7 +16,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "sender": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "senderId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

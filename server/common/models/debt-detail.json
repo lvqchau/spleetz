@@ -21,7 +21,29 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "bill": {
+      "type": "belongsTo",
+      "model": "Bill",
+      "foreignKey": "billId"
+    },
+    "payer": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "payerId"
+    },
+    "borrower": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "borrowerId"
+    },
+    "items": {
+      "type": "hasMany",
+      "model": "Item",
+      "foreignKey": "",
+      "through": "Bill"
+    }
+  },
   "acls": [],
   "methods": {}
 }
