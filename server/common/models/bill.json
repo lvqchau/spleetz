@@ -27,9 +27,9 @@
       "foreignKey": "payerId"
     },
     "borrower": {
-      "type": "belongsTo",
+      "type": "hasAndBelongsToMany",
       "model": "Account",
-      "foreignKey": "borrowerId"
+      "foreignKey": ""
     }
   },
   "acls": [],
