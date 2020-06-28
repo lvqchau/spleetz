@@ -1,7 +1,7 @@
 {
   "SpleetzMongo": {
     "host": "spleetz-3ddjy.mongodb.net",
-    "port": "",
+    "port": "27017",
     "url": "mongodb+srv://lvqchau:spleetz168@spleetz-3ddjy.mongodb.net/spleetz?retryWrites=true&w=majority",
     "database": "spleetz",
     "password": "spleetz168",
