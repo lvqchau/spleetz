@@ -5,6 +5,7 @@ import {View, TouchableOpacity, TextInput, Text} from 'react-native'
 import styles from '../containers/Access/screens/Signin.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../assets/colors'
+import Axios from 'axios'
 
 // import { userService } from '../../services/index'
 
@@ -22,7 +23,14 @@ export default class SignInForm extends Component {
 					password: '',
 				}}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
-					authedUser('token', false)
+					console.log(values)
+					Axios({
+						method: "POST",
+						url: "http://localhost:3001/api/accounts/login",
+						data: values
+					}).then(res => console.log(res))
+					.catch(err=>console.log(err))
+					// authedUser('token', false)
 				}}
 			>
 				{({handleChange, handleBlur, handleSubmit, values}) => (
