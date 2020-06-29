@@ -86,3 +86,5 @@ buck-out/
 package-lock.json
 
 ios/Pods/Pods\.xcodeproj/project\.pbxproj
+
+.env
