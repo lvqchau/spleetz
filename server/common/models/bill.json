@@ -1,0 +1,37 @@
+{
+  "name": "Bill",
+  "plural": "bills",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date": {
+      "type": "date"
+    },
+    "location": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "items": {
+      "type": "hasMany",
+      "model": "Item",
+      "foreignKey": ""
+    },
+    "payer": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "payerId"
+    },
+    "borrower": {
+      "type": "hasAndBelongsToMany",
+      "model": "Account",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

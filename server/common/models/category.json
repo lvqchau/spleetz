@@ -1,0 +1,26 @@
+{
+  "name": "Category",
+  "plural": "categories",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "enum": [
+        "food",
+        "house",
+        "shop",
+        "others"
+      ],
+      "default": "food"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Friendship",
+  "plural": "friends",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "createdAt": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "friendOne": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "friendOneId"
+    },
+    "friendTwo": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "friendTwoId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

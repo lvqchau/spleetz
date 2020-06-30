@@ -1,0 +1,74 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "SpleetzMongo"
+  },
+  "AccessToken": {
+    "dataSource": "SpleetzMongo",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "SpleetzMongo",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "SpleetzMongo",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "SpleetzMongo",
+    "public": false
+  },
+  "Account": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Item": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Message": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Category": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "ChatRoom": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Friendship": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "DebtDetail": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Bill": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  },
+  "Notification": {
+    "dataSource": "SpleetzMongo",
+    "public": true
+  }
+}

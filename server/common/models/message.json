@@ -1,0 +1,28 @@
+{
+  "name": "Message",
+  "plural": "messages",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "date": {
+      "type": "date"
+    },
+    "content": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "sender": {
+      "type": "belongsTo",
+      "model": "Account",
+      "foreignKey": "senderId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

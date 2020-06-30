@@ -8,6 +8,7 @@ import styles from './Account.component.style.js'
 import COLORS from '../../../../assets/colors'
 import Avatar from '../../../../components/Avatar.js';
 import Switcher from '../../../../components/Switcher'
+import { logOut } from '../../../../services/accountGateway.js';
 
 class AccountScreen extends React.Component {
 
@@ -15,8 +16,17 @@ class AccountScreen extends React.Component {
     super(props)
   }
 
+  _logOut = async () => {
+    const userOut = await logOut()
+    if (userOut.status) {
+      this.props._authedUser(null, true)
+    } else {
+      console.log("popup login faild, retry")
+    }
+  }
+
   render() {
-    const { navigation, _authedUser } = this.props
+    const { navigation } = this.props
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScrollView style={styles.accountContainer}>
@@ -109,7 +119,7 @@ class AccountScreen extends React.Component {
             <TouchableHighlight
               style={{ flex: 1 }}
               underlayColor={'rgba(186,186,186,0.1)'}
-              onPress={() => _authedUser(null, true)}
+              onPress={() => this._logOut()}
             >
               <View style={styles.rowTouchContainer}>
                 <AntDesign name="logout" size={24} color={COLORS.salmon} />

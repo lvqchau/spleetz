@@ -12,6 +12,7 @@ import displayPrice from '../../utils/displayPrice.js'
 const { width, height } = Dimensions.get('window')
 const mockData = [
 	{
+		id: 0,
 		name: "Bánh mì xúc xích xông khói",
 		quantity: 100,
 		price: 100000,
@@ -55,36 +56,43 @@ const mockData = [
 		]
 	},
 	{
+		id: 1,
 		name: "Banh mi xuc xich",
 		quantity: 10,
 		price: 20000
 	},
 	{
+		id: 2,
 		name: "Banh mi ga",
 		quantity: 2,
 		price: 15000
 	},
 	{
+		id: 3,
 		name: "Banh mi ga",
 		quantity: 2,
 		price: 15000
 	},
 	{
+		id: 4,
 		name: "Banh mi ga",
 		quantity: 5,
 		price: 15000
 	},
 	{
+		id: 5,
 		name: "Banh mi ga",
 		quantity: 5,
 		price: 15000
 	},
 	{
+		id: 6,
 		name: "Banh mi ga",
 		quantity: 5,
 		price: 15000
 	},
 	{
+		id: 7,
 		name: "Banh mi ga",
 		quantity: 5,
 		price: 15000
@@ -97,8 +105,19 @@ export default class SplitScreen extends Component {
 		super(props)
 		this.state = {
 			isCategory: 'food',
-			isEditing: false
+			isEditing: false,
+			data: mockData
 		}
+	}
+
+	changeData = (item, method) => {
+		data = this.state.data.filter(dataItem => dataItem.id !== item.id)
+		this.setState({
+			data
+		})
+		// this.forceUpdate()
+		console.log(this.state)
+		console.log(data)
 	}
 
 	openCamera = () => {
@@ -243,7 +262,7 @@ export default class SplitScreen extends Component {
 
 					{/* info container */}
 					<View>
-						<BillContainer data={mockData}></BillContainer>
+						<BillContainer changeData={this.changeData} isEditing={isEditing} data={this.state.data}></BillContainer>
 					</View>
 				</View>
 				<View style={{

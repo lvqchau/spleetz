@@ -1,0 +1,29 @@
+{
+  "name": "ChatRoom",
+  "plural": "chatrooms",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "accounts": {
+      "type": "hasAndBelongsToMany",
+      "model": "Account",
+      "foreignKey": ""
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "Message",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
