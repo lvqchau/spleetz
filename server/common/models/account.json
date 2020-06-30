@@ -50,7 +50,7 @@
       "foreignKey": ""
     },
     "friendship": {
-      "type": "hasAndBelongsToMany",
+      "type": "hasOne",
       "model": "Friendship",
       "foreignKey": ""
     }

@@ -3,8 +3,8 @@ import AsyncStorage from "@react-native-community/async-storage"
 
 const logIn = async (user) => {
   let returnedUser = {
-    userId: '', 
-    accessToken: ''
+    userId: null, 
+    accessToken: null
   }
   await accountService.logInService(user)
     .then(async (res) => {
@@ -12,6 +12,7 @@ const logIn = async (user) => {
       await AsyncStorage.setItem('accessToken', id)
       returnedUser.userId = userId
       returnedUser.accessToken = id
+      console.log('yay', id)
     })
     .catch(err=> console.log(err.response.data.error.message))
   return returnedUser
