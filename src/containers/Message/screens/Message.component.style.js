@@ -1,21 +1,37 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet, Dimensions, Platform, StatusBar } from 'react-native'
 import COLORS from '../../../assets/colors'
 import { getInset } from 'react-native-safe-area-view'
 
 const { width, height } = Dimensions.get('window')
 
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
+
+const XSMAX_WIDTH = 414;
+const XSMAX_HEIGHT = 896;
+const isIPhoneX = () => Platform.OS === 'ios' && !Platform.isPad && !Platform.isTVOS
+  ? width === X_WIDTH && height === X_HEIGHT || width === XSMAX_WIDTH && height === XSMAX_HEIGHT
+  : false;
+
+const StatusBarHeight = Platform.select({
+  ios: isIPhoneX() ? 44 : 20,
+  android: StatusBar.currentHeight,
+  default: 0
+})
+
 const styles = StyleSheet.create({
   messageScreenContainer: {
-    position: 'relative',
     backgroundColor: COLORS.white,
-    height: '100%'
+    height: '100%',
+    marginTop: -StatusBarHeight
   },
   gradContainer: {
     position: 'absolute',
     width,
     marginTop: getInset('top'),
     zIndex: -1,
-    top: 0
+    top: 0,
+    paddingTop: StatusBarHeight-14
   },
   headerNavigator: {
     position: 'relative',
@@ -44,34 +60,28 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: height,
     justifyContent: 'space-between',
-    marginTop: 60,
+    marginTop: 60+StatusBarHeight-15,
     backgroundColor: COLORS.white,
-    shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: -1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 1,
     flex: 1
   },
   scrollContainer: {
     paddingTop: 38,
-    paddingBottom: 10,
+    paddingBottom: 15,
     paddingHorizontal: 25,
     flex: 11
   },
   sendContainer: {
     flex: 1,
     paddingHorizontal: 25,
-    paddingVertical: 13,
+    paddingVertical: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.white,
     width,
     shadowColor: COLORS.black,
-    shadowOffset: { width: 0, height: -1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 7,
-    elevation: 10
+    shadowOffset: { width: 0, height: -8 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6
   },
   sendBox: {
     flexDirection: 'row',
