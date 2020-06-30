@@ -9,7 +9,8 @@ const logIn = async (user) => {
   await accountService.logInService(user)
     .then(async (res) => {
       const { userId, id } = res.data
-      await AsyncStorage.setItem('accessToken', id)
+			await AsyncStorage.setItem('accessToken', id)
+			await AsyncStorage.setItem('userId', userId)
       returnedUser.userId = userId
       returnedUser.accessToken = id
     })
@@ -32,7 +33,19 @@ const logOut = async () => {
   return { status }
 }
 
+const getUser = async (userId) => {
+	let user = {}
+	await accountService.getUser(userId)
+	.then(async (res) => {
+		user = res.data
+		await AsyncStorage.setItem('user', JSON.stringify(user))
+	})
+	.catch(err=> console.log(err.response.data.error.message))
+	return user
+}
+
 export {
   logIn,
-  logOut
+	logOut,
+	getUser
 }

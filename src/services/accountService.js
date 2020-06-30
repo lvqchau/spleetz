@@ -16,7 +16,13 @@ export class accountManagingService {
         url:`${baseURL}/accounts/logout?access_token=${accessToken}`,
         method:'POST'
     })
-  }
+	}
+	getUser = async (userId) => {
+		return axios({
+			url: `${baseURL}/accounts/${userId}`,
+			method: 'GET'
+		})
+	}
 }
 
 
