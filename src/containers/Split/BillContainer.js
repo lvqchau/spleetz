@@ -7,9 +7,8 @@ import COLORS from '../../assets/colors'
 import displayPrice from '../../utils/displayPrice'
 
 export default class BillContainer extends Component {
-	state = {}
 	render() {
-		const { data } = this.props
+		const { data, isEditing, changeData } = this.props
 		return (
 			<View style={{
 				backgroundColor: COLORS.white,
@@ -29,7 +28,7 @@ export default class BillContainer extends Component {
 			>
 				<ScrollView style={{ marginBottom: 5 }} showsVerticalScrollIndicator={false}>
 					{data && data.map((billItem, index) =>
-						<BillItem key={index} data={billItem}></BillItem>
+						<BillItem isEditing={isEditing} key={index} item={billItem} changeData={changeData}></BillItem>
 					)}
 				</ScrollView>
 				<Text style={{
