@@ -86,11 +86,16 @@ export default class SplitScreen extends Component {
 	}
 
 	componentDidMount() {
-		// const { navigation } = this.props
-		// this.focusListener = navigation.addListener('didFocus', () => {
-		// 	 console.log('hello there')
-		// });
+		const { navigation } = this.props
+		this.focusListener = navigation.addListener('focus', () => {
+			this.getFriend()
+		});
 	}
+
+	componentWillUnmount() {
+    // Remove the event listener before removing the screen from the stack
+    this.focusListener.remove();
+}
 
 	editBill = (type) => {
 		this.setState({ isEditing: !this.state.isEditing })
@@ -152,13 +157,19 @@ export default class SplitScreen extends Component {
 
 	changeBorrower = (itemId, person, method) => {
 		let data = this.state.originalData
+		let friends = this.state.friends
 		let index = data.findIndex(item => item.id === itemId)
+		let indexF = friends.findIndex(item => item.username === person.username)
 		if (method === 'delete') {
+			console.log(friends[indexF])
+			friends[indexF].added = false
 			data[index].borrower.splice(index, 1)
-			this.setState({originalData: data, data})
+			this.setState({originalData: data, data, friends})
 		} else if (method === 'add') {
+			console.log("indexF:", friends[indexF])
+			friends[indexF].added = true
 			data[index].borrower.push(person)
-			this.setState({originalData: data, data})
+			this.setState({originalData: data, data, friends})
 		}
 	}
 
@@ -195,15 +206,14 @@ export default class SplitScreen extends Component {
 			await axios({
 				method: 'GET',
 				url: `${baseURL}/accounts/${accountId}/friendship`,
-			}).then(res => {
+			}).then(async res => {
 				let friendList = res.data.friends
 				friendList = friendList.map((friend) => {
 					friend.added = false
 					return friend
 				})
-				console.log(friendList)
-				this.setState({
-					friends: res.data.friends
+				await this.setState({
+					friends: friendList
 				})
 			}).catch(err => {
 				console.log(err.response.data)
