@@ -22,76 +22,15 @@ export default class BillItem extends Component {
 		}
 	}
 
-	openRBSheet = async (RBSheet) => {
-		// const user = JSON.parse(AsyncStorage.getItem('user'))
-		// const accountId = user.id
-		
-		const accessToken = await AsyncStorage.getItem('accessToken')
-		const id = '5ef97cab2f5fd7de3dd6b33b'
-		const accountId = id
-		let friendshipId = null
-
-		await axios({
-			method: 'GET',
-			url: `${baseURL}/accounts/${accountId}/friendship`,
-		}).then(res => {
-			friendshipId = res.data.id
-		}).catch(err => {
-			if (err.response.data.error.code === "MODEL_NOT_FOUND") {
-				friendshipId = null
-			}
-		})
-
-		if (!friendshipId) {
-			await axios({
-				method: 'POST',
-				url: `${baseURL}/friends`,
-				data: {
-					accountId
-				}
-			}).then(res => {
-				console.log('yay, init friendlist')
-			}).catch(err => {
-				console.log('fail to init')
-			})
-		} else {
-			await axios({
-				method: 'GET',
-				url: `${baseURL}/accounts/${accountId}/friendship`,
-			}).then(res => {
-				let friendList = res.data.friends
-				friendList = friendList.map((friend) => {
-					friend.added = false
-					return friend
-				})
-				this.setState({
-					friends: res.data.friends
-				})
-			}).catch(err => {
-				console.log(err.response.data)
-			})
-		}
+	openRBSheet = (RBSheet) => {
 		RBSheet.open()
 	}
 
-	checkAdded = (user) => {
-		let { borrower } = this.props.item
-		console.log(borrower)
-		borrower.forEach((person) => {
-			if (person.username === user.username)
-				return true
-		})
-		return false
-	}
-
 	_changeBorrower = (id, user) => {
-		console.log(this.checkAdded(user))
-		if (this.checkAdded(user)) {
+		if (user.added) {
 			this.props.changeBorrower(id, user, 'delete')
-			this.setState({isChanged: !this.state.isChange})
 		} else {
 			this.props.changeBorrower(id, user, 'add')
-			this.setState({isChanged: !this.state.isChange})
 		}
 	}
 
@@ -107,14 +46,14 @@ export default class BillItem extends Component {
 							<Text style={styles.userName}>{user.username}</Text>
 						</View>
 					</View>
-					<Text style={styles.addedBorrower}>{user.added}</Text>
+					<Text style={styles.addedBorrower}>{user.added ? "Added" : ""}</Text>
 				</View>
 			</TouchableOpacity>
 		)
 	}
 
 	render() {
-		const { item, index, isEditing, changeTempData, changeBorrower } = this.props
+		const { item, index, friends, isEditing, changeTempData, changeBorrower } = this.props
 		return (
 			<View style={{
 				flexDirection: 'row',
@@ -158,11 +97,18 @@ export default class BillItem extends Component {
 								<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.aqua} />
 							</TouchableOpacity>
 							<RBSheet
+								animationType={"slide"}
+								closeOnPressMask={true}
+								closeOnPressBack={true}
+								keyboardAvoidingViewEnabled={true}
 								ref={ref => {
 									this[RBSheet + index] = ref;
 								}}
 								height={100}
 								customStyles={{
+									wrapper: {
+										backgroundColor: "transparent"
+									},
 									container: {
 										height: '45%',
 										backgroundColor: COLORS.lightdark,
@@ -174,7 +120,7 @@ export default class BillItem extends Component {
 							>
 								<SafeAreaView>
 									<FlatList
-										data={this.state.friends}
+										data={friends}
 										renderItem={({ index, item }) => this.renderFriendItem(item, index)}
 										keyExtractor={item => item.id}
 									/>
