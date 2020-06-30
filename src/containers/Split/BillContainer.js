@@ -16,7 +16,7 @@ export default class BillContainer extends Component {
 	}
 
 	render() {
-		const { data, friends, isEditing, changeBorrower } = this.props
+		const { data, isEditing, friends, changeBorrower } = this.props
 		return (
 			<View style={{
 				backgroundColor: COLORS.white,

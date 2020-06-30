@@ -11,26 +11,57 @@ import { baseURL } from '../../assets/constant/constant'
 import { FlatList } from 'react-native-gesture-handler'
 import axios from '../../services/axios'
 import Avatar from '../../components/Avatar'
+import { getFriendOfBill, getFriendId } from '../../services/accountGateway'
+import { initFriend } from '../../services/friendGateway'
 
 export default class BillItem extends Component {
-	
+
 	constructor(props) {
 		super(props)
 		this.state = {
-			friends: [],
-			isChanged: false
+			friends: []
 		}
 	}
 
-	openRBSheet = (RBSheet) => {
+	openRBSheet = async (RBSheet) => {
+		
+			let { borrower } = this.props.item
+			let friendList = this.props.friends
+			friendList = friendList.map((friend) => {
+        friend.added = false
+        borrower.forEach(person => {
+          if (person.username === friend.username) {
+            friend.added = true
+          }
+        })
+        return friend
+      })
+			this.setState({
+				friends: friendList
+			})
 		RBSheet.open()
 	}
 
-	_changeBorrower = (id, user) => {
+	checkAdded = (user) => {
+		let { friends } = this.state
+		//check if a user is in friend
+		let indexF = friends.findIndex(friend => friend.username === user.username)
+		return friends[indexF].added
+	}
+
+	_changeBorrower = async (id, user) => {
+		let friends = this.state.friends
+		let indexF = friends.findIndex(friend => user.username === friend.username)
 		if (user.added) {
+			user.added = false
+			friends[indexF].added = false
 			this.props.changeBorrower(id, user, 'delete')
+			this.setState({ friends })
 		} else {
+			user.added = true
+			friends[indexF].added = true
 			this.props.changeBorrower(id, user, 'add')
+			this.setState({ friends })
 		}
 	}
 
@@ -40,7 +71,7 @@ export default class BillItem extends Component {
 			<TouchableOpacity onPress={() => this._changeBorrower(id, user)}>
 				<View style={styles.friendItemContainer}>
 					<View style={styles.friendInfoContainer}>
-						<Avatar source={""} key={user.avatarUrl} size={50} style={{borderColor: 'white', borderWidth: 1, marginRight: 10}}/>
+						<Avatar source={""} key={user.avatarUrl} size={50} style={{ borderColor: 'white', borderWidth: 1, marginRight: 10 }} />
 						<View style={styles.nameContainer}>
 							<Text style={styles.fullName}>{user.fullname}</Text>
 							<Text style={styles.userName}>{user.username}</Text>
@@ -53,7 +84,7 @@ export default class BillItem extends Component {
 	}
 
 	render() {
-		const { item, index, friends, isEditing, changeTempData, changeBorrower } = this.props
+		const { item, index, isEditing, changeTempData } = this.props
 		return (
 			<View style={{
 				flexDirection: 'row',
@@ -87,7 +118,7 @@ export default class BillItem extends Component {
 							<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 								{item.borrower && item.borrower.map((borrower, index) =>
 									<View key={index}>
-										<Avatar source={""} key={borrower.avatarUrl} size={24} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+										<Avatar source={""} key={borrower.avatarUrl} size={24} style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
 									</View>
 								)}
 							</ScrollView>
@@ -120,7 +151,7 @@ export default class BillItem extends Component {
 							>
 								<SafeAreaView>
 									<FlatList
-										data={friends}
+										data={this.state.friends}
 										renderItem={({ index, item }) => this.renderFriendItem(item, index)}
 										keyExtractor={item => item.id}
 									/>
@@ -156,7 +187,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 22
 	},
-  friendInfoContainer: {
+	friendInfoContainer: {
 		flexDirection: 'row'
 	},
 	nameContainer: {
@@ -169,7 +200,7 @@ const styles = StyleSheet.create({
 	},
 	fullName: {
 		color: COLORS.white,
-		marginBottom: 2	
+		marginBottom: 2
 	},
 	addedBorrower: {
 		color: COLORS.light,

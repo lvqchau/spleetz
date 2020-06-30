@@ -10,8 +10,7 @@ import COLORS from '../../assets/colors'
 import BillContainer from './BillContainer'
 import displayPrice from '../../utils/displayPrice'
 import CategoryComponent from './components/CategoryComponent'
-import { baseURL } from '../../assets/constant/constant'
-import AsyncStorage from '@react-native-community/async-storage'
+import { getFriend } from '../../services/accountGateway'
 
 const mockData = [
 	{
@@ -85,17 +84,21 @@ export default class SplitScreen extends Component {
 		}
 	}
 
-	componentDidMount() {
-		const { navigation } = this.props
-		this.focusListener = navigation.addListener('focus', () => {
-			this.getFriend()
-		});
-	}
+  componentDidMount() {
+    const { navigation } = this.props
+    this.focusListener = navigation.addListener('focus', () => {
+      this._getFriend()
+    });
+  }
 
-	componentWillUnmount() {
-    // Remove the event listener before removing the screen from the stack
+  componentWillUnmount() {
     this.focusListener.remove();
-}
+  }
+
+	_getFriend = async () => {
+		let friends = await getFriend()
+		this.setState({friends})
+	}
 
 	editBill = (type) => {
 		this.setState({ isEditing: !this.state.isEditing })
@@ -157,72 +160,18 @@ export default class SplitScreen extends Component {
 
 	changeBorrower = (itemId, person, method) => {
 		let data = this.state.originalData
-		let friends = this.state.friends
 		let index = data.findIndex(item => item.id === itemId)
-		let indexF = friends.findIndex(item => item.username === person.username)
 		if (method === 'delete') {
-			console.log(friends[indexF])
-			friends[indexF].added = false
-			data[index].borrower.splice(index, 1)
-			this.setState({originalData: data, data, friends})
+			data[index].borrower = data[index].borrower.filter(user => user.username !== person.username)
+			this.setState({originalData: data, data})
 		} else if (method === 'add') {
-			console.log("indexF:", friends[indexF])
-			friends[indexF].added = true
 			data[index].borrower.push(person)
-			this.setState({originalData: data, data, friends})
-		}
-	}
-
-	getFriend = async () => {
-		const accessToken = await AsyncStorage.getItem('accessToken')
-		const id = '5ef97cab2f5fd7de3dd6b33b'
-		const accountId = id
-		let friendshipId = null
-
-		await axios({
-			method: 'GET',
-			url: `${baseURL}/accounts/${accountId}/friendship`,
-		}).then(res => {
-			friendshipId = res.data.id
-		}).catch(err => {
-			if (err.response.data.error.code === "MODEL_NOT_FOUND") {
-				friendshipId = null
-			}
-		})
-
-		if (!friendshipId) {
-			await axios({
-				method: 'POST',
-				url: `${baseURL}/friends`,
-				data: {
-					accountId
-				}
-			}).then(res => {
-				console.log('yay, init friendlist')
-			}).catch(err => {
-				console.log('fail to init')
-			})
-		} else {
-			await axios({
-				method: 'GET',
-				url: `${baseURL}/accounts/${accountId}/friendship`,
-			}).then(async res => {
-				let friendList = res.data.friends
-				friendList = friendList.map((friend) => {
-					friend.added = false
-					return friend
-				})
-				await this.setState({
-					friends: friendList
-				})
-			}).catch(err => {
-				console.log(err.response.data)
-			})
-		}
+			this.setState({originalData: data, data})
+		}	
 	}
 
 	render() {
-		const { isEditing } = this.state
+		const { isEditing, friends } = this.state
 		return (
 			<SafeAreaView style={[
 				styles.splitContainer, {
@@ -285,7 +234,7 @@ export default class SplitScreen extends Component {
 
 					{/* info container */}
 					<View>
-						<BillContainer friends={this.state.friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={this.state.data}></BillContainer>
+						<BillContainer friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={this.state.data}></BillContainer>
 					</View>
 				</View>
 				<View style={{
