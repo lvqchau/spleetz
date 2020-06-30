@@ -21,7 +21,8 @@
     },
     "createdAt": {
       "type": "date",
-      "required": true
+      "required": true,
+      "defaultFn": "now"
     },
     "checkedAt": {
       "type": "date"

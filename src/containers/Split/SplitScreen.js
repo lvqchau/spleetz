@@ -1,101 +1,74 @@
 import React, { Component } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, Dimensions } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import LinearGradient from 'react-native-linear-gradient'
+import { ScrollView } from 'react-native-gesture-handler'
 
-import styles from './Split.component.style.js'
+import styles from './Split.component.style'
 import COLORS from '../../assets/colors'
 import BillContainer from './BillContainer'
-import displayPrice from '../../utils/displayPrice.js'
+import displayPrice from '../../utils/displayPrice'
+import CategoryComponent from './components/CategoryComponent'
+import { baseURL } from '../../assets/constant/constant'
+import AsyncStorage from '@react-native-community/async-storage'
 
-const { width, height } = Dimensions.get('window')
 const mockData = [
 	{
 		id: 0,
 		name: "Bánh mì xúc xích xông khói",
 		quantity: 100,
 		price: 100000,
-		borrower: [
-			{
-				name: "Thanh",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Tran",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Trieu",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Thanh",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Tran",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Thanh",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Tran",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Thanh",
-				avatar: '../../assets/images/add.svg'
-			},
-			{
-				name: "Tran",
-				avatar: '../../assets/images/add.svg'
-			},
-		]
+		borrower: []
 	},
 	{
 		id: 1,
 		name: "Banh mi xuc xich",
 		quantity: 10,
-		price: 20000
+		price: 20000,
+		borrower: []
 	},
 	{
 		id: 2,
 		name: "Banh mi ga",
 		quantity: 2,
-		price: 15000
+		price: 15000,
+		borrower: []
 	},
 	{
 		id: 3,
 		name: "Banh mi ga",
 		quantity: 2,
-		price: 15000
+		price: 15000,
+		borrower: []
 	},
 	{
 		id: 4,
 		name: "Banh mi ga",
 		quantity: 5,
-		price: 15000
+		price: 15000,
+		borrower: []
 	},
 	{
 		id: 5,
 		name: "Banh mi ga",
 		quantity: 5,
-		price: 15000
+		price: 15000,
+		borrower: []
 	},
 	{
 		id: 6,
 		name: "Banh mi ga",
 		quantity: 5,
-		price: 15000
+		price: 15000,
+		borrower: []
 	},
 	{
 		id: 7,
 		name: "Banh mi ga",
 		quantity: 5,
-		price: 15000
+		price: 15000,
+		borrower: []
 	}
 ]
 
@@ -106,108 +79,136 @@ export default class SplitScreen extends Component {
 		this.state = {
 			isCategory: 'food',
 			isEditing: false,
-			data: mockData
+			data: mockData, //from api, changable
+			originalData: mockData, //from api
+			friends: []
 		}
 	}
 
-	changeData = (item, method) => {
-		data = this.state.data.filter(dataItem => dataItem.id !== item.id)
-		this.setState({
-			data
-		})
-		// this.forceUpdate()
-		console.log(this.state)
-		console.log(data)
+	componentDidMount() {
+		// const { navigation } = this.props
+		// this.focusListener = navigation.addListener('didFocus', () => {
+		// 	 console.log('hello there')
+		// });
+	}
+
+	editBill = (type) => {
+		this.setState({ isEditing: !this.state.isEditing })
+		switch (type) {
+			case 'edit':
+				console.log(this.state.originalData)
+				break
+			case 'cancel':
+				console.log(this.state.originalData)
+				this.changeData(this.state.originalData, 'cancel')
+				break
+			case 'done':
+				console.log(this.state.originalData)
+				this.changeData(this.state.data, 'done')
+				break
+		}
+	}
+
+	changeData = (data, method) => {
+		// let originalData = this.state.originalData
+		if (method === 'done') {
+			console.log('done')
+			this.setState({ originalData: data, data })
+			// console.log('api called') //saving... 
+		} else if (method === 'delete') {
+			this.setState({ data }) //delete in state
+		} else if (method === 'cancel') {
+			this.setState({ data: this.state.originalData, originalData: data })
+		}
 	}
 
 	openCamera = () => {
 		this.props.navigation.navigate("Camera")
 	}
 
-	renderCategory = (category, isCategory) => {
-		let colorGrad = COLORS.gradientGray
-		let icon = ''
-		let textColor = COLORS.light
-		switch (category) {
-			case 'food':
-				icon = 'hamburger'
-				if (isCategory === 'food') {
-					textColor = 'white'
-					colorGrad = COLORS.gradientPink
-				}
-				break
-			case 'others':
-				if (isCategory === 'others') {
-					textColor = 'white'
-					colorGrad = COLORS.gradientPink
-				}
-				break
-			case 'shop':
-				icon = 'shopping'
-				if (isCategory === 'shop') {
-					textColor = 'white'
-					colorGrad = COLORS.gradientGreen
-				}
-				break
-			case 'house':
-				icon = 'home-variant'
-				if (isCategory === 'house') {
-					textColor = 'white'
-					colorGrad = COLORS.gradientPurple
-				}
-				break
-		}
-
+	editTouchable = (type) => {
+		let color = type === 'done' ? COLORS.aqua : COLORS.salmon
 		return (
 			<TouchableOpacity
-				activeOpacity={0.8}
-				onPress={() => this.setState({ isCategory: category })}
+				activeOpacity={.7}
+				style={{
+					alignItems: 'flex-end'
+				}}
+				onPress={() => this.editBill(type)}
 			>
-				<LinearGradient
-					start={{ x: 1, y: 1 }}
-					end={{ x: 1, y: 0 }}
-					colors={colorGrad} style={{
-						width: 68,
-						height: 68,
-						justifyContent: 'center',
-						alignItems: 'center',
-						borderRadius: 10
-					}}>
-					{
-						category === 'others' ?
-							<Text style={{
-								textTransform: 'uppercase',
-								color: textColor,
-								fontSize: 14,
-								fontWeight: '600'
-							}}>Others</Text>
-							:
-							<MaterialCommunityIcons size={50} name={icon} color={textColor} />
-					}
-
-				</LinearGradient>
+				<Text style={{
+					fontWeight: '700',
+					textTransform: 'uppercase',
+					color,
+					marginRight: type === 'cancel' ? 4 : 0
+				}}>{type}</Text>
 			</TouchableOpacity>
 		)
 	}
 
-	renderCategories = () => {
-		const { isCategory } = this.state
-		return (
-			<View style={{
-				flexDirection: 'row',
-				justifyContent: 'space-between',
-				alignItem: 'center'
-			}}>
-				{/* Food */}
-				{this.renderCategory('food', isCategory)}
-				{/* Shopping/Groceries */}
-				{this.renderCategory('shop', isCategory)}
-				{/* Housing */}
-				{this.renderCategory('house', isCategory)}
-				{/* Others */}
-				{this.renderCategory('others', isCategory)}
-			</View>
-		)
+	setCategory = (category) => {
+		this.setState({isCategory: category})
+	}
+
+	changeBorrower = (itemId, person, method) => {
+		let data = this.state.originalData
+		let index = data.findIndex(item => item.id === itemId)
+		if (method === 'delete') {
+			data[index].borrower.splice(index, 1)
+			this.setState({originalData: data, data})
+		} else if (method === 'add') {
+			data[index].borrower.push(person)
+			this.setState({originalData: data, data})
+		}
+	}
+
+	getFriend = async () => {
+		const accessToken = await AsyncStorage.getItem('accessToken')
+		const id = '5ef97cab2f5fd7de3dd6b33b'
+		const accountId = id
+		let friendshipId = null
+
+		await axios({
+			method: 'GET',
+			url: `${baseURL}/accounts/${accountId}/friendship`,
+		}).then(res => {
+			friendshipId = res.data.id
+		}).catch(err => {
+			if (err.response.data.error.code === "MODEL_NOT_FOUND") {
+				friendshipId = null
+			}
+		})
+
+		if (!friendshipId) {
+			await axios({
+				method: 'POST',
+				url: `${baseURL}/friends`,
+				data: {
+					accountId
+				}
+			}).then(res => {
+				console.log('yay, init friendlist')
+			}).catch(err => {
+				console.log('fail to init')
+			})
+		} else {
+			await axios({
+				method: 'GET',
+				url: `${baseURL}/accounts/${accountId}/friendship`,
+			}).then(res => {
+				let friendList = res.data.friends
+				friendList = friendList.map((friend) => {
+					friend.added = false
+					return friend
+				})
+				console.log(friendList)
+				this.setState({
+					friends: res.data.friends
+				})
+			}).catch(err => {
+				console.log(err.response.data)
+			})
+		}
 	}
 
 	render() {
@@ -226,43 +227,55 @@ export default class SplitScreen extends Component {
 					<View style={{
 						marginBottom: 25,
 					}}>
-						{this.renderCategories()}
+						<CategoryComponent setCategory={this.setCategory} isCategory={this.state.isCategory}></CategoryComponent>
 					</View>
 					<View style={{
 						marginBottom: 15,
+						flexDirection: 'row',
+						justifyContent: 'space-between'
 					}}>
-						<Text style={{
-							color: COLORS.purple,
-							fontWeight: '700',
-							marginBottom: 5
-						}}>Location</Text>
 						<View style={{
-							flexDirection: 'row'
+							flexDirection: 'column',
+							width: '50%'
 						}}>
 							<Text style={{
-								fontSize: 18,
-								fontWeight: '400'
-							}}>23 Nguyen Trai, Q1</Text>
-							<TouchableOpacity
-								activeOpacity={.7}
+								color: COLORS.purple,
+								fontWeight: '700',
+								marginBottom: 5
+							}}>Location</Text>
+							<ScrollView
 								style={{
-									flex: 1,
-									alignItems: 'flex-end'
+									// width: '30%'
 								}}
-								onPress={() => this.setState({ isEditing: !isEditing })}
-							>
+								horizontal={true}
+								showsHorizontalScrollIndicator={false}>
 								<Text style={{
-									fontWeight: '700',
-									textTransform: 'uppercase',
-									color: !isEditing ? COLORS.salmon : COLORS.aqua
-								}}>{!isEditing ? 'Edit' : 'Done'}</Text>
-							</TouchableOpacity>
+									fontSize: 18,
+									fontWeight: '400'
+								}}>23 Nguyen Trai, Q1111111 Q1111111 Q1111111 Q1111111</Text>
+							</ScrollView>
+						</View>
+						<View style={{
+							alignSelf: 'flex-end',
+							alignItems: 'flex-end',
+							textAlign: 'right',
+							flexDirection: 'row'
+						}}>
+							{
+								!isEditing ?
+									this.editTouchable('edit')
+									:
+									<>
+										{this.editTouchable('cancel')}
+										{this.editTouchable('done')}
+									</>
+							}
 						</View>
 					</View>
 
 					{/* info container */}
 					<View>
-						<BillContainer changeData={this.changeData} isEditing={isEditing} data={this.state.data}></BillContainer>
+						<BillContainer friends={this.state.friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={this.state.data}></BillContainer>
 					</View>
 				</View>
 				<View style={{
@@ -273,7 +286,7 @@ export default class SplitScreen extends Component {
 				}}>
 					<TouchableOpacity
 						activeOpacity={.7}
-						onPress={() => {this.openCamera()}}
+						onPress={() => { this.openCamera() }}
 					>
 						<LinearGradient
 							start={{ x: 1, y: 1 }}
@@ -315,7 +328,7 @@ export default class SplitScreen extends Component {
 							<AntDesign size={30} name="arrowright" color={COLORS.white} style={{ height: 30 }} />
 						</LinearGradient>
 					</TouchableOpacity>
-					</View>
+				</View>
 			</SafeAreaView>
 		)
 	}
