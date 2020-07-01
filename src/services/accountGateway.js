@@ -86,7 +86,6 @@ const getFriend = async () => {
   let myId = await AsyncStorage.getItem('userId')
   let friendList = []
   let friendshipId = await getFriendId()
-  console.log(friendshipId)
   if (!friendshipId) {
     await initFriend()
     friendList = []
