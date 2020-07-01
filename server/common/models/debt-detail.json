@@ -18,6 +18,15 @@
     },
     "status": {
       "type": "string"
+    },
+    "items": {
+      "type": [
+        {
+          "name": "string",
+          "price": "number",
+          "quantity": "number"
+        }
+      ]
     }
   },
   "validations": [],
@@ -36,12 +45,6 @@
       "type": "belongsTo",
       "model": "Account",
       "foreignKey": "borrowerId"
-    },
-    "items": {
-      "type": "hasMany",
-      "model": "Item",
-      "foreignKey": "",
-      "through": "Bill"
     }
   },
   "acls": [],

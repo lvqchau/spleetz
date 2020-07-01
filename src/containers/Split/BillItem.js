@@ -1,45 +1,47 @@
 import React, { Component } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import RBSheet from "react-native-raw-bottom-sheet"
-import AsyncStorage from '@react-native-community/async-storage'
 
 import displayPrice from '../../utils/displayPrice'
 import COLORS from '../../assets/colors'
-import { baseURL } from '../../assets/constant/constant'
 import { FlatList } from 'react-native-gesture-handler'
-import axios from '../../services/axios'
 import Avatar from '../../components/Avatar'
-import { getFriendOfBill, getFriendId } from '../../services/accountGateway'
-import { initFriend } from '../../services/friendGateway'
+import { getFriendId } from '../../services/accountGateway'
 
 export default class BillItem extends Component {
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			friends: []
+			friends: [],
+			isInputting: false
 		}
 	}
 
 	openRBSheet = async (RBSheet) => {
-		
-			let { borrower } = this.props.item
-			let friendList = this.props.friends
-			friendList = friendList.map((friend) => {
-        friend.added = false
-        borrower.forEach(person => {
-          if (person.username === friend.username) {
-            friend.added = true
-          }
-        })
-        return friend
-      })
-			this.setState({
-				friends: friendList
+		let friendshipId = await getFriendId()
+		let { borrower } = this.props.item
+		let friendList = this.props.friends
+		friendList = friendList.map((friend) => {
+			friend.added = false
+			borrower.forEach(person => {
+				if (person.username === friend.username) {
+					friend.added = true
+				}
 			})
-		RBSheet.open()
+			return friend
+		})
+
+		if (friendshipId) {
+			while (this.state.friends.length === 0) {
+				this.setState({
+					friends: friendList
+				})
+			}
+			RBSheet.open()
+		}
 	}
 
 	checkAdded = (user) => {
@@ -65,13 +67,12 @@ export default class BillItem extends Component {
 		}
 	}
 
-	renderFriendItem = (user, index) => {
-		const { id } = this.props.item
+	renderFriendItem = (index, user) => {
 		return (
-			<TouchableOpacity onPress={() => this._changeBorrower(id, user)}>
+			<TouchableOpacity key={index} onPress={() => this._changeBorrower(this.props.item.id, user)}>
 				<View style={styles.friendItemContainer}>
 					<View style={styles.friendInfoContainer}>
-						<Avatar source={""} key={user.avatarUrl} size={50} style={{ borderColor: 'white', borderWidth: 1, marginRight: 10 }} />
+						<Avatar source={user.avatarUrl} key={user.avatarUrl} size={50} style={{ borderColor: 'white', borderWidth: 1, marginRight: 10 }} />
 						<View style={styles.nameContainer}>
 							<Text style={styles.fullName}>{user.fullname}</Text>
 							<Text style={styles.userName}>{user.username}</Text>
@@ -83,30 +84,58 @@ export default class BillItem extends Component {
 		)
 	}
 
+	renderInputItem = (item, isInputting) => {
+		if (isInputting) {
+			return (
+				<>
+					<Text style={{
+						flex: 1
+					}}>{item.quantity}</Text>
+					<Text style={{
+						flex: 4
+					}}>{item.name}</Text>
+					<Text style={{
+						flex: 2,
+						fontFamily: 'Montserrat-Bold',
+						textAlign: 'right',
+						alignItems: 'stretch'
+					}}>{displayPrice(item.price)}</Text>
+				</>
+			)
+		} else {
+			return (
+				<>
+					<Text style={{
+						flex: 1
+					}}>{item.quantity}</Text>
+					<Text style={{
+						flex: 4
+					}}>{item.name}</Text>
+					<Text style={{
+						flex: 2,
+						fontFamily: 'Montserrat-Bold',
+						textAlign: 'right',
+						alignItems: 'stretch'
+					}}>{displayPrice(item.price)}</Text>
+				</>
+			)
+		}
+	}
+
 	render() {
 		const { item, index, isEditing, changeTempData } = this.props
+		const { isInputting } = this.state
 		return (
 			<View style={{
 				flexDirection: 'row',
 				flex: 1
 			}}>
-				<View style={{ flex: 7, marginBottom: 15 }}>
+				<View style={{ flex: 7, marginBottom: 15, marginRight: isEditing ? 62 : 0 }}>
 					<View style={{
 						flexDirection: 'row',
 						marginBottom: 5
 					}}>
-						<Text style={{
-							flex: 1
-						}}>{item.quantity}</Text>
-						<Text style={{
-							flex: 4
-						}}>{item.name}</Text>
-						<Text style={{
-							flex: 2,
-							fontFamily: 'Montserrat-Bold',
-							textAlign: 'right',
-							alignItems: 'stretch'
-						}}>{displayPrice(item.price)}</Text>
+						{this.renderInputItem(item, isInputting)}
 					</View>
 					<View style={{
 						flexDirection: 'row',
@@ -118,58 +147,108 @@ export default class BillItem extends Component {
 							<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 								{item.borrower && item.borrower.map((borrower, index) =>
 									<View key={index}>
-										<Avatar source={""} key={borrower.avatarUrl} size={24} style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
+										<Avatar source={borrower.avatarUrl} key={borrower.avatarUrl} size={24} style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
 									</View>
 								)}
 							</ScrollView>
 						</View>
 						<View style={{ flex: 1 }}>
-							<TouchableOpacity onPress={() => { this.openRBSheet(this[RBSheet + index]) }}>
-								<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.aqua} />
-							</TouchableOpacity>
-							<RBSheet
-								animationType={"slide"}
-								closeOnPressMask={true}
-								closeOnPressBack={true}
-								keyboardAvoidingViewEnabled={true}
-								ref={ref => {
-									this[RBSheet + index] = ref;
-								}}
-								height={100}
-								customStyles={{
-									wrapper: {
-										backgroundColor: "transparent"
-									},
-									container: {
-										height: '45%',
-										backgroundColor: COLORS.lightdark,
-										paddingVertical: 15,
-										borderTopRightRadius: 42,
-										borderTopLeftRadius: 42
-									}
-								}}
-							>
-								<SafeAreaView>
-									<FlatList
-										data={this.state.friends}
-										renderItem={({ index, item }) => this.renderFriendItem(item, index)}
-										keyExtractor={item => item.id}
-									/>
-								</SafeAreaView>
-							</RBSheet>
+							{
+								isEditing ?
+									<></>
+									:
+									<>
+										<TouchableOpacity onPress={() => { this.openRBSheet(this[RBSheet + index]) }}>
+											<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.aqua} />
+										</TouchableOpacity>
+										<RBSheet
+											animationType={"slide"}
+											closeOnPressMask={true}
+											closeOnPressBack={true}
+											keyboardAvoidingViewEnabled={true}
+											ref={ref => {
+												this[RBSheet + index] = ref;
+											}}
+											height={100}
+											customStyles={{
+												wrapper: {
+													backgroundColor: "transparent"
+												},
+												container: {
+													height: '45%',
+													backgroundColor: COLORS.lightdark,
+													paddingVertical: 15,
+													borderTopRightRadius: 42,
+													borderTopLeftRadius: 42
+												}
+											}}
+										>
+											<SafeAreaView style={{ height: '100%' }}>
+												<View style={styles.friendTextContainer}>
+													<Text style={styles.friendListText}>Friendlist</Text>
+													<TouchableOpacity onPress={async () => {
+														await this[RBSheet + index].close()
+														this.props.navigation.navigate("Profile")
+													}}>
+														<AntDesign name="arrowright" size={26} color={COLORS.aqua} />
+													</TouchableOpacity>
+												</View>
+												<FlatList
+													data={this.state.friends}
+													renderItem={({ index, item }) => this.renderFriendItem(index, item)}
+													keyExtractor={item => item.id}
+												/>
+											</SafeAreaView>
+										</RBSheet>
+									</>
+							}
 						</View>
 					</View>
 				</View>
 				{
 					isEditing ?
-						<TouchableOpacity style={{
-							flex: 1,
-							alignItems: 'flex-end'
-						}}
-							onPress={() => { changeTempData(item, 'delete') }}
-						>
-							<AntDesign name="delete" size={18} color={COLORS.red} />
-						</TouchableOpacity>
+						<>
+							{
+								!isInputting ?
+									<TouchableOpacity style={{
+										position: 'absolute',
+										right: 26,
+										top: -5,
+										flex: 1,
+										alignItems: 'flex-end',
+										padding: 5
+									}}
+										onPress={() => this.setState({ isInputting: true })}
+									>
+										<AntDesign name="form" size={18} color={COLORS.aqua} />
+									</TouchableOpacity>
+									:
+									<TouchableOpacity style={{
+										position: 'absolute',
+										right: 26,
+										top: -5,
+										flex: 1,
+										alignItems: 'flex-end',
+										padding: 5
+									}}
+										onPress={() => this.setState({ isInputting: false })}
+									>
+										<AntDesign name="check" size={18} color={COLORS.green} />
+									</TouchableOpacity>
+							}
+							<TouchableOpacity style={{
+								position: 'absolute',
+								right: 0,
+								top: -5,
+								flex: 1,
+								alignItems: 'flex-end',
+								padding: 5
+							}}
+								onPress={() => { changeTempData(item, 'delete') }}
+							>
+								<AntDesign name="delete" size={18} color={COLORS.red} />
+							</TouchableOpacity>
+						</>
 						:
 						<></>
 				}
@@ -183,15 +262,16 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		marginVertical: 5,
+		alignItems: 'center',
+		marginBottom: 10,
 		paddingVertical: 5,
-		paddingHorizontal: 22
+		marginHorizontal: 22
 	},
 	friendInfoContainer: {
 		flexDirection: 'row'
 	},
 	nameContainer: {
-		flexDirection: 'column',
+		flexDirection: 'column'
 	},
 	userName: {
 		fontFamily: 'Montserrat-Regular',
@@ -203,7 +283,19 @@ const styles = StyleSheet.create({
 		marginBottom: 2
 	},
 	addedBorrower: {
-		color: COLORS.light,
+		color: COLORS.light
+	},
+	friendTextContainer: {
+		marginTop: 10,
+		marginBottom: 5,
+		marginHorizontal: 22,
+		flexDirection: 'row',
+		justifyContent: 'space-between'
+	},
+	friendListText: {
+		fontSize: 16,
+		textTransform: 'uppercase',
+		fontFamily: 'Montserrat-SemiBold',
+		color: COLORS.white
 	}
 })
-

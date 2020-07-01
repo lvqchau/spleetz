@@ -10,13 +10,20 @@ export default class BillContainer extends Component {
 
 	changeTempData = (item, method) => {
 		if (method === 'delete') {
-			let tempData = this.props.data.filter(dataItem => dataItem.id !== item.id)
-			this.props.changeData(tempData, 'delete')
+			console.log(item.id)
+			let indexI = this.props.data.findIndex(myItem => myItem.id == item.id)
+			
+			console.log('indexOfItem: ', indexI)
+			this.props.data.splice(indexI, 1)
+			// console.log("temp:", this.props.data)
+			// let tempData = this.props.data.filter(dataItem => dataItem.id !== item.id)
+			this.props.changeData(this.props.data, 'delete')
 		}
 	}
 
 	render() {
-		const { data, isEditing, friends, changeBorrower } = this.props
+		const { data, updateItem, isEditing, friends, changeBorrower, navigation } = this.props
+		console.log("container: ",data)
 		return (
 			<View style={{
 				backgroundColor: COLORS.white,
@@ -36,7 +43,7 @@ export default class BillContainer extends Component {
 			>
 				<ScrollView style={{ marginBottom: 5 }} showsVerticalScrollIndicator={false}>
 					{data && data.map((billItem, index) =>
-						<BillItem friends={friends} changeBorrower={changeBorrower} isEditing={isEditing} key={index} index={index} item={billItem} changeTempData={this.changeTempData}></BillItem>
+						<BillItem updateItem={updateItem} navigation={navigation} friends={friends} changeBorrower={changeBorrower} isEditing={isEditing} key={index} index={index} item={billItem} changeTempData={this.changeTempData}></BillItem>
 					)}
 				</ScrollView>
 				<Text style={{

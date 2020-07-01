@@ -12,7 +12,7 @@ export class friendManagingService {
     })
   }
 
-  addFriendService = async (accountId, friend) => {
+  addFriendService = async (accountId, friendId) => {
     let friendshipId = null
     let friends = []
     await accountService.getFriendService(accountId).then(res => {
@@ -33,7 +33,7 @@ export class friendManagingService {
 			})
     }
 
-    friends.push(friend)
+    friends.push({accountId: friendId})
 
     return axios({
       method: 'POST',

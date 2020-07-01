@@ -41,6 +41,12 @@ export class accountManagingService {
 			url: `${baseURL}/accounts/${accountId}/friendship`,
 		})
   }
+  getUserInfoService = (accountId) => {
+    return axios({
+      method: 'GET',
+      url: `${baseURL}/accounts/${accountId}`
+    })
+  }
 }
 
 export const accountService = new accountManagingService();

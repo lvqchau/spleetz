@@ -10,10 +10,6 @@
     "friends": {
       "type": [
         {
-          "fullname": "string",
-          "avatarUrl": "string",
-          "username": "string",
-          "phone": "string",
           "accountId": "string"
         }
       ],

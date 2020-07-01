@@ -12,15 +12,19 @@
     },
     "location": {
       "type": "string"
+    },
+    "items": {
+      "type": [
+        {
+          "name": "string",
+          "price": "number",
+          "quantity": "number"
+        }
+      ]
     }
   },
   "validations": [],
   "relations": {
-    "items": {
-      "type": "hasMany",
-      "model": "Item",
-      "foreignKey": ""
-    },
     "payer": {
       "type": "belongsTo",
       "model": "Account",

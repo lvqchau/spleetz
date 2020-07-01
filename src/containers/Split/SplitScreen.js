@@ -8,7 +8,6 @@ import { ScrollView } from 'react-native-gesture-handler'
 import styles from './Split.component.style'
 import COLORS from '../../assets/colors'
 import BillContainer from './BillContainer'
-import displayPrice from '../../utils/displayPrice'
 import CategoryComponent from './components/CategoryComponent'
 import { getFriend } from '../../services/accountGateway'
 
@@ -80,38 +79,48 @@ export default class SplitScreen extends Component {
 			isEditing: false,
 			data: mockData, //from api, changable
 			originalData: mockData, //from api
-			friends: []
+			friends: [],
+			itemCount: 0
 		}
 	}
+	componentDidMount() {
+		const { navigation } = this.props
+		this.focusListener = navigation.addListener('focus', () => {
+			this._getFriend()
+		});
+	}
 
-  componentDidMount() {
-    const { navigation } = this.props
-    this.focusListener = navigation.addListener('focus', () => {
-      this._getFriend()
-    });
-  }
+	componentWillUnmount() {
+		this.focusListener.remove();
+	}
 
-  componentWillUnmount() {
-    this.focusListener.remove();
-  }
+	checkOutBill = () => {
+		const {originalData}  = this.state
+		console.log(originalData)
+	}
+
+	updateItem = (item, id) => {
+		let { originalData } = this.state
+		let indexI = originalData.findIndex(item => item.id === id)
+		originalData[indexI] = item
+		this.setState({originalData})
+	}
 
 	_getFriend = async () => {
 		let friends = await getFriend()
-		this.setState({friends})
+		console.log("friends", friends)
+		this.setState({ friends })
 	}
 
 	editBill = (type) => {
 		this.setState({ isEditing: !this.state.isEditing })
 		switch (type) {
 			case 'edit':
-				console.log(this.state.originalData)
 				break
 			case 'cancel':
-				console.log(this.state.originalData)
 				this.changeData(this.state.originalData, 'cancel')
 				break
 			case 'done':
-				console.log(this.state.originalData)
 				this.changeData(this.state.data, 'done')
 				break
 		}
@@ -120,11 +129,11 @@ export default class SplitScreen extends Component {
 	changeData = (data, method) => {
 		// let originalData = this.state.originalData
 		if (method === 'done') {
-			console.log('done')
 			this.setState({ originalData: data, data })
 			// console.log('api called') //saving... 
 		} else if (method === 'delete') {
-			this.setState({ data }) //delete in state
+			
+			this.setState({ data }, console.log("data moi: ", this.state.data)) //delete in state
 		} else if (method === 'cancel') {
 			this.setState({ data: this.state.originalData, originalData: data })
 		}
@@ -155,7 +164,7 @@ export default class SplitScreen extends Component {
 	}
 
 	setCategory = (category) => {
-		this.setState({isCategory: category})
+		this.setState({ isCategory: category })
 	}
 
 	changeBorrower = (itemId, person, method) => {
@@ -163,11 +172,11 @@ export default class SplitScreen extends Component {
 		let index = data.findIndex(item => item.id === itemId)
 		if (method === 'delete') {
 			data[index].borrower = data[index].borrower.filter(user => user.username !== person.username)
-			this.setState({originalData: data, data})
+			this.setState({ originalData: data, data })
 		} else if (method === 'add') {
 			data[index].borrower.push(person)
-			this.setState({originalData: data, data})
-		}	
+			this.setState({ originalData: data, data })
+		}
 	}
 
 	render() {
@@ -234,12 +243,12 @@ export default class SplitScreen extends Component {
 
 					{/* info container */}
 					<View>
-						<BillContainer friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={this.state.data}></BillContainer>
+						<BillContainer updateItem={this.updateItem} navigation={this.props.navigation} friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={this.state.data} originalData={this.state.originalData}></BillContainer>
 					</View>
 				</View>
 				<View style={{
 					position: 'absolute',
-					bottom: 10,
+					bottom: 15,
 					right: 0,
 					flexDirection: 'row',
 				}}>
@@ -264,7 +273,7 @@ export default class SplitScreen extends Component {
 					</TouchableOpacity>
 					<TouchableOpacity
 						activeOpacity={.7}
-						onPress={() => { }}
+						onPress={() => this.checkOutBill()}
 					>
 						<LinearGradient
 							start={{ x: 1, y: 1 }}

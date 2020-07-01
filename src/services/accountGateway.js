@@ -47,20 +47,44 @@ const getFriendId = async () => {
   return friendshipId
 }
 
+const getUserInfo = async (accountId) => {
+  let user = {}
+  await accountService.getUserInfoService(accountId)
+  .then(async res => {
+    const {id, fullname, username, phone} = await res.data
+    user = {
+      accountId: id, 
+      fullname,
+      username,
+      phone
+    }
+  })
+  .catch(err => console.log(err.response.data))
+  return user
+}
+
 const getFriend = async () => {
-  let accountId = '5ef97cab2f5fd7de3dd6b33b'
+  let accountId = await AsyncStorage.getItem('userId')
   let friendList = []
   let friendshipId = await getFriendId()
   if (!friendshipId) {
     await initFriend()
     friendList = []
   } else {
-    await accountService.getFriendService(accountId).then(async res => {
+    await accountService.getFriendService(accountId)
+    .then(async res => {
       friendList = await res.data.friends
+      friendList = await friendList.map(async friend => {
+        let user = await getUserInfo(friend.accountId)
+        console.log("user", user)
+        return user
+      })
+      console.log("userFriendList: ", friendList)
     }).catch(err => {
       console.log(err.response.data)
     })
   }
+  console.log("userFriendList2: ", friendList)
   return friendList
 }
 
