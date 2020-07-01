@@ -13,7 +13,6 @@ export default class BillContainer extends Component {
 			let indexI = this.props.data.findIndex(myItem => myItem.id == item.id)
 			let newData = [...this.props.data]
 			newData.splice(indexI, 1)
-			// let tempData = this.props.data.filter(dataItem => dataItem.id !== item.id)
 			this.props.changeData(newData, 'delete')
 		}
 	}
@@ -38,7 +37,7 @@ export default class BillContainer extends Component {
 				}}
 			>
 				<ScrollView style={{ marginBottom: 5 }} showsVerticalScrollIndicator={false}>
-					{data && data.map((billItem, index) =>
+					{data && data.map((billItem, index) => 
 						<BillItem updateItem={updateItem} navigation={navigation} friends={friends} changeBorrower={changeBorrower} isEditing={isEditing} key={index} index={index} item={billItem} changeTempData={this.changeTempData}></BillItem>
 					)}
 				</ScrollView>

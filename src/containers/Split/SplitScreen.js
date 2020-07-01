@@ -10,6 +10,8 @@ import COLORS from '../../assets/colors'
 import BillContainer from './BillContainer'
 import CategoryComponent from './components/CategoryComponent'
 import { getFriend } from '../../services/accountGateway'
+import { createBill } from '../../services/billGateway'
+import  Input from '../../components/FormModal/Input'
 
 const mockData = [
 	{
@@ -80,7 +82,9 @@ export default class SplitScreen extends Component {
 			data: [...mockData], //from api, changable
 			originalData: [...mockData], //from api
 			friends: [],
-			itemCount: 0
+			itemCount: 0,
+			location: '',
+			originalLocation: ''
 		}
 	}
 	componentDidMount() {
@@ -95,14 +99,24 @@ export default class SplitScreen extends Component {
 	}
 
 	checkOutBill = () => {
-		const {originalData}  = this.state
+		const { originalData, originalLocation }  = this.state
+		const items = [...originalData]
+		items.forEach((item)=> {
+			item.borrower.forEach(person => delete person.added)	
+		})
+		const bill = createBill({
+			location: originalLocation,
+			items,
+			date: new Date()
+		})
+		console.log('Created bill: ', bill)
 	}
 
 	updateItem = (item, id) => {
-		let { originalData } = this.state
-		let indexI = originalData.findIndex(item => item.id === id)
-		originalData[indexI] = item
-		this.setState({originalData})
+		let { data } = this.state
+		let indexI = data.findIndex(item => item.id === id)
+		data[indexI] = item
+		this.setState({data})
 	}
 
 	_getFriend = async () => {
@@ -127,11 +141,11 @@ export default class SplitScreen extends Component {
 	changeData = (data, method) => {
 		// let originalData = this.state.originalData
 		if (method === 'done') {
-			this.setState({ originalData: data, data: data })
+			this.setState({ originalData: data, data: data, originalLocation: this.state.location })
 		} else if (method === 'delete') {
 			this.setState({ data: data }) //delete in state
 		} else if (method === 'cancel') {
-			this.setState({ data: this.state.originalData })
+			this.setState({ data, location: this.state.originalLocation })
 		}
 	}
 
@@ -165,8 +179,6 @@ export default class SplitScreen extends Component {
 
 	changeBorrower = (itemId, person, method) => {
 		let data = this.state.originalData
-		// console.log("huhuhuh",itemId, person, method)
-
 		let index = data.findIndex(item => item.id === itemId)
 		if (method === 'delete') {
 			data[index].borrower = data[index].borrower.filter(user => user.username !== person.username)
@@ -175,6 +187,12 @@ export default class SplitScreen extends Component {
 			data[index].borrower.push(person)
 			this.setState({ originalData: data, data })
 		}
+	}
+
+	handleChangeLocation(text) { 
+		this.setState({
+			location: text
+		})
 	}
 
 	render() {
@@ -209,14 +227,24 @@ export default class SplitScreen extends Component {
 								fontWeight: '700',
 								marginBottom: 5
 							}}>Location</Text>
-							<ScrollView
-								horizontal={true}
-								showsHorizontalScrollIndicator={false}>
-								<Text style={{
-									fontSize: 18,
-									fontWeight: '400'
-								}}>23 Nguyen Trai, Q1111111 Q1111111 Q1111111 Q1111111</Text>
-							</ScrollView>
+							{
+								isEditing ? (
+									<Input 
+										style={{margin: 0}}
+										value={this.state.location} 
+										onChange={(text) => this.handleChangeLocation(text)}>
+									</Input>
+								) : (
+									<ScrollView
+										horizontal={true}
+										showsHorizontalScrollIndicator={false}>
+										<Text style={{
+											fontSize: 18,
+											fontWeight: '400'
+										}}>{this.state.location}</Text>
+									</ScrollView>
+								)
+							}
 						</View>
 						<View style={{
 							alignSelf: 'flex-end',
@@ -238,7 +266,7 @@ export default class SplitScreen extends Component {
 
 					{/* info container */}
 					<View>
-						<BillContainer updateItem={this.updateItem} navigation={this.props.navigation} friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={this.state.data} originalData={this.state.originalData}></BillContainer>
+						<BillContainer updateItem={this.updateItem} navigation={this.props.navigation} friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={[...this.state.data]} originalData={this.state.originalData}></BillContainer>
 					</View>
 				</View>
 				<View style={{
