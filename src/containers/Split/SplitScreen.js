@@ -212,9 +212,6 @@ export default class SplitScreen extends Component {
 								marginBottom: 5
 							}}>Location</Text>
 							<ScrollView
-								style={{
-									// width: '30%'
-								}}
 								horizontal={true}
 								showsHorizontalScrollIndicator={false}>
 								<Text style={{

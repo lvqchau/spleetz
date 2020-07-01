@@ -7,11 +7,13 @@ export default StyleSheet.create({
   },
   topContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    // marginHorizontal: 20
   },
   infoContainer: {
-    paddingHorizontal: 25,
-    marginBottom: 20
+    marginHorizontal: 25,
+    marginBottom: 20,
+    overflow: 'hidden'
   },
   fullName: {
     fontWeight: '700',

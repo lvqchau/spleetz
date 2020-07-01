@@ -34,7 +34,6 @@ export class accountManagingService {
 			}
 		})
 	}
-  
   getFriendService = (accountId) => {
     return axios({
 			method: 'GET',

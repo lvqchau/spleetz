@@ -51,7 +51,7 @@ const getUserInfo = async (accountId) => {
   let user = {}
   await accountService.getUserInfoService(accountId)
   .then(async res => {
-    const {id, fullname, username, phone} = await res.data
+    const {id, fullname, username, phone} = res.data
     user = {
       accountId: id, 
       fullname,
@@ -73,18 +73,32 @@ const getFriend = async () => {
   } else {
     await accountService.getFriendService(accountId)
     .then(async res => {
-      friendList = await res.data.friends
-      friendList = await friendList.map(async friend => {
-        let user = await getUserInfo(friend.accountId)
-        console.log("user", user)
-        return user
-      })
+      friendList = res.data.friends
       console.log("userFriendList: ", friendList)
+      for (let idx = 0; idx < friendList.length; idx++) {
+        await accountService.getUserInfoService(accountId)
+        .then(async res => {
+          // const {id, fullname, username, phone} = res.data
+          let user = {
+            accountId: res.data.id, 
+            fullname: res.data.fullname,
+            username: res.data.username,
+            phone: res.data.phone
+          }
+          friendList[idx] = user
+        })
+        .catch(err => console.log(err.response.data))
+      }
+      // friendList = friendList.map(async friend => {
+        
+      //   // let user = await getUserInfo(friend.accountId)
+      //   console.log("userFriendList: ", friendList)  
+      //   return user
+      // })
     }).catch(err => {
       console.log(err.response.data)
     })
   }
-  console.log("userFriendList2: ", friendList)
   return friendList
 }
 
