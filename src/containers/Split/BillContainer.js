@@ -10,13 +10,9 @@ export default class BillContainer extends Component {
 
 	changeTempData = (item, method) => {
 		if (method === 'delete') {
-			console.log(item.id)
-			console.log("Original data: ", this.props.originalData)
 			let indexI = this.props.data.findIndex(myItem => myItem.id == item.id)
 			let newData = [...this.props.data]
-			console.log('indexOfItem: ', indexI)
 			newData.splice(indexI, 1)
-			console.log("temp:", this.props.data)
 			// let tempData = this.props.data.filter(dataItem => dataItem.id !== item.id)
 			this.props.changeData(newData, 'delete')
 		}
@@ -24,7 +20,6 @@ export default class BillContainer extends Component {
 
 	render() {
 		const { data, updateItem, isEditing, friends, changeBorrower, navigation } = this.props
-		console.log("container: ",data)
 		return (
 			<View style={{
 				backgroundColor: COLORS.white,

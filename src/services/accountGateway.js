@@ -85,7 +85,6 @@ const getFriend = async () => {
             avatarUrl: res.data.avatarUrl
           }
           friendList[idx] = user
-          console.log("")
         })
         .catch(err => console.log(err.response.data))
       }
@@ -93,7 +92,6 @@ const getFriend = async () => {
       console.log(err.response.data)
     })
   }
-  console.log("")
   return friendList
 }
 

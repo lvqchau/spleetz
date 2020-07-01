@@ -96,7 +96,6 @@ export default class SplitScreen extends Component {
 
 	checkOutBill = () => {
 		const {originalData}  = this.state
-		console.log(originalData)
 	}
 
 	updateItem = (item, id) => {
@@ -107,9 +106,7 @@ export default class SplitScreen extends Component {
 	}
 
 	_getFriend = async () => {
-		console.log("")
 		let friends = await getFriend()
-		console.log("")
 		this.setState({ friends })
 	}
 
@@ -119,7 +116,6 @@ export default class SplitScreen extends Component {
 			case 'edit':
 				break
 			case 'cancel':
-				console.log('this.state.originalData', this.state.originalData)
 				this.changeData(this.state.originalData, 'cancel')
 				break
 			case 'done':
@@ -132,13 +128,9 @@ export default class SplitScreen extends Component {
 		// let originalData = this.state.originalData
 		if (method === 'done') {
 			this.setState({ originalData: data, data: data })
-			// console.log('api called') //saving... 
 		} else if (method === 'delete') {
-			console.log("huhuhuhuh: ", this.state.originalData)
-			this.setState({ data: data }, console.log("data moi: ", this.state.data)) //delete in state
+			this.setState({ data: data }) //delete in state
 		} else if (method === 'cancel') {
-			console.log('this.state.data', this.state.data)
-			console.log('this.state.originalData', this.state.originalData)
 			this.setState({ data: this.state.originalData })
 		}
 	}
