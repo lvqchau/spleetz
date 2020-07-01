@@ -40,7 +40,7 @@ class AccountScreen extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.focusListener.remove()
+		this.focusListener()
 	}
 
   _logOut = async () => {
@@ -72,7 +72,7 @@ class AccountScreen extends React.Component {
                       <Text style={styles.fullName}>{user.fullname}</Text>
                     </ScrollView>
                   </View>
-                  <Text style={styles.lightText}>{user.username}</Text>
+                  <Text style={styles.lightText}>{`@${user.username}`}</Text>
                 </View>
               </View>
               <TouchableOpacity

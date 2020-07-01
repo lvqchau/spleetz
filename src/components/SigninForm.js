@@ -6,6 +6,7 @@ import styles from '../containers/Access/screens/Signin.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../assets/colors'
 import { logIn } from '../services/accountGateway.js'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 // import { userService } from '../../services/index'
 
@@ -14,6 +15,13 @@ export default class SignInForm extends Component {
     this.props.navigation.navigate(name)
 	}
 	
+	constructor(props) {
+		super(props)
+		this.state = {
+			secureTextEntry: true
+		}
+	}
+
 	render() {
 		const {authedUser} = this.props
 		return (
@@ -39,12 +47,27 @@ export default class SignInForm extends Component {
 							onChange={handleChange('username')}
 							onBlur={handleBlur('username')}
 						/>
-						<Input
-							label='Password'
-							value={values.password}
-							onChange={handleChange('password')}
-							onBlur={handleBlur('password')}
-						/>
+						<View style={{
+							position: 'relative',
+						}}>
+							<Input
+								label='Password'
+								password={true}
+								secureTextEntry={this.state.secureTextEntry}
+								value={values.password}
+								onChange={handleChange('password')}
+								onBlur={handleBlur('password')}
+							/>
+							<TouchableOpacity style={{
+								position: 'absolute',
+								right: 0,
+								bottom: 15
+							}}
+								onPress={()=>this.setState({secureTextEntry: !this.state.secureTextEntry})}
+							>
+								<Ionicons name={this.state.secureTextEntry ? 'ios-eye-off' : 'ios-eye'} size={24} color={COLORS.aqua}/>
+							</TouchableOpacity>
+						</View>
 						<View style={{alignItems: 'center'}}>
 							<View style={{flexDirection:'row', marginTop: 10}}>
 								<Text style={{fontFamily: 'Montserrat-Medium'}}>Don't have an account?</Text>

@@ -19,6 +19,25 @@ const logIn = async (user) => {
   return returnedUser
 }
 
+const signUp = async (user) => {
+	let returnedUser = {
+    userId: null,
+    accessToken: null
+  }
+  await accountService.signUpService(user)
+    .then(async (res) => {
+			let account = {}
+			const { username, password } = user
+			account.username = username
+			account.password = password
+			const resUser = await logIn(account)
+			returnedUser.userId = resUser.userId
+			returnedUser.accessToken = resUser.id
+    })
+    .catch(err => console.log(err.response.data.error.message))
+  return returnedUser
+}
+
 const logOut = async () => {
   let status = false
   await accountService.logOutService()
@@ -116,7 +135,8 @@ const updateUser = async (userId, user) => {
 }
 
 export {
-  logIn,
+	logIn,
+	signUp,
   logOut,
   getFriend,
   getFriendId,

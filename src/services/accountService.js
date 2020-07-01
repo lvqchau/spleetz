@@ -9,7 +9,14 @@ export class accountManagingService {
       method: 'POST',
       data: user
     })
-  }
+	}
+	signUpService = (user) => {
+    return axios({
+      url: `${baseURL}/accounts`,
+      method: 'POST',
+      data: user
+    })
+	}
   logOutService = async () => {
     const accessToken = await AsyncStorage.getItem('accessToken')
     return axios({
