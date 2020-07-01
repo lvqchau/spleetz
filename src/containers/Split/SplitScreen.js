@@ -77,8 +77,8 @@ export default class SplitScreen extends Component {
 		this.state = {
 			isCategory: 'food',
 			isEditing: false,
-			data: mockData, //from api, changable
-			originalData: mockData, //from api
+			data: [...mockData], //from api, changable
+			originalData: [...mockData], //from api
 			friends: [],
 			itemCount: 0
 		}
@@ -107,8 +107,9 @@ export default class SplitScreen extends Component {
 	}
 
 	_getFriend = async () => {
+		console.log("")
 		let friends = await getFriend()
-		console.log("friends", friends)
+		console.log("")
 		this.setState({ friends })
 	}
 
@@ -118,6 +119,7 @@ export default class SplitScreen extends Component {
 			case 'edit':
 				break
 			case 'cancel':
+				console.log('this.state.originalData', this.state.originalData)
 				this.changeData(this.state.originalData, 'cancel')
 				break
 			case 'done':
@@ -129,13 +131,15 @@ export default class SplitScreen extends Component {
 	changeData = (data, method) => {
 		// let originalData = this.state.originalData
 		if (method === 'done') {
-			this.setState({ originalData: data, data })
+			this.setState({ originalData: data, data: data })
 			// console.log('api called') //saving... 
 		} else if (method === 'delete') {
-			
-			this.setState({ data }, console.log("data moi: ", this.state.data)) //delete in state
+			console.log("huhuhuhuh: ", this.state.originalData)
+			this.setState({ data: data }, console.log("data moi: ", this.state.data)) //delete in state
 		} else if (method === 'cancel') {
-			this.setState({ data: this.state.originalData, originalData: data })
+			console.log('this.state.data', this.state.data)
+			console.log('this.state.originalData', this.state.originalData)
+			this.setState({ data: this.state.originalData })
 		}
 	}
 
@@ -169,6 +173,8 @@ export default class SplitScreen extends Component {
 
 	changeBorrower = (itemId, person, method) => {
 		let data = this.state.originalData
+		// console.log("huhuhuh",itemId, person, method)
+
 		let index = data.findIndex(item => item.id === itemId)
 		if (method === 'delete') {
 			data[index].borrower = data[index].borrower.filter(user => user.username !== person.username)

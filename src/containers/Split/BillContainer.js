@@ -11,13 +11,14 @@ export default class BillContainer extends Component {
 	changeTempData = (item, method) => {
 		if (method === 'delete') {
 			console.log(item.id)
+			console.log("Original data: ", this.props.originalData)
 			let indexI = this.props.data.findIndex(myItem => myItem.id == item.id)
-			
+			let newData = [...this.props.data]
 			console.log('indexOfItem: ', indexI)
-			this.props.data.splice(indexI, 1)
-			// console.log("temp:", this.props.data)
+			newData.splice(indexI, 1)
+			console.log("temp:", this.props.data)
 			// let tempData = this.props.data.filter(dataItem => dataItem.id !== item.id)
-			this.props.changeData(this.props.data, 'delete')
+			this.props.changeData(newData, 'delete')
 		}
 	}
 

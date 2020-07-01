@@ -68,6 +68,7 @@ export default class BillItem extends Component {
 	}
 
 	renderFriendItem = (index, user) => {
+		console.log(user)
 		return (
 			<TouchableOpacity key={index} onPress={() => this._changeBorrower(this.props.item.id, user)}>
 				<View style={styles.friendItemContainer}>
