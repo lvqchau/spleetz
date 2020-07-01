@@ -16,13 +16,14 @@ const styles = StyleSheet.create({
 		padding: 0,
 		borderBottomWidth: 2,
 		paddingBottom: 0,
-		borderColor: COLORS.salmon,
+		borderColor: COLORS.darkgray,
 		marginBottom: 10
   },
   inputIsBlur: {
     width: '100%',
     fontSize: 20,
 		fontFamily: 'Quicksand-Medium',
+		padding: 0,
 		paddingBottom: 0,
     borderBottomWidth: 2,
 		borderColor: COLORS.darkgray,

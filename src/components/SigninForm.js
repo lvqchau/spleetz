@@ -23,11 +23,12 @@ export default class SignInForm extends Component {
 					password: '',
 				}}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
+					setSubmitting(true)
 					const objUser = await logIn(values)
 					if (objUser !== undefined) {
 						authedUser(objUser.accessToken, false)
 					}
-					
+					setSubmitting(false)
 				}}
 			>
 				{({handleChange, handleBlur, handleSubmit, values}) => (

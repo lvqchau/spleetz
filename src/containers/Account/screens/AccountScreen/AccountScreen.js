@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, TouchableHighlight, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, ScrollView, TouchableHighlight, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons
   from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -62,7 +62,7 @@ class AccountScreen extends React.Component {
                 </View>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate("EditProfile")}
+                onPress={() => navigation.navigate("EditProfile", {user: user})}
               >
                 <AntDesign name="edit" size={24} color={COLORS.darkblue} />
               </TouchableOpacity>

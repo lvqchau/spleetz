@@ -44,8 +44,18 @@ const getUser = async (userId) => {
 	return user
 }
 
+const updateUser = async (userId, user) => {
+	await accountService.updateUser(userId, user)
+	.then(async (res) => {
+		user = res.data
+	})
+	.catch(err=> console.log(err.response.data.error.message))
+	return user
+}
+
 export {
   logIn,
 	logOut,
-	getUser
+	getUser,
+	updateUser
 }

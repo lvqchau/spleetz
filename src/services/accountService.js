@@ -23,6 +23,17 @@ export class accountManagingService {
 			method: 'GET'
 		})
 	}
+	updateUser = async(userId, user) => {
+    const accessToken = await AsyncStorage.getItem('accessToken')
+		return axios({
+			url: `${baseURL}/accounts/${userId}`,
+			method: 'PATCH',
+			data: user,
+			headers: {
+				Authorization: accessToken
+			}
+		})
+	}
 }
 
 
