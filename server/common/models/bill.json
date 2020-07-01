@@ -8,19 +8,26 @@
   },
   "properties": {
     "date": {
-      "type": "date"
+      "type": "date",
+      "defaultFn": "now"
     },
     "location": {
       "type": "string"
+    },
+    "items": {
+      "type": [
+        {
+          "id": "number",
+          "name": "string",
+          "price": "number",
+          "quantity": "number",
+          "borrower": []
+        }
+      ]
     }
   },
   "validations": [],
   "relations": {
-    "items": {
-      "type": "hasMany",
-      "model": "Item",
-      "foreignKey": ""
-    },
     "payer": {
       "type": "belongsTo",
       "model": "Account",

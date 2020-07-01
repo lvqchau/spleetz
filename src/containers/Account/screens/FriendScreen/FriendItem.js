@@ -8,16 +8,17 @@ import COLORS from '../../../../assets/colors'
 class FriendItem extends React.Component {
   render() {
     const { user, style } = this.props
-    const { name, phone } = user
+    const { fullname, phone, avatarUrl } = user
     return (
       <View style={[style, styles.item]}>
         <View style={styles.infoContainer}>
           <TouchableOpacity style={styles.infoTouch}>
             <Avatar
               size={52}
-              style={styles.avatar}
+							style={styles.avatar}
+							source={avatarUrl}
             />
-            <Text>{name}</Text>
+            <Text>{fullname}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.phone}>

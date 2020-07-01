@@ -7,8 +7,18 @@ import COLORS from '../../assets/colors'
 import displayPrice from '../../utils/displayPrice'
 
 export default class BillContainer extends Component {
+
+	changeTempData = (item, method) => {
+		if (method === 'delete') {
+			let indexI = this.props.data.findIndex(myItem => myItem.id == item.id)
+			let newData = [...this.props.data]
+			newData.splice(indexI, 1)
+			this.props.changeData(newData, 'delete')
+		}
+	}
+
 	render() {
-		const { data, isEditing, changeData } = this.props
+		const { data, updateItem, isEditing, friends, changeBorrower, navigation } = this.props
 		return (
 			<View style={{
 				backgroundColor: COLORS.white,
@@ -27,8 +37,8 @@ export default class BillContainer extends Component {
 				}}
 			>
 				<ScrollView style={{ marginBottom: 5 }} showsVerticalScrollIndicator={false}>
-					{data && data.map((billItem, index) =>
-						<BillItem isEditing={isEditing} key={index} item={billItem} changeData={changeData}></BillItem>
+					{data && data.map((billItem, index) => 
+						<BillItem updateItem={updateItem} navigation={navigation} friends={friends} changeBorrower={changeBorrower} isEditing={isEditing} key={index} index={index} item={billItem} changeTempData={this.changeTempData}></BillItem>
 					)}
 				</ScrollView>
 				<Text style={{

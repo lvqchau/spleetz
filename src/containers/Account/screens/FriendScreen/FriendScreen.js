@@ -5,6 +5,8 @@ import COLORS from '../../../../assets/colors';
 import FriendItem from './FriendItem';
 import { data } from './FriendData'
 import SearchContainer from '../../../../components/SearchContainer';
+import { getFriend } from '../../../../services/accountGateway'
+
 
 const { width, height } = Dimensions.get('window')
 
@@ -16,7 +18,20 @@ class FriendScreen extends React.Component {
       searchText: '',
       isFocused: false
     }
-  }
+	}
+	
+	_getFriend = async () => {
+		let friends = await getFriend()
+		this.setState({ friendList: friends })
+	}
+
+	async componentDidMount() {
+		const { navigation } = this.props
+		this.focusListener = navigation.addListener('focus', async () => {
+			await this._getFriend()
+			console.log('Friend list: ', this.state.friendList)
+		})
+	}
 
   handleFocus = () => this.setState({isFocused: true})
   handleInput = (searchText) => this.setState({searchText})
@@ -24,7 +39,7 @@ class FriendScreen extends React.Component {
 
   render() {
     const { navigation } = this.props
-    const { searchText, isFocused } = this.state
+		const { searchText, isFocused, friendList } = this.state
     return (
       <SafeAreaView style={styles.friendlistContainer}>
         <HeaderNavigator navigation={navigation} name="Friendlist" color={COLORS.aqua} />
@@ -41,7 +56,7 @@ class FriendScreen extends React.Component {
         <View style={styles.friendList}>
           <FlatList
           showsVerticalScrollIndicator={false}
-          data={data}
+          data={friendList}
           renderItem={({item}) => <FriendItem user={item} style={{marginVertical: 5}} />}
           keyExtractor={item => item.id}
         />

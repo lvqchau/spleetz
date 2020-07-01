@@ -5,12 +5,21 @@ import {View, TouchableOpacity, TextInput, Text, ScrollView} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../assets/colors'
 import styles from '../containers/Access/screens/SignUp.component.style'
+import { signUp } from '../services/accountGateway.js'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 // import { userService } from '../../services/index'
 
 export default class SignUpForm extends Component {
 	navigate = (name) => {
     this.props.navigation.navigate(name)
+	}
+
+	constructor(props) {
+		super(props)
+		this.state = {
+			secureTextEntry: true
+		}
 	}
 	
 	render() {
@@ -26,7 +35,20 @@ export default class SignUpForm extends Component {
 					phoneNumber: ''
 				}}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
-					authedUser('token', false)
+					setSubmitting(true)
+					let newUser = {
+						username: values.username,
+						password: values.password,
+						fullname: values.firstName + " " + values.lastName,
+						email: values.email,
+						phone: values.phoneNumber,
+						avatarUrl: 'https://spleetz.s3-ap-southeast-1.amazonaws.com/image/default-avatar.png'
+					}
+					const objUser = await signUp(newUser)
+					if (objUser !== undefined) {
+						authedUser(objUser.accessToken, false)
+					}
+					setSubmitting(false)
 				}}
 			>
 				{({handleChange, handleBlur, handleSubmit, values}) => (
@@ -37,12 +59,27 @@ export default class SignUpForm extends Component {
 							onChange={handleChange('username')}
 							onBlur={handleBlur('username')}
 						/>
-						<Input
-							label='Password'
-							value={values.password}
-							onChange={handleChange('password')}
-							onBlur={handleBlur('password')}
-						/>
+						<View style={{
+							position: 'relative',
+						}}>
+							<Input
+								label='Password'
+								password={true}
+								secureTextEntry={this.state.secureTextEntry}
+								value={values.password}
+								onChange={handleChange('password')}
+								onBlur={handleBlur('password')}
+							/>
+							<TouchableOpacity style={{
+								position: 'absolute',
+								right: 0,
+								bottom: 15
+							}}
+								onPress={()=>this.setState({secureTextEntry: !this.state.secureTextEntry})}
+							>
+								<Ionicons name={this.state.secureTextEntry ? 'ios-eye-off' : 'ios-eye'} size={24} color={COLORS.aqua}/>
+							</TouchableOpacity>
+						</View>
 						<View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
 							<Input
 								label='First name'

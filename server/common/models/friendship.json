@@ -7,24 +7,29 @@
     "validateUpsert": true
   },
   "properties": {
-    "createdAt": {
-      "type": "date",
-      "required": true
+    "friends": {
+      "type": [
+        {
+          "accountId": "string"
+        }
+      ],
+      "default": []
     }
   },
   "validations": [],
   "relations": {
-    "friendOne": {
+    "account": {
       "type": "belongsTo",
       "model": "Account",
-      "foreignKey": "friendOneId"
-    },
-    "friendTwo": {
-      "type": "belongsTo",
-      "model": "Account",
-      "foreignKey": "friendTwoId"
+      "foreignKey": ""
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }

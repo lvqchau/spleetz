@@ -124,6 +124,7 @@ class EditProfileModal extends React.Component {
   render() {
 		const { navigation} = this.props
 		const { user, avatar } = this.state
+		console.log(user)
     return (
       <SafeAreaView>
 					<Formik

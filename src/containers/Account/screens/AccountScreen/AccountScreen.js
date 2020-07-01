@@ -40,7 +40,7 @@ class AccountScreen extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.focusListener.remove()
+		this.focusListener()
 	}
 
   _logOut = async () => {
@@ -62,13 +62,24 @@ class AccountScreen extends React.Component {
           <View style={styles.infoContainer}>
             <View style={styles.topContainer}>
               <View style={styles.avatarContainer}>
-                <Avatar size={90} style={{ marginRight: 25 }} key={user.avatarUrl} source={{uri: user.avatarUrl}} />
+                <Avatar size={90} style={{ marginRight: 25}} key={user.avatarUrl} source={user.avatarUrl} />
                 <View>
-                  <Text style={styles.fullName}>{user.fullname}</Text>
-                  <Text style={styles.lightText}>{user.username}</Text>
+                  <View>
+                    <ScrollView 
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                    >
+                      <Text style={styles.fullName}>{user.fullname}</Text>
+                    </ScrollView>
+                  </View>
+                  <Text style={styles.lightText}>{`@${user.username}`}</Text>
                 </View>
               </View>
               <TouchableOpacity
+                style={{
+                  position: 'absolute',
+                  right: 0
+                }}
                 onPress={() => navigation.navigate("EditProfile", {user: user})}
               >
                 <AntDesign name="edit" size={24} color={COLORS.darkblue} />

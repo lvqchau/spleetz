@@ -39,10 +39,6 @@
     "dataSource": "SpleetzMongo",
     "public": true
   },
-  "Item": {
-    "dataSource": "SpleetzMongo",
-    "public": true
-  },
   "Message": {
     "dataSource": "SpleetzMongo",
     "public": true
