@@ -142,18 +142,21 @@ class EditProfileModal extends React.Component {
 							}
 							const userId = await AsyncStorage.getItem('userId')
 							const user = await updateUser(userId, newUser)
+							console.log(user)
 							setSubmitting(false)
 							navigation.goBack()
 						}}
 					>
 						{({handleChange, handleBlur, handleSubmit, values}) => (
 							<KeyboardAwareScrollView>
-								<TouchableOpacity style={{margin: 15}} onPress={() => navigation.goBack()}>
-									<Ionicons name="ios-arrow-round-back" size={32} color={COLORS.aqua} />
-								</TouchableOpacity>
-								<TouchableOpacity style={{margin: 15}} onPress={handleSubmit}>
-									<Text>SAVE</Text>
-								</TouchableOpacity>
+								<View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+									<TouchableOpacity style={{margin: 15}} onPress={() => navigation.goBack()}>
+										<Ionicons name="ios-arrow-round-back" size={32} color={COLORS.aqua} />
+									</TouchableOpacity>
+									<TouchableOpacity style={{margin: 15}} onPress={handleSubmit}>
+										<Text style={{color: COLORS.aqua, fontWeight: 'bold'}}>SAVE</Text>
+									</TouchableOpacity>
+								</View>
 								<TouchableOpacity style={{position: 'relative', display: 'flex', flexDirection: 'row', justifyContent: 'center'}} onPress={this.selectPhotoTapped}>
 									<View
 										style={[styles.avatar, styles.avatarContainer, {marginBottom: 20}]}>

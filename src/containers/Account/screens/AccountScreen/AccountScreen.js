@@ -29,11 +29,18 @@ class AccountScreen extends React.Component {
   }
 
 	async componentDidMount(){
-		const userId = await AsyncStorage.getItem('userId')
-		const user = await getUser(userId)
-		this.setState({
-			user: user
+		const { navigation } = this.props
+		this.focusListener = navigation.addListener('focus', async () => {
+			const userId = await AsyncStorage.getItem('userId')
+			const user = await getUser(userId)
+			this.setState({
+				user: user
+			})
 		})
+	}
+
+	componentWillUnmount() {
+		this.focusListener.remove()
 	}
 
   _logOut = async () => {
