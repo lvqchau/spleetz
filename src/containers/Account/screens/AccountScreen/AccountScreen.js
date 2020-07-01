@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ScrollView, TouchableHighlight, TouchableOpacity, SafeAreaView } from 'react-native'
+import { View, Text, ScrollView, TouchableHighlight, TouchableOpacity, SafeAreaView, Image } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons
   from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,13 +8,33 @@ import styles from './Account.component.style.js'
 import COLORS from '../../../../assets/colors'
 import Avatar from '../../../../components/Avatar.js';
 import Switcher from '../../../../components/Switcher'
-import { logOut } from '../../../../services/accountGateway.js';
+import { logOut, getUser } from '../../../../services/accountGateway.js'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class AccountScreen extends React.Component {
 
   constructor(props) {
-    super(props)
+		super(props)
+		this.state = {
+			user: {
+				fullname: '',
+				username: '',
+				phone: '',
+				avatarUrl: 'https://spleetz.s3-ap-southeast-1.amazonaws.com/image/default-avatar.png',
+				onlineStatus: '',
+				email: '',
+				id: ''
+			}
+		}
   }
+
+	async componentDidMount(){
+		const userId = await AsyncStorage.getItem('userId')
+		const user = await getUser(userId)
+		this.setState({
+			user: user
+		})
+	}
 
   _logOut = async () => {
     const userOut = await logOut()
@@ -26,7 +46,8 @@ class AccountScreen extends React.Component {
   }
 
   render() {
-    const { navigation } = this.props
+		const { navigation } = this.props
+		const { user } = this.state
     return (
       <SafeAreaView style={{flex: 1}}>
         <ScrollView style={styles.accountContainer}>
@@ -34,25 +55,25 @@ class AccountScreen extends React.Component {
           <View style={styles.infoContainer}>
             <View style={styles.topContainer}>
               <View style={styles.avatarContainer}>
-                <Avatar size={90} style={{ marginRight: 25 }} source={require('../../../../assets/images/avatar_2.png')} />
+                <Avatar size={90} style={{ marginRight: 25 }} key={user.avatarUrl} source={{uri: user.avatarUrl}} />
                 <View>
-                  <Text style={styles.fullName}>John Smith</Text>
-                  <Text style={styles.lightText}>jnsmith</Text>
+                  <Text style={styles.fullName}>{user.fullname}</Text>
+                  <Text style={styles.lightText}>{user.username}</Text>
                 </View>
               </View>
               <TouchableOpacity
-                onPress={() => navigation.navigate("EditProfile")}
+                onPress={() => navigation.navigate("EditProfile", {user: user})}
               >
                 <AntDesign name="edit" size={24} color={COLORS.darkblue} />
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: 'row', marginBottom: 10 }}>
               <AntDesign style={{ marginRight: 10 }} name="phone" size={20} color={COLORS.lightgray} />
-              <Text style={styles.lightText}>(+84) 0906835383</Text>
+              <Text style={styles.lightText}>{user.phone}</Text>
             </View>
             <View style={{ flexDirection: 'row' }}>
               <AntDesign style={{ marginRight: 10 }} name="mail" size={20} color={COLORS.lightgray} />
-              <Text style={styles.lightText}>jnsmith@gmail.com</Text>
+              <Text style={styles.lightText}>{user.email}</Text>
             </View>
           </View>
 

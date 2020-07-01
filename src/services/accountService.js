@@ -16,7 +16,24 @@ export class accountManagingService {
         url:`${baseURL}/accounts/logout?access_token=${accessToken}`,
         method:'POST'
     })
-  }
+	}
+	getUser = async (userId) => {
+		return axios({
+			url: `${baseURL}/accounts/${userId}`,
+			method: 'GET'
+		})
+	}
+	updateUser = async(userId, user) => {
+    const accessToken = await AsyncStorage.getItem('accessToken')
+		return axios({
+			url: `${baseURL}/accounts/${userId}`,
+			method: 'PATCH',
+			data: user,
+			headers: {
+				Authorization: accessToken
+			}
+		})
+	}
 }
 
 
