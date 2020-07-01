@@ -6,7 +6,7 @@ import FriendItem from './FriendItem';
 import { data } from './FriendData'
 import SearchContainer from '../../../../components/SearchContainer';
 import { getFriend } from '../../../../services/accountGateway'
-
+import {searchFriend} from '../../../../services/friendGateway'
 
 const { width, height } = Dimensions.get('window')
 
@@ -34,8 +34,16 @@ class FriendScreen extends React.Component {
 	}
 
   handleFocus = () => this.setState({isFocused: true})
-  handleInput = (searchText) => this.setState({searchText})
-  handleBlur = () => this.setState({isFocused: false})
+  handleInput = async (searchText) => {
+		this.setState({searchText, isPending: true})
+		let searchData = []
+		const where = {'or': [{'fullname': { 'like': `${searchText}`, 'options':'i' }}, {'username': { 'like': `${searchText}`, 'options':'i' }}, {'phone': { 'like': `${searchText}`, 'options':'i' }}]}
+		searchData = await searchFriend(where)
+		this.setState({
+			searchData, isPending: false
+		})
+	}
+	handleBlur = () => this.setState({isFocused: false})
 
   render() {
     const { navigation } = this.props
@@ -46,7 +54,7 @@ class FriendScreen extends React.Component {
         {/* Search and Add friend */}
         <View style={styles.searchContainer}>
         <View style={{flex: 8}}>
-          <SearchContainer/>
+					<TextInput style={styles.inputStyle} onChangeText={(text) => this.handleInput(text)} value={searchText}></TextInput>
         </View>
           <TouchableOpacity style={styles.textButton}>
               <Text style={styles.textAction}>Add</Text>
@@ -88,9 +96,9 @@ const styles = StyleSheet.create({
   },
   inputStyle: { 
     fontFamily: 'Quicksand-SemiBold',
-    padding: 10,
-    borderBottomWidth: 1,
-    flex: 8
+		borderBottomWidth: 1,
+		padding: 0,
+		fontSize: 16
   },
   friendList: {
     flex: 1,

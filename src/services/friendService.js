@@ -52,7 +52,14 @@ export class friendManagingService {
       url: `${baseURL}/accounts/logout?access_token=${accessToken}`,
       method: 'POST'
     })
-  }
+	}
+	
+	searchFriendsService = async (filter) => {
+		return axios({
+			url: `${baseURL}/accounts?filter={"where":${JSON.stringify(filter)}}`,
+			method: 'GET'
+		})
+	}
 }
 
 export const friendService = new friendManagingService();

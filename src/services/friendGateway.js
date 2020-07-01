@@ -11,6 +11,19 @@ const initFriend = async () => {
   })
 }
 
+const searchFriend = async (filter) => {
+	let friends = []
+	await friendService.searchFriendsService(filter)
+	.then(res => {
+		friends = res.data
+		console.log("Friends: ", friends)
+	}).catch(err => {
+		console.log(err.response.data)
+	})
+	return friends
+}
+
 export {
-  initFriend
+	initFriend,
+	searchFriend
 }
