@@ -9,25 +9,11 @@
     "content": {
       "type": "string"
     },
-    "status": {
-      "type": "string",
-      "required": true,
-      "enum": [
-        "pending",
-        "rejected",
-        "accepted"
-      ],
-      "default": "pending"
-    },
     "createdAt": {
       "type": "string", 
       "dataType": "date",
       "required": true,
       "defaultFn": "now"
-    },
-    "checkedAt": {
-      "type": "string", 
-      "dataType": "date"
     },
     "price": {
       "type": "number"
