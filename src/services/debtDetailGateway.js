@@ -12,9 +12,13 @@ const createDebtDetail = async (debt) => {
 }
 
 const getDebt = async () => {
+	let returnedDebt = null
   await debtService.getDebtService()
-    .then(res => console.log(res))
-    .catch(err => console.log(err.response.data))
+    .then((res) => {
+			returnedDebt = res.data
+		})
+		.catch(err => console.log(err.response.data.error.message))
+	return returnedDebt
 }
 
 export {

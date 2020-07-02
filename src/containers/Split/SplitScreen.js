@@ -14,65 +14,6 @@ import { createBill } from '../../services/billGateway'
 import { createDebtDetail } from '../../services/debtDetailGateway'
 import Input from '../../components/FormModal/Input'
 
-const mockData = [
-	{
-		id: 0,
-		name: "Bánh mì xúc xích xông khói",
-		quantity: 100,
-		price: 100000,
-		borrower: []
-	},
-	{
-		id: 1,
-		name: "Banh mi xuc xich",
-		quantity: 10,
-		price: 20000,
-		borrower: []
-	},
-	{
-		id: 2,
-		name: "Banh mi ga",
-		quantity: 2,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 3,
-		name: "Banh mi ga",
-		quantity: 2,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 4,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 5,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 6,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 7,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	}
-]
-
 export default class SplitScreen extends Component {
 
 	constructor(props) {
@@ -128,7 +69,7 @@ export default class SplitScreen extends Component {
 				}
 			})
 		})
-		console.log("Friend list: ", friendList)
+		// console.log("Friend list: ", friendList)
 		const bill = await createBill({
 			location: originalLocation,
 			items,
@@ -139,8 +80,9 @@ export default class SplitScreen extends Component {
 		friendList.forEach(async (friend) => {
 			let newDebt = {...friend}
 			newDebt.billId = bill.id
+			newDebt.location = bill.location
 			let debtDetail = await createDebtDetail(newDebt)
-			console.log("Debt Detail: ", debtDetail)
+			// console.log("Debt Detail: ", debtDetail)
 		})
 		this.setState({isCheckingOut: false})
 	}

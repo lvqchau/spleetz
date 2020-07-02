@@ -8,6 +8,8 @@ import styles from './Debt.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../../assets/colors'
 import { getBillsOfSelf } from '../../services/billGateway'
+import { getDebt } from '../../services/debtDetailGateway'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const mockData = {
 	debt: [
@@ -513,6 +515,13 @@ export default class DebtScreen extends Component {
 		const { navigation } = this.props
 		this.focusListener = navigation.addListener('focus', async () => {
 			const myBills = await getBillsOfSelf()
+			const myDebts = await getDebt()
+			const userId = await AsyncStorage.getItem('userId')
+			this.setState({
+				debts: myDebts,
+				userId: userId
+			})
+			// console.log("My debt: ", myDebts)
 			// console.log("hú", myBills)
 		})
 	}
@@ -544,6 +553,7 @@ export default class DebtScreen extends Component {
 
 	render() {
 		const { debt, bill } = mockData
+		const { debts, userId } = this.state
 		return (
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.topButtonContainer}>
@@ -551,7 +561,7 @@ export default class DebtScreen extends Component {
 					{this.renderGradientButton('bill')}
 				</View>
 				{isDebt ?
-					<DebtContainer data={debt}></DebtContainer>
+					<DebtContainer userId={userId} data={debts}></DebtContainer>
 					:
 					<BillContainer data={bill}></BillContainer>
 				}
