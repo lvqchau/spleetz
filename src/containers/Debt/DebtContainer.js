@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Image } from 'react-native'
+import { View, Text, FlatList, Image, ScrollView } from 'react-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 import styles from './Debt.component.style'
@@ -28,9 +28,9 @@ export default class DebtContainer extends Component {
 		const { data } = this.props
 		// temporary date format: 22/02/2020
 		const year = item.date.split('/')[2]
-		if (index === 0) 
+		if (index === 0)
 			return <Text style={styles.yearText}>{year}</Text>
-		else if (year !== data[index-1].date.split('/')[2]){
+		else if (year !== data[index - 1].date.split('/')[2]) {
 			return <Text style={styles.yearText}>{year}</Text>
 		}
 	}
@@ -52,12 +52,6 @@ export default class DebtContainer extends Component {
 					</LinearGradient>
 				</View>
 				<View style={styles.debtContainer}>
-					<LinearGradient
-					 colors={COLORS.gradientPink}
-					 style={styles.triangleCorner}
-					>
-						<View style={styles.triangle}></View>
-					</LinearGradient>
 					<View style={[styles.flexRow, { marginBottom: 5, flex: 1, alignItems: 'center' }]}>
 						<MaterialIcon name='location-on' size={18} color={COLORS.black}></MaterialIcon>
 						<Text style={styles.addressText}>{item.address}</Text>
@@ -74,11 +68,14 @@ export default class DebtContainer extends Component {
 							</Text>
 						</View>
 						:
-						<View>
-							<View style={styles.flexRow}>
+						<>
+							<ScrollView
+								horizontal={true}
+								showsHorizontalScrollIndicator={false}
+							>
 								<FlatList
 									style={styles.flexRow}
-									data={item.borrower.slice(0, 4)}
+									data={item.borrower}
 									renderItem={({ index, item }) =>
 										<Image
 											style={styles.avatarContainer}
@@ -86,17 +83,12 @@ export default class DebtContainer extends Component {
 										/>
 									}
 								/>
-								{item.borrower.length > 4 ?
-									<View style={styles.moreUserButton}>
-										<Text>{`+${item.borrower.length - 5}`}</Text>
-									</View>
-									: null}
-							</View>
+							</ScrollView>
 							<Text style={styles.debtStatus}>You split
 								<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(120000)}</Text>
 								{/*Bill total*/}
 							</Text>
-						</View>
+						</>
 					}
 				</View>
 			</View>

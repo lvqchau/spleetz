@@ -24,6 +24,10 @@
           "borrower": []
         }
       ]
+    },
+    "category": {
+      "type": "string",
+      "default": "food"
     }
   },
   "validations": [],

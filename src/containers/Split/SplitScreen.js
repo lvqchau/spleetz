@@ -102,7 +102,7 @@ export default class SplitScreen extends Component {
 	}
 
 	checkOutBill = async () => {
-		const { originalData, originalLocation } = this.state
+		const { originalData, originalLocation, isCategory } = this.state
 		this.setState({isCheckingOut: true})
 		const items = [...originalData]
 		items.forEach((item) => {
@@ -111,7 +111,8 @@ export default class SplitScreen extends Component {
 		const bill = await createBill({
 			location: originalLocation,
 			items,
-			date: new Date()
+			date: new Date(),
+			category: isCategory
 		})
 		this.setState({isCheckingOut: false})
 	}

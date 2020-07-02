@@ -11,6 +11,24 @@ const createBill = async (bill) => {
   return returnedBill
 }
 
+const getBillOfSelf = async () => {
+  await billService.getBillOfSelfService()
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err.response.data))
+}
+
+const getBillBorrowers = async () => {
+  await billService.getBillBorrowersService()
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err.response.data))
+}
+
+const getBillList = async () => {
+  
+}
+
 export {
-  createBill
+  createBill,
+  getBillOfSelf,
+  getBillBorrowers
 }
