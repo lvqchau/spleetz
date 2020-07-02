@@ -17,6 +17,13 @@ export class debtManagingService {
       data: newDebt
     })
   }
+  
+  getDebtService = async () => {
+    return axios({
+      method: 'GET',
+      url: `${baseURL}/debts`
+    })
+  }
 }
 
 export const debtService = new debtManagingService();
