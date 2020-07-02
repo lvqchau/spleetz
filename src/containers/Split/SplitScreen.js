@@ -154,7 +154,7 @@ export default class SplitScreen extends Component {
 			await this.setState({ originalData: [...data], data: [...data], originalLocation: this.state.location})
 			this.getTotal()
 		} else if (method === 'delete') {
-			await this.setState({ data: [...data] }, this.getTotal()) //delete in state
+			await this.setState({ data: [...data] }, () => this.getTotal()) //delete in state
 		} else if (method === 'cancel') {
 			await this.setState({ data: [...data], location: this.state.originalLocation })
 		}
