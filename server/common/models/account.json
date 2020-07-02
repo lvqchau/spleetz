@@ -47,8 +47,7 @@
     "debtDetails": {
       "type": "hasMany",
       "model": "DebtDetail",
-      "foreignKey": "debtId",
-      "through": "Bill"
+      "foreignKey": "payerId"
     },
     "notifications": {
       "type": "hasMany",
@@ -84,7 +83,7 @@
       "accessType": "WRITE",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
     },
     {
       "accessType": "WRITE",

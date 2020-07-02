@@ -39,11 +39,6 @@
       "model": "Bill",
       "foreignKey": "billId"
     },
-    "payer": {
-      "type": "belongsTo",
-      "model": "Account",
-      "foreignKey": "payerId"
-    },
     "borrower": {
       "type": "belongsTo",
       "model": "Account",

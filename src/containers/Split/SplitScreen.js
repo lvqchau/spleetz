@@ -82,11 +82,13 @@ export default class SplitScreen extends Component {
 			data: [], //from api, changable
 			originalData: [], //from api
 			friends: [],
+			total: 0,
 			itemCount: 0,
 			location: null,
 			originalLocation: ''
 		}
 	}
+
 	componentDidMount() {
 		const { navigation } = this.props
 		this.focusListener = navigation.addListener('focus', () => {
@@ -120,7 +122,7 @@ export default class SplitScreen extends Component {
 
 	_getFriend = async () => {
 		let friends = await getFriend()
-		this.setState({ friends })
+		this.setState({ friends: [...friends] })
 	}
 
 	editBill = (type) => {
@@ -137,14 +139,24 @@ export default class SplitScreen extends Component {
 		}
 	}
 
-	changeData = (data, method) => {
-		// let originalData = this.state.originalData
+	getTotal = async () => {
+		let originalData = this.state.originalData
+		let total = originalData.reduce((money, item) => {
+			money += item.price.toString()*item.quantity.toString()
+			return money
+		}, 0)
+		await this.setState({total})
+	}
+
+	changeData = async (data, method) => {
+		// let originalData = [...this.state.originalData]
 		if (method === 'done') {
-			this.setState({ originalData: data, data: data, originalLocation: this.state.location })
+			await this.setState({ originalData: [...data], data: [...data], originalLocation: this.state.location})
+			this.getTotal()
 		} else if (method === 'delete') {
-			this.setState({ data: data }) //delete in state
+			await this.setState({ data: [...data] }, this.getTotal()) //delete in state
 		} else if (method === 'cancel') {
-			this.setState({ data, location: this.state.originalLocation })
+			await this.setState({ data: [...data], location: this.state.originalLocation })
 		}
 	}
 
@@ -181,10 +193,10 @@ export default class SplitScreen extends Component {
 		let index = data.findIndex(item => item.id === itemId)
 		if (method === 'delete') {
 			data[index].borrower = data[index].borrower.filter(user => user.username !== person.username)
-			this.setState({ originalData: data, data })
+			this.setState({ originalData: [...data], data: [...data] })
 		} else if (method === 'add') {
 			data[index].borrower.push(person)
-			this.setState({ originalData: data, data })
+			this.setState({ originalData: [...data], data: [...data] })
 		}
 	}
 
@@ -195,27 +207,31 @@ export default class SplitScreen extends Component {
 	}
 
 	addEmptyItem = () => {
-		let originalData = [...this.state.originalData]
+		let { originalData, data } = this.state
 		let { itemCount } = this.state
 		this.setState({
 			itemCount: itemCount+1
 		})
 		let defaultItem = {
 			id: itemCount,
-			name: `Item ${itemCount}`,
-			quantity: 0,
-			price: 0,
+			name: `Item ${itemCount+1}`,
+			quantity: 1,
+			price: 5000,
 			borrower: []
 		}
+		console.log(defaultItem)
 		originalData.push(defaultItem)
+		data.push(defaultItem)
+
 		this.setState({
 			originalData,
-			data: originalData
+			data
 		})
+		this.getTotal()
 	}
 
 	render() {
-		const { isEditing, friends, location } = this.state
+		const { isEditing, friends, location, total } = this.state
 		return (
 			<SafeAreaView style={[
 				styles.splitContainer, {
@@ -292,7 +308,17 @@ export default class SplitScreen extends Component {
 
 						{/* info container */}
 						<View>
-							<BillContainer addEmptyItem={this.addEmptyItem} updateItem={this.updateItem} navigation={this.props.navigation} friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={[...this.state.data]} originalData={this.state.originalData}></BillContainer>
+							<BillContainer 
+								addEmptyItem={this.addEmptyItem} 
+								updateItem={this.updateItem} 
+								navigation={this.props.navigation} 
+								friends={friends} 
+								changeBorrower={this.changeBorrower} 
+								changeData={this.changeData} 
+								isEditing={isEditing} 
+								data={[...this.state.data]} 
+								originalData={this.state.originalData}
+								total={total}></BillContainer>
 						</View>
 					</View>
 					<View style={{

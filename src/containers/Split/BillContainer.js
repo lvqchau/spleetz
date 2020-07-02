@@ -20,7 +20,7 @@ export default class BillContainer extends Component {
 	}
 
 	render() {
-		const { data, updateItem, isEditing, addEmptyItem, friends, changeBorrower, navigation } = this.props
+		const { data, updateItem, isEditing, addEmptyItem, friends, changeBorrower, navigation, total } = this.props
 		return (
 			<View style={{
 				backgroundColor: COLORS.white,
@@ -75,7 +75,7 @@ export default class BillContainer extends Component {
 							fontFamily: 'Montserrat-Bold',
 							fontSize: 26,
 							color: COLORS.salmon
-						}}>{displayPrice(1000000)}</Text>
+						}}>{displayPrice(total)}</Text>
 					</View>
 				</LinearGradient>
 			</View>
