@@ -11,7 +11,7 @@ import BillContainer from './BillContainer'
 import CategoryComponent from './components/CategoryComponent'
 import { getFriend } from '../../services/accountGateway'
 import { createBill } from '../../services/billGateway'
-import  Input from '../../components/FormModal/Input'
+import Input from '../../components/FormModal/Input'
 
 const mockData = [
 	{
@@ -79,11 +79,11 @@ export default class SplitScreen extends Component {
 		this.state = {
 			isCategory: 'food',
 			isEditing: false,
-			data: [...mockData], //from api, changable
-			originalData: [...mockData], //from api
+			data: [], //from api, changable
+			originalData: [], //from api
 			friends: [],
 			itemCount: 0,
-			location: '',
+			location: null,
 			originalLocation: ''
 		}
 	}
@@ -99,24 +99,23 @@ export default class SplitScreen extends Component {
 	}
 
 	checkOutBill = () => {
-		const { originalData, originalLocation }  = this.state
+		const { originalData, originalLocation } = this.state
 		const items = [...originalData]
-		items.forEach((item)=> {
-			item.borrower.forEach(person => delete person.added)	
+		items.forEach((item) => {
+			item.borrower.forEach(person => delete person.added)
 		})
 		const bill = createBill({
 			location: originalLocation,
 			items,
 			date: new Date()
 		})
-		console.log('Created bill: ', bill)
 	}
 
 	updateItem = (item, id) => {
 		let { data } = this.state
 		let indexI = data.findIndex(item => item.id === id)
 		data[indexI] = item
-		this.setState({data})
+		this.setState({ data })
 	}
 
 	_getFriend = async () => {
@@ -189,14 +188,34 @@ export default class SplitScreen extends Component {
 		}
 	}
 
-	handleChangeLocation(text) { 
+	handleChangeLocation = (text) => {
 		this.setState({
 			location: text
 		})
 	}
 
+	addEmptyItem = () => {
+		let originalData = [...this.state.originalData]
+		let { itemCount } = this.state
+		this.setState({
+			itemCount: itemCount+1
+		})
+		let defaultItem = {
+			id: itemCount,
+			name: `Item ${itemCount}`,
+			quantity: 0,
+			price: 0,
+			borrower: []
+		}
+		originalData.push(defaultItem)
+		this.setState({
+			originalData,
+			data: originalData
+		})
+	}
+
 	render() {
-		const { isEditing, friends } = this.state
+		const { isEditing, friends, location } = this.state
 		return (
 			<SafeAreaView style={[
 				styles.splitContainer, {
@@ -228,98 +247,105 @@ export default class SplitScreen extends Component {
 								marginBottom: 5
 							}}>Location</Text>
 							{
-								isEditing ? (
-									<Input 
-										style={{margin: 0}}
-										value={this.state.location} 
+								isEditing ?
+									<Input
+										style={{ margin: 0, paddingVertical: 0, padding: 0 }}
+										value={this.state.location}
 										onChange={(text) => this.handleChangeLocation(text)}>
 									</Input>
-								) : (
-									<ScrollView
-										horizontal={true}
-										showsHorizontalScrollIndicator={false}>
-										<Text style={{
-											fontSize: 18,
-											fontWeight: '400'
-										}}>{this.state.location}</Text>
-									</ScrollView>
-								)
-							}
-						</View>
-						<View style={{
-							alignSelf: 'flex-end',
-							alignItems: 'flex-end',
-							textAlign: 'right',
-							flexDirection: 'row'
-						}}>
-							{
-								!isEditing ?
-									this.editTouchable('edit')
 									:
 									<>
-										{this.editTouchable('cancel')}
-										{this.editTouchable('done')}
+										{
+											location === null ?
+												<Text style={{ fontFamily: 'Quicksand-Regular', color: COLORS.lightgray, fontSize: 16 }}>Edit your location</Text>
+												:
+												<ScrollView
+													horizontal={true}
+													showsHorizontalScrollIndicator={false}>
+													<Text style={{
+														fontSize: 18,
+														fontWeight: '400'
+													}}>{this.state.location}</Text>
+												</ScrollView>
+
+										}
 									</>
 							}
-						</View>
-					</View>
-
-					{/* info container */}
-					<View>
-						<BillContainer updateItem={this.updateItem} navigation={this.props.navigation} friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={[...this.state.data]} originalData={this.state.originalData}></BillContainer>
-					</View>
-				</View>
-				<View style={{
-					position: 'absolute',
-					bottom: 15,
-					right: 0,
-					flexDirection: 'row',
-				}}>
-					<TouchableOpacity
-						activeOpacity={.7}
-						onPress={() => { this.openCamera() }}
-					>
-						<LinearGradient
-							start={{ x: 1, y: 1 }}
-							end={{ x: 1, y: 0 }}
-							colors={[COLORS.salmon, COLORS.salmon]}
-							style={{
-								width: 54,
-								height: 54,
-								marginRight: 15,
-								borderRadius: 54 / 2,
-								justifyContent: 'center',
-								alignItems: 'center'
-							}}>
-							<MaterialCommunityIcons size={30} name="camera" color={COLORS.white} style={{ height: 30 }} />
-						</LinearGradient>
-					</TouchableOpacity>
-					<TouchableOpacity
-						activeOpacity={.7}
-						onPress={() => this.checkOutBill()}
-					>
-						<LinearGradient
-							start={{ x: 1, y: 1 }}
-							end={{ x: 1, y: 0 }}
-							colors={[COLORS.aqua, COLORS.aqua]}
-							style={{
-								height: 54,
-								paddingHorizontal: 20,
-								borderRadius: 54 / 2,
-								justifyContent: 'center',
-								alignItems: 'center',
+							</View>
+							<View style={{
+								alignSelf: 'flex-end',
+								alignItems: 'flex-end',
+								textAlign: 'right',
 								flexDirection: 'row'
 							}}>
-							<Text style={{
-								color: COLORS.white,
-								fontSize: 20,
-								marginRight: 5,
-								marginBottom: 5
-							}}>Checkout</Text>
-							<AntDesign size={30} name="arrowright" color={COLORS.white} style={{ height: 30 }} />
-						</LinearGradient>
-					</TouchableOpacity>
-				</View>
+								{
+									!isEditing ?
+										this.editTouchable('edit')
+										:
+										<>
+											{this.editTouchable('cancel')}
+											{this.editTouchable('done')}
+										</>
+								}
+							</View>
+						</View>
+
+						{/* info container */}
+						<View>
+							<BillContainer addEmptyItem={this.addEmptyItem} updateItem={this.updateItem} navigation={this.props.navigation} friends={friends} changeBorrower={this.changeBorrower} changeData={this.changeData} isEditing={isEditing} data={[...this.state.data]} originalData={this.state.originalData}></BillContainer>
+						</View>
+					</View>
+					<View style={{
+						position: 'absolute',
+						bottom: 15,
+						right: 0,
+						flexDirection: 'row',
+					}}>
+						<TouchableOpacity
+							activeOpacity={.7}
+							onPress={() => { this.openCamera() }}
+						>
+							<LinearGradient
+								start={{ x: 1, y: 1 }}
+								end={{ x: 1, y: 0 }}
+								colors={[COLORS.salmon, COLORS.salmon]}
+								style={{
+									width: 54,
+									height: 54,
+									marginRight: 15,
+									borderRadius: 54 / 2,
+									justifyContent: 'center',
+									alignItems: 'center'
+								}}>
+								<MaterialCommunityIcons size={30} name="camera" color={COLORS.white} style={{ height: 30 }} />
+							</LinearGradient>
+						</TouchableOpacity>
+						<TouchableOpacity
+							activeOpacity={.7}
+							onPress={() => this.checkOutBill()}
+						>
+							<LinearGradient
+								start={{ x: 1, y: 1 }}
+								end={{ x: 1, y: 0 }}
+								colors={[COLORS.aqua, COLORS.aqua]}
+								style={{
+									height: 54,
+									paddingHorizontal: 20,
+									borderRadius: 54 / 2,
+									justifyContent: 'center',
+									alignItems: 'center',
+									flexDirection: 'row'
+								}}>
+								<Text style={{
+									color: COLORS.white,
+									fontSize: 20,
+									marginRight: 5,
+									marginBottom: 5
+								}}>Checkout</Text>
+								<AntDesign size={30} name="arrowright" color={COLORS.white} style={{ height: 30 }} />
+							</LinearGradient>
+						</TouchableOpacity>
+					</View>
 			</SafeAreaView>
 		)
 	}

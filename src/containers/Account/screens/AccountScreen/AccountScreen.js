@@ -40,7 +40,8 @@ class AccountScreen extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.focusListener()
+		if (this.focusListener != null && this.focusListener?.remove)
+      this.focusListener.remove();
 	}
 
   _logOut = async () => {
@@ -48,7 +49,7 @@ class AccountScreen extends React.Component {
     if (userOut.status) {
       this.props._authedUser(null, true)
     } else {
-      console.log("popup login faild, retry")
+      console.log("popup login fail, retry")
     }
   }
 

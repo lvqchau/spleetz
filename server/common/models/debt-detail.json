@@ -8,13 +8,16 @@
   },
   "properties": {
     "remindDate": {
-      "type": "date"
+      "type": "string", 
+      "dataType": "date"
     },
     "startDate": {
-      "type": "date"
+      "type": "string", 
+      "dataType": "date"
     },
     "returnDate": {
-      "type": "date"
+      "type": "string", 
+      "dataType": "date"
     },
     "status": {
       "type": "string"

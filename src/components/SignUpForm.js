@@ -101,12 +101,14 @@ export default class SignUpForm extends Component {
 							value={values.email}
 							onChange={handleChange('email')}
 							onBlur={handleBlur('email')}
+							keyboardType= {'email-address'}
 						/>
 						<Input
 							label='Phone number'
 							value={values.phoneNumber}
 							onChange={handleChange('phoneNumber')}
 							onBlur={handleBlur('phoneNumber')}
+							keyboardType= {'number-pad'}
 						/>
 						<View style={{alignItems: 'center'}}>
 							<View style={{flexDirection:'row', marginTop: 10}}>

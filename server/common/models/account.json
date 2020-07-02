@@ -34,6 +34,12 @@
     "email": {
       "type": "string",
       "required": true
+    },
+    "createdAt": {
+      "type": "string",
+      "dataType": "data",
+      "defaultFn": "now",
+      "required": true
     }
   },
   "validations": [],

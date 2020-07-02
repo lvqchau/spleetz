@@ -37,9 +37,14 @@ const searchFriend = async (filter) => {
 
 const addFriend = async (friendId) => {
 	let friends = await getFriend()
+	const accountId = await AsyncStorage.getItem('userId')
 	let idx = friends.findIndex(friend => friend.accountId === friendId)
 	if (idx === -1) {
-		await friendService.addFriendService(friendId)
+		console.log(accountId, friendId)
+		await friendService.addFriendService(accountId, friendId)
+			.then(res => console.log("Add successfully"))
+			.catch(err => console.log("Add failed"))
+		await friendService.addFriendService(friendId, accountId)
 			.then(res => console.log("Add successfully"))
 			.catch(err => console.log("Add failed"))
 	}
