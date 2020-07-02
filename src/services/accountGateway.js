@@ -72,15 +72,15 @@ const getUserInfo = async (accountId) => {
   let user = {}
   await accountService.getUserInfoService(accountId)
     .then(async res => {
-      const { id, fullname, username, phone } = res.data
       user = {
-        accountId: id,
-        fullname,
-        username,
-        phone
+        accountId: res.data.id,
+        fullname: res.data.fullname,
+        username: res.data.username,
+        avatarUrl: res.data.avatarUrl
       }
     })
     .catch(err => console.log(err.response.data))
+    
   return user
 }
 
@@ -137,5 +137,6 @@ export {
   getFriend,
   getFriendId,
   getUser,
-  updateUser
+  updateUser,
+  getUserInfo
 }

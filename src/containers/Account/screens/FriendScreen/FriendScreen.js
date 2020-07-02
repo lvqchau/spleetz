@@ -97,14 +97,13 @@ class FriendScreen extends React.Component {
                       searchData.length === 0 ? 
                       <Text>No match found</Text>  
                       :
-                      <>
+                      
                       <FlatList
                       showsVerticalScrollIndicator={false}
                       data={searchData}
                       renderItem={({ item }) => <FriendAdd isAdding={isAdding} addFriend={this._addFriend} user={item} style={{ marginVertical: 5 }} />}
-                      keyExtractor={(item, index) => item.id+index}
+                      keyExtractor={(item, index) => index}
                     />
-                  </>
                     }
                   </View>
                 }
@@ -174,8 +173,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   searchList: {
-    borderRadius: 20,
-    // flexGrow: 1
+    paddingBottom: 20
   }
 })
 

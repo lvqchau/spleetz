@@ -11,6 +11,8 @@ import { navigationRef } from './RootNavigation'
 import AccountNavigator from '../containers/Account/navigator/AccountNavigator'
 import SplitNavigator from '../containers/Split/SplitStack'
 import MessageNavigator from '../containers/Message/MessageStack'
+import { Easing } from 'react-native'
+import { CardStyleInterpolators } from '@react-navigation/stack'
 
 const Tab = createBottomTabNavigator()
 
@@ -27,11 +29,41 @@ export default class MyTabs extends React.Component {
 	}
 
 	render() {
+
+		const config = {
+			animation: 'spring', 
+			config: {
+				stiffness: 1000, 
+				damping: 50, 
+				mass: 3, 
+				overshootClamping: true, 
+				restDisplacementThreshold: 0.01, 
+				restSpeedThreshold: 0.01
+			}
+		}
+
+		const closeConfig = {
+			animation: 'timing',
+			config: {
+				duration: 500,
+				easing: Easing.linear
+			}
+		}
+
 		return (
 			<Tab.Navigator
 				initialRouteName='Bill'
 				tabBarOptions={{
 					showLabel: false,
+				}}
+				screenOptions={{
+					gestureEnabled: true,
+					gestureDirection: "horizontal",
+					cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+					transitionSpec: {
+						open: config,
+						close: closeConfig
+					}
 				}}
 			>
 				<Tab.Screen

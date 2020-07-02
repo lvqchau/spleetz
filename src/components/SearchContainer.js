@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-SemiBold',
     borderBottomWidth: 1,
     width: '100%',
+    backgroundColor: 'transparent'
     // paddingLeft: 30,
   }
 })

@@ -504,7 +504,8 @@ export default class DebtScreen extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			isDebt: false
+			isDebt: false,
+			bills: []
 		}
 	}
 
@@ -513,7 +514,7 @@ export default class DebtScreen extends Component {
 		const { navigation } = this.props
 		this.focusListener = navigation.addListener('focus', async () => {
 			const myBills = await getBillsOfSelf()
-			// console.log("hú", myBills)
+			await this.setState({bills: myBills})
 		})
 	}
 
@@ -544,6 +545,7 @@ export default class DebtScreen extends Component {
 
 	render() {
 		const { debt, bill } = mockData
+		const { bills } = this.state
 		return (
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.topButtonContainer}>
@@ -553,7 +555,7 @@ export default class DebtScreen extends Component {
 				{isDebt ?
 					<DebtContainer data={debt}></DebtContainer>
 					:
-					<BillContainer data={bill}></BillContainer>
+					<BillContainer bills={bills}></BillContainer>
 				}
 			</SafeAreaView>
 		)
