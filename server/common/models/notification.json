@@ -20,12 +20,14 @@
       "default": "pending"
     },
     "createdAt": {
-      "type": "date",
+      "type": "string", 
+      "dataType": "date",
       "required": true,
       "defaultFn": "now"
     },
     "checkedAt": {
-      "type": "date"
+      "type": "string", 
+      "dataType": "date"
     },
     "price": {
       "type": "number"

@@ -29,7 +29,7 @@ export default class SearchContainer extends Component {
     alignItems: 'center',
     backgroundColor: '#fff',
       }}>
-        <EvilIcons name="search" size={28} style={{position: 'absolute', left: 0}}color={isFocused ? COLORS.aqua : COLORS.black} />
+        {/* <EvilIcons name="search" size={28} style={{position: 'absolute', left: 0}}color={isFocused ? COLORS.aqua : COLORS.black} /> */}
         <TextInput
           style={[
             styles.inputStyle, {
@@ -55,7 +55,6 @@ export default class SearchContainer extends Component {
 const styles = StyleSheet.create({
   inputStyle: {
     fontFamily: 'Quicksand-SemiBold',
-    padding: 10,
     borderBottomWidth: 1,
     width: '100%',
     paddingLeft: 30,

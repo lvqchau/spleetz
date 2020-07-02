@@ -65,6 +65,7 @@ export default class Input extends Component {
       <View style={style}>
         {label && <Text style={styles.label}>{label}</Text>}
         <InputComponent
+					autoCapitalize="none"
           style={[styleInput, styleInputProp, customStyleInput]}
           placeholder={placeholder}
           onChangeText={onChange}

@@ -34,6 +34,12 @@
     "email": {
       "type": "string",
       "required": true
+    },
+    "createdAt": {
+      "type": "string",
+      "dataType": "data",
+      "defaultFn": "now",
+      "required": true
     }
   },
   "validations": [],
@@ -41,8 +47,7 @@
     "debtDetails": {
       "type": "hasMany",
       "model": "DebtDetail",
-      "foreignKey": "debtId",
-      "through": "Bill"
+      "foreignKey": "payerId"
     },
     "notifications": {
       "type": "hasMany",
@@ -78,7 +83,7 @@
       "accessType": "WRITE",
       "principalType": "ROLE",
       "principalId": "$everyone",
-      "permission": "DENY"
+      "permission": "ALLOW"
     },
     {
       "accessType": "WRITE",

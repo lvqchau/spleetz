@@ -4,7 +4,9 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { accountService } from './accountService'
 
 export class friendManagingService {
-  initFriendService = (accountId) => {
+  initFriendService = async () => {
+    const accountId = await AsyncStorage.getItem('userId')
+
     return axios({
       url: `${baseURL}/friends`,
       method: 'POST',
@@ -13,6 +15,7 @@ export class friendManagingService {
   }
 
   addFriendService = async (accountId, friendId) => {
+    // const accountId = await AsyncStorage.getItem('userId')
     let friendshipId = null
     let friends = []
     await accountService.getFriendService(accountId).then(res => {
@@ -23,21 +26,12 @@ export class friendManagingService {
         friendshipId = null
 			}
     })
-    
-    if (!friendshipId) {
-      await this.initFriendService(accountId).then(res => {
-        friendshipId = res.data.id
-        friends = []
-			}).catch(err => {
-				console.log('fail to init')
-			})
-    }
 
     friends.push({accountId: friendId})
-
+    
     return axios({
-      method: 'POST',
-      url: `${baseURL}/accounts/${accountId}/friendship`,
+      method: 'PUT',
+      url: `${baseURL}/friends/${friendshipId}`,
       data: {
         id: friendshipId,
         accountId,
@@ -45,14 +39,13 @@ export class friendManagingService {
       }
     })
   }
-
-  logOutService = async () => {
-    const accessToken = await AsyncStorage.getItem('accessToken')
-    return axios({
-      url: `${baseURL}/accounts/logout?access_token=${accessToken}`,
-      method: 'POST'
-    })
-  }
+	
+	searchFriendsService = async (filter) => {
+		return axios({
+			url: `${baseURL}/accounts?filter={"where":${JSON.stringify(filter)}}`,
+			method: 'GET'
+		})
+	}
 }
 
 export const friendService = new friendManagingService();

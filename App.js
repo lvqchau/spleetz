@@ -31,7 +31,6 @@ class App extends React.Component {
   }
 
   _stateChange = (e) => {
-    // console.log(navigationRef.current.getCurrentRoute().name)
   }
 
   _authedUser = (userToken, isSignout) => {

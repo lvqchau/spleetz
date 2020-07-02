@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, ActivityIndicator } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import RBSheet from "react-native-raw-bottom-sheet"
@@ -19,12 +19,13 @@ export default class BillItem extends Component {
 		this.state = {
 			friends: [],
 			isInputting: false,
-			item: this.props.item ? this.props.item : {}
+			item: this.props.item ? this.props.item : {},
+			isPending: false
 		}
 	}
 
 	openRBSheet = async (RBSheet) => {
-		let friendshipId = await getFriendId()
+		this.setState({ isPending: true })
 		let { borrower } = this.props.item
 		let friendList = this.props.friends
 		friendList = friendList.map((friend) => {
@@ -37,14 +38,11 @@ export default class BillItem extends Component {
 			return friend
 		})
 
-		if (friendshipId) {
-			while (this.state.friends.length === 0) {
 				this.setState({
 					friends: friendList
 				})
-			}
 			RBSheet.open()
-		}
+			this.setState({ isPending: false })
 	}
 
 	checkAdded = (user) => {
@@ -88,36 +86,41 @@ export default class BillItem extends Component {
 	}
 
 	renderInputItem = (item, isInputting, handleChange, handleBlur, values) => {
-		console.log("Render input item value: ", values)
 		if (isInputting && this.props.isEditing) {
 			return (
-				<>
-					<Input
-						customStyleInput={{
-							fontSize: 14
-						}}
-						keyboardType={"numeric"}
-						value={values.quantity}
-						onChange={handleChange('quantity')}
-						// onBlur={handleBlur('quantity')}
-					/>
-					<Input
-						customStyleInput={{
-							fontSize: 14,
-						}}
-						value={values.name}
-						onChange={handleChange('name')}
-						// onBlur={handleBlur('name')}
-					/>
-					<Input
-						customStyleInput={{
-							fontSize: 14,
-						}}
-						value={values.price}
-						onChange={handleChange('price')}
-						// onBlur={handleBlur('price')}
-					/>
-				</>
+				<View style={{ flexDirection: 'row', flex: 1 }}>
+					<View style={{ flex: 1 }}>
+						<Input
+							customStyleInput={{
+								fontSize: 14,
+								marginRight: 10
+							}}
+							keyboardType={"numeric"}
+							value={values.quantity}
+							onChange={handleChange('quantity')}
+							maxLength={3}
+						/>
+					</View>
+					<View style={{ flex: 6, marginRight: 10 }}>
+						<Input
+							customStyleInput={{
+								fontSize: 14,
+							}}
+							value={values.name}
+							onChange={handleChange('name')}
+						/>
+					</View>
+					<View style={{ flex: 3 }}>
+						<Input
+							customStyleInput={{
+								fontSize: 14,
+							}}
+							keyboardType={"numeric"}
+							value={values.price}
+							onChange={handleChange('price')}
+						/>
+					</View>
+				</View>
 			)
 		} else {
 			return (
@@ -140,10 +143,8 @@ export default class BillItem extends Component {
 	}
 
 	render() {
-		console.log("this.props.item", this.props.item)
-		const { item, index, isEditing, updateItem, changeTempData  } = this.props
-		const { isInputting } = this.state
-		// console.log(this.props.item, thais.state.item)
+		const { item, index, isEditing, updateItem, changeTempData } = this.props
+		const { isInputting, isPending } = this.state
 		return (
 			<Formik
 				initialValues={{
@@ -155,10 +156,12 @@ export default class BillItem extends Component {
 				}}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
 					setSubmitting(true)
-					this.setState({ 
-						isInputting: false
-					})
-					updateItem(values, this.props.item.id)
+					if (values.quantity !== 0 && values.price !== 0) {
+						this.setState({
+							isInputting: false
+						})
+						updateItem(values, this.props.item.id)
+					}
 					setSubmitting(false)
 				}}
 			>
@@ -195,9 +198,14 @@ export default class BillItem extends Component {
 											<></>
 											:
 											<>
-												<TouchableOpacity onPress={() => { this.openRBSheet(this[RBSheet + index]) }}>
-													<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.aqua} />
-												</TouchableOpacity>
+												{
+													isPending ?
+														<ActivityIndicator size={25} color="#0000ff" />
+														:
+														<TouchableOpacity onPress={() => { this.openRBSheet(this[RBSheet + index]) }}>
+															<MaterialCommunityIcons name="account-plus" size={24} color={COLORS.aqua} />
+														</TouchableOpacity>
+												}
 												<RBSheet
 													animationType={"slide"}
 													closeOnPressMask={true}

@@ -82,7 +82,6 @@ class EditProfileModal extends React.Component {
 		}
 		await s3.upload(params, async (err, data) => {
 			if (err) throw err
-			console.log(`File upload successfully at ${data.Location}`)
 			this.setState({
 				s3URL: data.Location
 			})
@@ -124,7 +123,6 @@ class EditProfileModal extends React.Component {
   render() {
 		const { navigation} = this.props
 		const { user, avatar } = this.state
-		console.log(user)
     return (
       <SafeAreaView>
 					<Formik
@@ -143,7 +141,6 @@ class EditProfileModal extends React.Component {
 							}
 							const userId = await AsyncStorage.getItem('userId')
 							const user = await updateUser(userId, newUser)
-							console.log(user)
 							setSubmitting(false)
 							navigation.goBack()
 						}}
@@ -190,12 +187,14 @@ class EditProfileModal extends React.Component {
 										value={values.email}
 										onChange={handleChange('email')}
 										onBlur={handleBlur('email')}
+										keyboardType= {'email-address'}
 									/>
 									<Input
 										label='Phone number'
 										value={values.phone}
 										onChange={handleChange('phone')}
 										onBlur={handleBlur('phone')}
+										keyboardType= {'number-pad'}
 									/>
 								</ScrollView>	
 							</KeyboardAwareScrollView>

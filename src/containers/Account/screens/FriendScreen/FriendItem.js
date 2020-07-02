@@ -11,18 +11,18 @@ class FriendItem extends React.Component {
     const { fullname, phone, avatarUrl } = user
     return (
       <View style={[style, styles.item]}>
-        <View style={styles.infoContainer}>
-          <TouchableOpacity style={styles.infoTouch}>
+        <View style={[styles.infoContainer, styles.infoTouch]}>
+          {/* <TouchableOpacity style={styles.infoTouch}> */}
             <Avatar
               size={52}
 							style={styles.avatar}
 							source={avatarUrl}
             />
             <Text>{fullname}</Text>
-          </TouchableOpacity>
+          {/* </TouchableOpacity> */}
         </View>
         <View style={styles.phone}>
-          <TouchableOpacity onPress={()=>{Linking.openURL(`tel:${phone}`);}}>
+          <TouchableOpacity style={styles.phoneTouch} onPress={()=>{Linking.openURL(`tel:${phone}`);}}>
             <Ionicons name="ios-call" size={28} color={COLORS.aqua} />
           </TouchableOpacity>
         </View>
@@ -49,6 +49,14 @@ const styles = StyleSheet.create({
   },
   phone: {
     flex: 1
+  },
+  phoneTouch: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'transparent',
+    paddingRight: 50 / 2 - 28 / 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
