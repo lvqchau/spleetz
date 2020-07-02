@@ -20,7 +20,12 @@
       "dataType": "date"
     },
     "status": {
-      "type": "string"
+			"type": "string",
+			"enum": [
+				"done",
+				"undone"
+      ],
+      "default": "undone"
     },
     "items": {
       "type": [

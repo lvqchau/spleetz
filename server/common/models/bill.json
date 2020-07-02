@@ -13,7 +13,11 @@
     },
     "location": {
       "type": "string"
-    },
+		},
+		"debtCount":{
+			"type": "number",
+			"required": true
+		},
     "items": {
       "type": [
         {
@@ -29,7 +33,7 @@
       "type": "string",
       "default": "food"
     }
-  },
+	},
   "validations": [],
   "relations": {
     "payer": {
