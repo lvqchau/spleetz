@@ -11,6 +11,7 @@ import BillContainer from './BillContainer'
 import CategoryComponent from './components/CategoryComponent'
 import { getFriend } from '../../services/accountGateway'
 import { createBill } from '../../services/billGateway'
+import { createDebtDetail } from '../../services/debtDetailGateway'
 import Input from '../../components/FormModal/Input'
 
 const mockData = [
@@ -113,17 +114,17 @@ export default class SplitScreen extends Component {
 				debtItem.price = Math.round((item.price * item.quantity / item.borrower.length)/500)*500
 				delete debtItem.borrower
 				delete debtItem.quantity
-				console.log("Debt Item: ", debtItem)
+				delete debtItem.id
 				let index = friendList.findIndex(friend => friend.borrowerId === person.accountId)
 				if (index === -1) {
 					let friend = {
 						borrowerId: person.accountId, 
-						items: [{...item}]
+						items: [{...debtItem}]
 					}
 					friendList.push(friend)
 				}
 				else {
-					friendList[index].items.push({...item})
+					friendList[index].items.push({...debtItem})
 				}
 			})
 		})
@@ -133,7 +134,13 @@ export default class SplitScreen extends Component {
 			items,
 			date: new Date(),
 			category: isCategory,
-			debtCount: 0
+			debtCount: friendList.length
+		})
+		friendList.forEach(async (friend) => {
+			let newDebt = {...friend}
+			newDebt.billId = bill.id
+			let debtDetail = await createDebtDetail(newDebt)
+			console.log("Debt Detail: ", debtDetail)
 		})
 		this.setState({isCheckingOut: false})
 	}
