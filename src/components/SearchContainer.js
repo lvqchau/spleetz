@@ -41,7 +41,7 @@ export default class SearchContainer extends Component {
           onBlur={this.handleBlur}
           onChangeText={searchText => this.handleInput(searchText)}
           value={searchText}
-          placeholder="Search a friend's name"
+          placeholder="Search a group's name"
         />
         {/* <View style={{
         }}>
@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Quicksand-SemiBold',
     borderBottomWidth: 1,
     width: '100%',
-    paddingLeft: 30,
+    // paddingLeft: 30,
   }
 })
