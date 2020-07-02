@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import LinearGradient from 'react-native-linear-gradient'
@@ -84,8 +84,9 @@ export default class SplitScreen extends Component {
 			friends: [],
 			total: 0,
 			itemCount: 0,
-			location: null,
-			originalLocation: ''
+			location: '',
+			originalLocation: '',
+			isCheckingOut: false
 		}
 	}
 
@@ -100,17 +101,19 @@ export default class SplitScreen extends Component {
 		this.focusListener.remove();
 	}
 
-	checkOutBill = () => {
+	checkOutBill = async () => {
 		const { originalData, originalLocation } = this.state
+		this.setState({isCheckingOut: true})
 		const items = [...originalData]
 		items.forEach((item) => {
 			item.borrower.forEach(person => delete person.added)
 		})
-		const bill = createBill({
+		const bill = await createBill({
 			location: originalLocation,
 			items,
 			date: new Date()
 		})
+		this.setState({isCheckingOut: false})
 	}
 
 	updateItem = (item, id) => {
@@ -231,7 +234,7 @@ export default class SplitScreen extends Component {
 	}
 
 	render() {
-		const { isEditing, friends, location, total } = this.state
+		const { isCheckingOut, isEditing, friends, location, total } = this.state
 		return (
 			<SafeAreaView style={[
 				styles.splitContainer, {
@@ -346,7 +349,31 @@ export default class SplitScreen extends Component {
 								<MaterialCommunityIcons size={30} name="camera" color={COLORS.white} style={{ height: 30 }} />
 							</LinearGradient>
 						</TouchableOpacity>
-						<TouchableOpacity
+						{
+							isCheckingOut ?
+							<LinearGradient
+								start={{ x: 1, y: 1 }}
+								end={{ x: 1, y: 0 }}
+								colors={[COLORS.aqua, COLORS.aqua]}
+								style={{
+									height: 54,
+									paddingHorizontal: 20,
+									borderRadius: 54 / 2,
+									justifyContent: 'center',
+									alignItems: 'center',
+									flexDirection: 'row'
+								}}>
+								<Text style={{
+									color: COLORS.white,
+									fontSize: 20,
+									marginRight: 5,
+									marginBottom: 5
+								}}>Checkout</Text>
+								<ActivityIndicator size={25} color={COLORS.white} />
+							</LinearGradient>
+							:
+							<>
+								<TouchableOpacity
 							activeOpacity={.7}
 							onPress={() => this.checkOutBill()}
 						>
@@ -371,6 +398,9 @@ export default class SplitScreen extends Component {
 								<AntDesign size={30} name="arrowright" color={COLORS.white} style={{ height: 30 }} />
 							</LinearGradient>
 						</TouchableOpacity>
+							</>
+						}
+					
 					</View>
 			</SafeAreaView>
 		)
