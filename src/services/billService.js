@@ -22,9 +22,17 @@ export class billManagingService {
     })
   }
 
+  getBillService = async () => {
+    return axios({
+      url: `${baseURL}/bills`,
+      method: 'GET'
+    })
+  }
+
   getBillBorrowersService = (billId) => {
     return axios({
-      url: `${baseUrl}/bills/${billId}/borrower`
+      url: `${baseURL}/bills/${billId}/borrower`,
+      method: 'GET'
     })
   }
 }

@@ -132,7 +132,8 @@ export default class SplitScreen extends Component {
 			location: originalLocation,
 			items,
 			date: new Date(),
-			category: isCategory
+			category: isCategory,
+			debtCount: 0
 		})
 		this.setState({isCheckingOut: false})
 	}

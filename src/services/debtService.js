@@ -3,7 +3,12 @@ import { baseURL } from '../assets/constant/constant'
 import AsyncStorage from '@react-native-community/async-storage'
 
 export class debtManagingService {
-  
+  getDebtService = async () => {
+    return axios({
+      method: 'GET',
+      url: `${baseURL}/debts`
+    })
+  }
 }
 
-export const debt = new debtManagingService();
+export const debtService = new debtManagingService();

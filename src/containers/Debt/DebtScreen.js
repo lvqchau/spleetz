@@ -7,6 +7,7 @@ import BillContainer from './BillContainer'
 import styles from './Debt.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../../assets/colors'
+import { getBillsOfSelf } from '../../services/billGateway'
 
 const mockData = {
 	debt: [
@@ -505,6 +506,20 @@ export default class DebtScreen extends Component {
 		this.state = {
 			isDebt: false
 		}
+	}
+
+	
+	async componentDidMount(){
+		const { navigation } = this.props
+		this.focusListener = navigation.addListener('focus', async () => {
+			const myBills = await getBillsOfSelf()
+			// console.log("hú", myBills)
+		})
+	}
+
+	componentWillUnmount() {
+		if (this.focusListener != null && this.focusListener?.remove)
+      this.focusListener.remove();
 	}
 
 	renderGradientButton = (type) => {
