@@ -105,9 +105,29 @@ export default class SplitScreen extends Component {
 		const { originalData, originalLocation } = this.state
 		this.setState({isCheckingOut: true})
 		const items = [...originalData]
+		let friendList = []
 		items.forEach((item) => {
-			item.borrower.forEach(person => delete person.added)
+			item.borrower.forEach(person => {
+				delete person.added
+				let debtItem = {...item}
+				debtItem.price = Math.round((item.price * item.quantity / item.borrower.length)/500)*500
+				delete debtItem.borrower
+				delete debtItem.quantity
+				console.log("Debt Item: ", debtItem)
+				let index = friendList.findIndex(friend => friend.borrowerId === person.accountId)
+				if (index === -1) {
+					let friend = {
+						borrowerId: person.accountId, 
+						items: [{...item}]
+					}
+					friendList.push(friend)
+				}
+				else {
+					friendList[index].items.push({...item})
+				}
+			})
 		})
+		console.log("Friend list: ", friendList)
 		const bill = await createBill({
 			location: originalLocation,
 			items,
