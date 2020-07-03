@@ -79,11 +79,10 @@ const updateBillCount = async (debtCount) => {
 }
 
 const acceptBill = async (billId, debtId) => {
-  console.log('debtId', debtId)
   await Promise.all([debtService.updateStatusService(debtId), billService.getBillIdService(billId)])
   .then(async res => {
     bill = res[1].data
-    await updateBillCount(bill.debtCount-1)
+    await updateBillCount(bill.debtCount)
   }).catch(errors => {
     console.log(errors)
   })

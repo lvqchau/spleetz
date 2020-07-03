@@ -57,13 +57,11 @@ export class billManagingService {
   }
 
   updateBillCountService = async (debtCount) => {
-    let tmp = debtCount
-    console.log(tmp, tmp-1)
     return await axios({
 			method: 'PATCH',
 			url: `${baseURL}/bills/${billId}`,
 			data: {
-				debtCount
+				debtCount: debtCount-1
 			}
 		})
   }
