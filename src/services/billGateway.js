@@ -58,7 +58,6 @@ const getBillsOfSelf = async () => {
       delete myBill.payerId
       myBills.push({ ...myBill, payer, borrowers, total })
     }
-    console.log("myBills", myBills)
   })
   return myBills
 

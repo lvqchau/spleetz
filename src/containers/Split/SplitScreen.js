@@ -69,7 +69,6 @@ export default class SplitScreen extends Component {
 				}
 			})
 		})
-		// console.log("Friend list: ", friendList)
 		const bill = await createBill({
 			location: originalLocation,
 			items,
@@ -82,7 +81,6 @@ export default class SplitScreen extends Component {
 			newDebt.billId = bill.id
 			newDebt.location = bill.location
 			let debtDetail = await createDebtDetail(newDebt)
-			// console.log("Debt Detail: ", debtDetail)
 		})
 		this.setState({
 			isCheckingOut: false, 

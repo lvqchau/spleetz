@@ -40,16 +40,13 @@ export default class DebtContainer extends Component {
 
 	getUser(accountId) {
 		const {friend} = this.props
-		console.log('friend', friend)
 		let tmp = friend.find(user => user.accountId === accountId)
 		return tmp
 	 }
 	 
 	renderDebtDetail(userId, item){
-		console.log('item', item)
 		if (userId === item.borrowerId){
 			const user = this.getUser(item.payerId)
-			console.log("Payer: ", user)
 			if (user)
 				return(
 					<View>
@@ -63,7 +60,6 @@ export default class DebtContainer extends Component {
 		}
 		else {
 			const user = this.getUser(item.borrowerId)
-			console.log("Borrower: ", user)
 			if (user)
 				return(
 					<View>
