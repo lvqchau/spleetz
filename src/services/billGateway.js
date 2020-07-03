@@ -57,6 +57,7 @@ const getBillsOfSelf = async () => {
       myBills.push({ ...myBill, payer, borrowers, total })
     }
   })
+  console.log(myBills)
   return myBills.reverse()
 
   // return myBills
@@ -72,8 +73,8 @@ const getBill = async () => {
   return bills
 }
 
-const updateBillCount = async (debtCount) => {
-  await billService.updateBillCountService(debtCount)
+const updateBillCount = async (debtCount, billId) => {
+  await billService.updateBillCountService(debtCount, billId)
   .then(res => console.log('done'))
   .catch(err => console.log(err.response.data))
 }
@@ -82,7 +83,7 @@ const acceptBill = async (billId, debtId) => {
   await Promise.all([debtService.updateStatusService(debtId), billService.getBillIdService(billId)])
   .then(async res => {
     bill = res[1].data
-    await updateBillCount(bill.debtCount)
+    await updateBillCount(bill.debtCount, bill.id)
   }).catch(errors => {
     console.log(errors)
   })

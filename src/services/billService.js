@@ -56,7 +56,7 @@ export class billManagingService {
     })
   }
 
-  updateBillCountService = async (debtCount) => {
+  updateBillCountService = async (debtCount, billId) => {
     return await axios({
 			method: 'PATCH',
 			url: `${baseURL}/bills/${billId}`,
