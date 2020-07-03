@@ -9,6 +9,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../../assets/colors'
 import { getBillsOfSelf } from '../../services/billGateway'
 import { getDebt } from '../../services/debtDetailGateway'
+import { getFriend } from '../../services/accountGateway'
 import AsyncStorage from '@react-native-community/async-storage'
 
 const mockData = {
@@ -506,22 +507,27 @@ export default class DebtScreen extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			isDebt: false
+			isDebt: false,
+			isLoading: true
 		}
 	}
-
 	
 	async componentDidMount(){
 		const { navigation } = this.props
 		this.focusListener = navigation.addListener('focus', async () => {
 			const myBills = await getBillsOfSelf()
 			const myDebts = await getDebt()
+			const myFriends = await getFriend()
 			const userId = await AsyncStorage.getItem('userId')
 			this.setState({
-				debts: myDebts,
-				userId: userId
+				debt: myDebts,
+				friend: myFriends, 
+				bill: myBills, 
+				userId: userId,
+				isLoading: false
 			})
-			// console.log("My debt: ", myDebts)
+			console.log("My debt: ", myDebts)
+			console.log("My friend: ", myFriends)
 			// console.log("hú", myBills)
 		})
 	}
@@ -552,8 +558,8 @@ export default class DebtScreen extends Component {
 	}
 
 	render() {
-		const { debt, bill } = mockData
-		const { debts, userId } = this.state
+		const { bill } = mockData
+		const { debt, friend, userId, isLoading } = this.state
 		return (
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.topButtonContainer}>
@@ -561,7 +567,7 @@ export default class DebtScreen extends Component {
 					{this.renderGradientButton('bill')}
 				</View>
 				{isDebt ?
-					<DebtContainer userId={userId} data={debts}></DebtContainer>
+					<DebtContainer isLoading={isLoading} userId={userId} friend={friend} data={debt}></DebtContainer>
 					:
 					<BillContainer data={bill}></BillContainer>
 				}

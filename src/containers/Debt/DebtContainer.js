@@ -12,9 +12,6 @@ export default class DebtContainer extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state = {
-			inDebtUser: {}
-		}
 	}
 
 	getTotalPrice(item) {
@@ -40,19 +37,54 @@ export default class DebtContainer extends Component {
 		}
 	}
 
-	async getUserInfo(userId, item) {
-		let user = null
-		if (userId === item.borrowerId) 
-			user = await getUserInfo(item.payerId)
-		else user = await getUserInfo(item.borrowerId)
-		return user
+	getUser(accountId) {
+		const {friend} = this.props
+		const index = friend.indexOf(user => {user.accountId === accountId})
+		return friend[index]
+	 }
+	 
+	renderDebtDetail(userId, item){
+		if (userId === item.borrowerId){
+			const user = this.getUser(item.payerId)
+			console.log("Payer: ", user)
+			if (user)
+				return(
+					<View>
+						<Image
+							style={styles.avatarContainer}
+							source={{ uri: user.avatarUrl }}
+						/>
+						<Text style={styles.debtStatus}>You owe
+							<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text> to
+							<Text style={styles.debtInfo}> {user.fullname.split(' ')[0]}</Text>
+						</Text>
+					</View>
+				)
+		}
+		else {
+			const user = this.getUser(item.borrowerId)
+			console.log("Borrower: ", user)
+			if (user)
+				return(
+					<View>
+						<Image
+							style={styles.avatarContainer}
+							source={{ uri: user.avatarUrl }}
+						/>
+						<Text style={styles.debtStatus}>You lend
+							<Text style={styles.debtInfo}> {user.fullname.split(' ')[0]}</Text>
+							<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text>
+						</Text>
+					</View>
+				)
+		}
+		return(<></>)
 	}
 
-	async renderDebtItem(userId, item, index) {
+	renderDebtItem(item, index) {
 		const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 		let date = new Date(item.startDate)
-		let inDebtUser = await this.getUserInfo(userId, item)
-		// const {inDebtUser} = this.state
+		const { userId } = this.props
 		return (
 			<View style={{ ...styles.flexRow, justifyContent: 'space-around', flex: 1, paddingHorizontal: 25, marginTop: 5 }}>
 				<View style={{ flex: 2, position: 'relative', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -72,44 +104,26 @@ export default class DebtContainer extends Component {
 			 			<MaterialIcon name='location-on' size={18} color={COLORS.black}></MaterialIcon>
 			 			<Text style={styles.addressText}>{item.location || 'Ama kitchen'}</Text>
 			 		</View>
-			 		{item.userId === item.borrowerId ?
-						<View>
-							<Image
-								style={styles.avatarContainer}
-								source={{ uri: inDebtUser.avatarUrl }}
-							/>
-							<Text style={styles.debtStatus}>You owe
-								<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text> to
-								<Text style={styles.debtInfo}> {inDebtUser.fullname.split(' ')[0]}</Text>
-							</Text>
-						</View>
-						:
-						<View>
-							<Image
-								style={styles.avatarContainer}
-								source={{ uri: inDebtUser.avatarUrl }}
-							/>
-							<Text style={styles.debtStatus}>You lend
-								<Text style={styles.debtInfo}> {inDebtUser.fullname}</Text>
-								<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text>
-							</Text>
-						</View>
-					}
+			 		{this.renderDebtDetail(userId, item)}
 				</View>
 			</View>
 		)
 	}	
 
 	render() {
-		const { userId, data } = this.props
+		const { data, isLoading } = this.props
 		return (
 			<View style={{ flex: 1 }}>
-				<FlatList
-					data={data}
-					renderItem={
-						({ index, item }) => this.renderDebtItem(userId, item, index)
-					}
-				/>
+				{isLoading ? 
+					<View></View>
+				:
+					<FlatList
+						data={data}
+						renderItem={
+							({ index, item }) => this.renderDebtItem(item, index)
+						}
+					/>
+				}
 			</View>
 		)
 	}

@@ -8,7 +8,7 @@ const createBill = async (bill) => {
       returnedBill = res.data
       console.log(returnedBill)
     })
-    .catch(err => console.log(err.response.data.error.message))
+		.catch(err => console.log(err.response.data.error.message))
   return returnedBill
 }
 

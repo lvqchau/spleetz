@@ -47,8 +47,8 @@ export class accountManagingService {
 			url: `${baseURL}/accounts/${accountId}/friendship`,
 		})
   }
-  getUserInfoService = (accountId) => {
-    return axios({
+  getUserInfoService = async(accountId) => {
+    return await axios({
       method: 'GET',
       url: `${baseURL}/accounts/${accountId}`
     })
