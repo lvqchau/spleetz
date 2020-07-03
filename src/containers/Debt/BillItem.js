@@ -27,7 +27,7 @@ export default class BillItem extends PureComponent {
     else if (index % 2 === 0) colorGrad = COLORS.gradientPink
     return (
       <View key={key}>
-        <View style={[styles.badge, { backgroundColor: debtCount === 0 ? COLORS.lightgray : COLORS.green }]}></View>
+        <View style={[styles.badge, { backgroundColor: debtCount === 0 ? COLORS.gray : COLORS.green }]}></View>
         <LinearGradient
           end={{ x: 1, y: 0 }}
           start={{ x: 0, y: 1 }}

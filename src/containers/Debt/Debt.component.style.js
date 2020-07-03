@@ -82,7 +82,8 @@ export default StyleSheet.create({
 	debtStatus: {
 		color: COLORS.gray,
 		marginTop: 7,
-		fontSize: 14
+		fontSize: 14,
+		flex: 5
 	},
 	moneyInfo: {
 		color: COLORS.salmon

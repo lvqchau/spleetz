@@ -41,8 +41,8 @@ const getAll = async () => {
     console.log('err')
   })
   return { 
-    debt: myDebts,
-    bill: myBills,
+    debt: myDebts.reverse(),
+    bill: myBills.reverse(),
     friend: myFriends,
     userId
   }

@@ -42,11 +42,30 @@ export class billManagingService {
     })
   }
 
+  getBillIdService = async (billId) => {
+    return await axios({
+      url: `${baseURL}/bills/${billId}`,
+      method: 'GET'
+    })
+  }
+
   getBillBorrowersService = async (billId) => {
     return await axios({
       url: `${baseURL}/bills/${billId}/borrower`,
       method: 'GET'
     })
+  }
+
+  updateBillCountService = async (debtCount) => {
+    let tmp = debtCount
+    console.log(tmp, tmp-1)
+    return await axios({
+			method: 'PATCH',
+			url: `${baseURL}/bills/${billId}`,
+			data: {
+				debtCount
+			}
+		})
   }
 }
 

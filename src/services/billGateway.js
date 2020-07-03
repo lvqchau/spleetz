@@ -1,14 +1,12 @@
 import { billService } from "./billService"
 import AsyncStorage from '@react-native-community/async-storage'
-import { getUserInfo } from "./accountGateway"
-import { accountService } from "./accountService"
+import { debtService } from "./debtDetailService"
 
 const createBill = async (bill) => {
   let returnedBill = null
   await billService.createBillService(bill)
     .then(async (res) => {
       returnedBill = res.data
-      console.log(returnedBill)
     })
 		.catch(err => console.log(err.response.data.error.message))
   return returnedBill
@@ -59,7 +57,7 @@ const getBillsOfSelf = async () => {
       myBills.push({ ...myBill, payer, borrowers, total })
     }
   })
-  return myBills
+  return myBills.reverse()
 
   // return myBills
 }
@@ -74,7 +72,25 @@ const getBill = async () => {
   return bills
 }
 
+const updateBillCount = async (debtCount) => {
+  await billService.updateBillCountService(debtCount)
+  .then(res => console.log('done'))
+  .catch(err => console.log(err.response.data))
+}
+
+const acceptBill = async (billId, debtId) => {
+  console.log('debtId', debtId)
+  await Promise.all([debtService.updateStatusService(debtId), billService.getBillIdService(billId)])
+  .then(async res => {
+    bill = res[1].data
+    await updateBillCount(bill.debtCount-1)
+  }).catch(errors => {
+    console.log(errors)
+  })
+}
+
 export {
   createBill,
-  getBillsOfSelf
+  getBillsOfSelf,
+  acceptBill
 }
