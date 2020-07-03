@@ -36,7 +36,7 @@ export default class DebtContainer extends Component {
 
 	_acceptBill = async (billId, debtId) => {
 		await acceptBill(billId, debtId)
-		this.props.getAllItems()
+		await this.props.getAllItems()
 	}
 
 	getUser(accountId) {

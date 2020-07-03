@@ -17,8 +17,8 @@ export default class DebtItem extends Component {
 
   acceptBill = async (bill, id) => {
     await this.setState({isPaying: true})
-    await this.props._acceptBill(item.billId, item.id)
-    this.setState({isPaying: false})
+    await this.props._acceptBill(bill, id)
+    await this.setState({isPaying: false})
   }
 
   render() {
