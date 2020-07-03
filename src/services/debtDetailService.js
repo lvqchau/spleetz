@@ -9,21 +9,24 @@ export class debtManagingService {
 		newDebt.payerId = userId
 		let date = new Date()
 		newDebt.startDate = date
-		date.setDate(date.getDate() + 7)
-		newDebt.remindDate = date
+		let newDate = new Date(date)
+		newDate.setDate(date.getDate() + 7)
+		newDebt.returnDate = newDate
     return await axios({
       url: `${baseURL}/debts`,
       method: 'POST',
       data: newDebt
     })
-  }
-  
+	}
+	
   getDebtService = async () => {
-    return await axios({
+	const userId = await AsyncStorage.getItem('userId')
+	const where = { 'or': [{ 'payerId': userId}, { 'borrowerId': userId} ] }
+    return await  axios({
       method: 'GET',
-      url: `${baseURL}/debts`
+      url: `${baseURL}/debts?filter={"where":${JSON.stringify(where)}}`
     })
-  }
+	}
 }
 
 export const debtService = new debtManagingService();

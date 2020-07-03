@@ -35,7 +35,10 @@
           "quantity": "number"
         }
       ]
-    }
+		},
+		"location": {
+			"type": "string"
+		}
   },
   "validations": [],
   "relations": {

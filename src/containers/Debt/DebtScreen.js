@@ -8,7 +8,9 @@ import styles from './Debt.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../../assets/colors'
 import { getBillsOfSelf } from '../../services/billGateway'
-import { withNavigationFocus } from 'react-navigation'
+import { getDebt, getAll } from '../../services/debtDetailGateway'
+import { getFriend } from '../../services/accountGateway'
+import AsyncStorage from '@react-native-community/async-storage'
 
 const mockData = {
 	debt: [
@@ -510,6 +512,18 @@ export default class DebtScreen extends Component {
 			bills: null
 		}
 	}
+	
+	_getAll = async () => {
+		let myAll = await getAll()
+		// console.log('myAll', myAll)
+		// console.log("My debt: ", myAll.debt)
+		console.log("My friend: ", myAll.friend)
+		this.setState({
+			...myAll,
+			isLoading: false
+		})
+		
+	}
 
 	getAllItems = async () => {
 		await this.setState({ isDebt: false })
@@ -521,8 +535,10 @@ export default class DebtScreen extends Component {
 		await this.setState({ isLoading: true })
 		const { navigation } = this.props
 		await this.getAllItems()
+		await this._getAll()
 		this.focusListener = navigation.addListener('focus', async () => {
 			await this.getAllItems()
+			await this._getAll()
 		})
 	}
 
@@ -552,8 +568,7 @@ export default class DebtScreen extends Component {
 	}
 
 	render() {
-		const { debt } = mockData
-		const { bills, isLoading } = this.state
+		const { debt, friend, userId, isLoading, bills } = this.state
 		return (
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.topButtonContainer}>
@@ -562,7 +577,7 @@ export default class DebtScreen extends Component {
 				</View>
 				{
 					isDebt ?
-						<DebtContainer data={debt} isLoading={isLoading}></DebtContainer>
+					    <DebtContainer isLoading={isLoading} userId={userId} friend={friend} data={debt}></DebtContainer>
 						:
 						<BillContainer bills={bills} isLoading={isLoading}></BillContainer>
 				}

@@ -13,6 +13,7 @@ import { getFriend, getUserInfo } from '../../services/accountGateway'
 import { createBill } from '../../services/billGateway'
 import { createDebtDetail } from '../../services/debtDetailGateway'
 import Input from '../../components/FormModal/Input'
+
 export default class SplitScreen extends Component {
 
 	constructor(props) {
@@ -68,7 +69,7 @@ export default class SplitScreen extends Component {
 				}
 			})
 		})
-		console.log("Friend list: ", friendList)
+		// console.log("Friend list: ", friendList)
 		const bill = await createBill({
 			location: originalLocation,
 			items,
@@ -79,8 +80,9 @@ export default class SplitScreen extends Component {
 		friendList.forEach(async (friend) => {
 			let newDebt = {...friend}
 			newDebt.billId = bill.id
+			newDebt.location = bill.location
 			let debtDetail = await createDebtDetail(newDebt)
-			console.log("Debt Detail: ", debtDetail)
+			// console.log("Debt Detail: ", debtDetail)
 		})
 		this.setState({
 			isCheckingOut: false, 
