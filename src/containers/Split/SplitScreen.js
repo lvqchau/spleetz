@@ -34,6 +34,7 @@ export default class SplitScreen extends Component {
 
 	componentDidMount() {
 		const { navigation } = this.props
+		this._getFriend()
 		this.focusListener = navigation.addListener('focus', () => {
 			this._getFriend()
 		});
