@@ -8,7 +8,7 @@ import styles from './Debt.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../../assets/colors'
 import { getBillsOfSelf } from '../../services/billGateway'
-import { getDebt } from '../../services/debtDetailGateway'
+import { getDebt, getAll } from '../../services/debtDetailGateway'
 import { getFriend } from '../../services/accountGateway'
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -512,23 +512,23 @@ export default class DebtScreen extends Component {
 		}
 	}
 	
+	_getAll = async () => {
+		let myAll = await getAll()
+		// console.log('myAll', myAll)
+		// console.log("My debt: ", myAll.debt)
+		console.log("My friend: ", myAll.friend)
+		this.setState({
+			...myAll,
+			isLoading: false
+		})
+		
+	}
+
 	async componentDidMount(){
 		const { navigation } = this.props
+		await this._getAll()
 		this.focusListener = navigation.addListener('focus', async () => {
-			const myBills = await getBillsOfSelf()
-			const myDebts = await getDebt()
-			const myFriends = await getFriend()
-			const userId = await AsyncStorage.getItem('userId')
-			this.setState({
-				debt: myDebts,
-				friend: myFriends, 
-				bill: myBills, 
-				userId: userId,
-				isLoading: false
-			})
-			console.log("My debt: ", myDebts)
-			console.log("My friend: ", myFriends)
-			// console.log("hú", myBills)
+			await this._getAll()
 		})
 	}
 

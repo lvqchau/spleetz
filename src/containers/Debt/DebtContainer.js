@@ -7,6 +7,7 @@ import COLORS from '../../assets/colors'
 import LinearGradient from 'react-native-linear-gradient'
 import { data } from '../Notification/screens/NotiData'
 import { getUserInfo } from '../../services/accountGateway'
+import Avatar from '../../components/Avatar'
 
 export default class DebtContainer extends Component {
 
@@ -39,21 +40,20 @@ export default class DebtContainer extends Component {
 
 	getUser(accountId) {
 		const {friend} = this.props
-		const index = friend.indexOf(user => {user.accountId === accountId})
-		return friend[index]
+		console.log('friend', friend)
+		let tmp = friend.find(user => user.accountId === accountId)
+		return tmp
 	 }
 	 
 	renderDebtDetail(userId, item){
+		console.log('item', item)
 		if (userId === item.borrowerId){
 			const user = this.getUser(item.payerId)
 			console.log("Payer: ", user)
 			if (user)
 				return(
 					<View>
-						<Image
-							style={styles.avatarContainer}
-							source={{ uri: user.avatarUrl }}
-						/>
+						<Avatar source={user.avatarUrl} size={36} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
 						<Text style={styles.debtStatus}>You owe
 							<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text> to
 							<Text style={styles.debtInfo}> {user.fullname.split(' ')[0]}</Text>
@@ -67,10 +67,7 @@ export default class DebtContainer extends Component {
 			if (user)
 				return(
 					<View>
-						<Image
-							style={styles.avatarContainer}
-							source={{ uri: user.avatarUrl }}
-						/>
+						<Avatar source={user.avatarUrl} size={36} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
 						<Text style={styles.debtStatus}>You lend
 							<Text style={styles.debtInfo}> {user.fullname.split(' ')[0]}</Text>
 							<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text>

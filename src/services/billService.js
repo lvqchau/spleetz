@@ -7,7 +7,7 @@ export class billManagingService {
     let newBill = {...bill}
     const accountId = await AsyncStorage.getItem('userId')
     newBill.payerId = accountId
-    return axios({
+    return await axios({
       url: `${baseURL}/bills`,
       method: 'POST',
       data: newBill
@@ -16,21 +16,21 @@ export class billManagingService {
 
   getBillOfSelfService = async () => {
     const accountId = await AsyncStorage.getItem('userId')
-    return axios({
+    return  axios({
       url: `${baseURL}/bills?filter={"where": {"payerId": ${JSON.stringify(accountId)}}}`,
       method: 'GET'
     })
   }
 
   getBillService = async () => {
-    return axios({
+    return await axios({
       url: `${baseURL}/bills`,
       method: 'GET'
     })
   }
 
-  getBillBorrowersService = (billId) => {
-    return axios({
+  getBillBorrowersService = async (billId) => {
+    return await axios({
       url: `${baseURL}/bills/${billId}/borrower`,
       method: 'GET'
     })
