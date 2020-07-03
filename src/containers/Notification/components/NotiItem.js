@@ -17,13 +17,6 @@ class NotiItem extends React.Component {
     }
   }
 
-  confirmNoti = (isChecked) => {
-    this.setState({
-      isChosen: true,
-      isChecked
-    })
-  }
-
   render() {
     const { noti, index, y, containerHeight } = this.props
     const { cardHeight } = this.state
@@ -75,38 +68,7 @@ class NotiItem extends React.Component {
           </View>
           <View style={styles.debtContainer}>
             <Text style={styles.debtText}>{displayPrice(100000)}</Text>
-            <View style={styles.choices}>
-              {
-                this.state.isChosen ?
-                  (
-                    <>
-                    {
-                      this.state.isChecked ? 
-                      <Ionicons name="ios-checkmark" size={28} color={COLORS.green}/>
-                      : 
-                      <Ionicons name="ios-close" size={28} color={COLORS.salmon}/>
-                    }
-                    </>
-                  )
-                  : (
-                    <>
-                      <TouchableOpacity 
-                        style={styles.choiceCircle}
-                        onPress={()=>{this.confirmNoti(1)}}
-                        >
-                        <Ionicons name="ios-checkmark-circle" size={28} color={COLORS.green} />
-                      </TouchableOpacity>
-                      <TouchableOpacity 
-                        style={styles.choiceCircle}
-                        onPress={()=>{this.confirmNoti(0)}}
-                        >
-                        <Ionicons name="ios-close-circle" size={28} color={COLORS.salmon} />
-                      </TouchableOpacity>
-                    </>
-                  )
-              }
             </View>
-          </View>
         </View>
       </Animated.View>
     )

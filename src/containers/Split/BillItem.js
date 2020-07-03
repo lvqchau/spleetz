@@ -156,12 +156,12 @@ export default class BillItem extends Component {
 				}}
 				onSubmit={async (values, { setSubmitting, setErrors }) => {
 					setSubmitting(true)
-					if (values.quantity !== 0 && values.price !== 0) {
-						this.setState({
+					// if (values.quantity !== 0 && values.price !== 0) {
+						await this.setState({
 							isInputting: false
 						})
 						updateItem(values, this.props.item.id)
-					}
+					// }
 					setSubmitting(false)
 				}}
 			>

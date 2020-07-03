@@ -3,15 +3,15 @@ import { baseURL } from '../assets/constant/constant'
 import AsyncStorage from '@react-native-community/async-storage'
 
 export class accountManagingService {
-  logInService = (user) => {
-    return axios({
+  logInService = async (user) => {
+    return await axios({
       url: `${baseURL}/accounts/login`,
       method: 'POST',
       data: user
     })
 	}
-	signUpService = (user) => {
-    return axios({
+	signUpService = async (user) => {
+    return await axios({
       url: `${baseURL}/accounts`,
       method: 'POST',
       data: user
@@ -25,14 +25,14 @@ export class accountManagingService {
     })
 	}
 	getUser = async (userId) => {
-		return axios({
+		return await axios({
 			url: `${baseURL}/accounts/${userId}`,
 			method: 'GET'
 		})
 	}
-	updateUser = async(userId, user) => {
+	updateUser = async (userId, user) => {
     const accessToken = await AsyncStorage.getItem('accessToken')
-		return axios({
+		return await axios({
 			url: `${baseURL}/accounts/${userId}`,
 			method: 'PATCH',
 			data: user,
@@ -41,14 +41,14 @@ export class accountManagingService {
 			}
 		})
 	}
-  getFriendService = (accountId) => {
-    return axios({
+  getFriendService = async (accountId) => {
+    return await axios({
 			method: 'GET',
 			url: `${baseURL}/accounts/${accountId}/friendship`,
 		})
   }
-  getUserInfoService = (accountId) => {
-    return axios({
+  getUserInfoService = async (accountId) => {
+    return await axios({
       method: 'GET',
       url: `${baseURL}/accounts/${accountId}`
     })

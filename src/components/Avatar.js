@@ -20,30 +20,15 @@ class Avatar extends React.Component {
   render() {
     const { size, style } = this.props
     return (
-      <>
-        {
-          this.state.isUrl ?
-            <Image
-              style={[style, {
-                width: size,
-                height: size,
-                borderRadius: size / 2
-              }]}
-              source={{ uri: this.state.image }}
-              onError={(err) => this.onError(err)}
-            />
-            :
-            <Image
-              style={[style, {
-                width: size,
-                height: size,
-                borderRadius: size / 2
-              }]}
-              source={this.state.image}
-              onError={(err) => this.onError(err)}
-            />
-        }
-      </>
+      <Image
+        style={[style, {
+          width: size,
+          height: size,
+          borderRadius: size / 2
+        }]}
+        source={this.state.isUrl ? { uri: this.state.image } : this.state.image}
+        onError={(err) => this.onError(err)}
+      />
     )
   }
 }

@@ -9,69 +9,10 @@ import styles from './Split.component.style'
 import COLORS from '../../assets/colors'
 import BillContainer from './BillContainer'
 import CategoryComponent from './components/CategoryComponent'
-import { getFriend } from '../../services/accountGateway'
+import { getFriend, getUserInfo } from '../../services/accountGateway'
 import { createBill } from '../../services/billGateway'
+import { createDebtDetail } from '../../services/debtDetailGateway'
 import Input from '../../components/FormModal/Input'
-
-const mockData = [
-	{
-		id: 0,
-		name: "Bánh mì xúc xích xông khói",
-		quantity: 100,
-		price: 100000,
-		borrower: []
-	},
-	{
-		id: 1,
-		name: "Banh mi xuc xich",
-		quantity: 10,
-		price: 20000,
-		borrower: []
-	},
-	{
-		id: 2,
-		name: "Banh mi ga",
-		quantity: 2,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 3,
-		name: "Banh mi ga",
-		quantity: 2,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 4,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 5,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 6,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	},
-	{
-		id: 7,
-		name: "Banh mi ga",
-		quantity: 5,
-		price: 15000,
-		borrower: []
-	}
-]
-
 export default class SplitScreen extends Component {
 
 	constructor(props) {
@@ -102,18 +43,55 @@ export default class SplitScreen extends Component {
 	}
 
 	checkOutBill = async () => {
-		const { originalData, originalLocation } = this.state
+		const { originalData, originalLocation, isCategory } = this.state
 		this.setState({isCheckingOut: true})
 		const items = [...originalData]
+		let friendList = []
 		items.forEach((item) => {
-			item.borrower.forEach(person => delete person.added)
+			item.borrower.forEach(person => {
+				delete person.added
+				let debtItem = {...item}
+				debtItem.price = Math.round((item.price * item.quantity / item.borrower.length)/500)*500
+				delete debtItem.borrower
+				delete debtItem.quantity
+				delete debtItem.id
+				let index = friendList.findIndex(friend => friend.borrowerId === person.accountId)
+				if (index === -1) {
+					let friend = {
+						borrowerId: person.accountId, 
+						items: [{...debtItem}]
+					}
+					friendList.push(friend)
+				}
+				else {
+					friendList[index].items.push({...debtItem})
+				}
+			})
 		})
+		console.log("Friend list: ", friendList)
 		const bill = await createBill({
 			location: originalLocation,
 			items,
-			date: new Date()
+			date: new Date(),
+			category: isCategory,
+			debtCount: friendList.length
 		})
-		this.setState({isCheckingOut: false})
+		friendList.forEach(async (friend) => {
+			let newDebt = {...friend}
+			newDebt.billId = bill.id
+			let debtDetail = await createDebtDetail(newDebt)
+			console.log("Debt Detail: ", debtDetail)
+		})
+		this.setState({
+			isCheckingOut: false, 
+			originalData: [], 
+			data: [], 
+			isCategory: 'food',
+			total: 0,
+			itemCount: 0,
+			location: '',
+			originalLocation: ''
+		})
 	}
 
 	updateItem = (item, id) => {
@@ -222,7 +200,6 @@ export default class SplitScreen extends Component {
 			price: 5000,
 			borrower: []
 		}
-		console.log(defaultItem)
 		originalData.push(defaultItem)
 		data.push(defaultItem)
 

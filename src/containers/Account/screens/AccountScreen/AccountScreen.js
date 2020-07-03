@@ -10,6 +10,7 @@ import Avatar from '../../../../components/Avatar.js';
 import Switcher from '../../../../components/Switcher'
 import { logOut, getUser } from '../../../../services/accountGateway.js'
 import AsyncStorage from '@react-native-community/async-storage';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 class AccountScreen extends React.Component {
 

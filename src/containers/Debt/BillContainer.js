@@ -1,102 +1,49 @@
-import React, { Component } from 'react'
-import { TouchableOpacity, SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native'
-import Entypo from 'react-native-vector-icons/Entypo'
-import LinearGradient from 'react-native-linear-gradient'
+import React, { Component, PureComponent } from 'react'
+import { SafeAreaView, StyleSheet, FlatList, View, ActivityIndicator } from 'react-native'
 
-import Avatar from '../../components/Avatar'
 import COLORS from '../../assets/colors'
-import displayPrice from '../../utils/displayPrice'
-import { ScrollView } from 'react-native-gesture-handler'
+import BillItem from './BillItem'
 
-class BillContainer extends Component {
+class BillContainer extends PureComponent {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      bills: this.props.bills ? this.props.bills : []
+    }
+  }
+
   renderBillItem = (item, index) => {
-    const { createdDate, location, status, category, borrowers } = item
-    let colorGrad = COLORS.gradientGreen
-    if (index % 3 === 0) colorGrad = COLORS.gradientPurple
-    else if (index % 2 === 0) colorGrad = COLORS.gradientPink
-
-    return (
-      <>
-        <View style={[styles.badge, {backgroundColor: status ? COLORS.green : 'red'}]}></View>
-        <LinearGradient
-          end={{ x: 1, y: 0 }}
-          start={{ x: 0, y: 1 }}
-          colors={colorGrad}
-          style={styles.billItem}
-        >
-          <View style={styles.billTop}>
-            <View style={{
-              flex: 5
-            }}>
-              <Text style={{
-                fontSize: 12,
-                fontWeight: '700',
-                color: COLORS.white
-              }}>{createdDate}</Text>
-              <Text style={{
-                fontSize: 18,
-                color: COLORS.white,
-                marginBottom: 5
-              }}>{location}</Text>
-              <ScrollView 
-                style={{
-                  width: '60%',
-                  marginBottom: 10
-                }}
-                horizontal={true} 
-                showsHorizontalScrollIndicator={false}>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  <Avatar source={""} size={26} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-                  
-              </ScrollView>
-            </View>
-            <View style={{
-              flex: 1,
-              alignItems: 'flex-end'
-            }}>
-              <TouchableOpacity
-                onPress={() => this.setState({ openModal: true })}
-              >
-                <Entypo name="resize-full-screen" size={24} color={COLORS.white} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.billBot}>
-            <Text
-              style={{
-                fontFamily: 'Montserrat-Bold',
-                fontSize: 28,
-                bottom: -5,
-                color: COLORS.white
-              }}>{displayPrice(1050000)}</Text>
-            <Avatar
-              style={{ borderColor: COLORS.white, borderWidth: 1 }}
-              size={32}
-              source={""} />
-          </View>
-          <Text style={styles.categoryText}>{category}</Text>
-        </LinearGradient>
-      </>
-    )
+    return <BillItem key={index.toString()} bill={item} index={index}></BillItem>
   }
 
   render() {
-    const { data } = this.props
+    const { bills, isLoading } = this.props
     return (
-      <SafeAreaView style={styles.billContainer}>
-        <FlatList
-          data={data}
-          renderItem={({ index, item }) => this.renderBillItem(item, index)}
-          keyExtractor={item => item.id}
-        />
-      </SafeAreaView>
+      <>
+        {
+          isLoading ?
+            <ActivityIndicator size={25} color="#0000ff" />
+            :
+            <>
+              {
+                bills == null
+                  ?
+                  <ActivityIndicator size={25} color="#0000ff" />
+                  :
+                  <SafeAreaView style={styles.billContainer}>
+                    <FlatList
+                      data={bills}
+                      renderItem={({ index, item }) => <View key={index.toString()}>{this.renderBillItem(item, index)}</View>}
+                      keyExtractor={(item, index) => index.toString()}
+                    />
+                  </SafeAreaView>
+
+              }
+            </>
+
+        }
+      </>
     )
   }
 }
@@ -138,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 2
   },
-	categoryText: {
+  categoryText: {
     position: 'absolute',
     bottom: -12,
     right: -5,
@@ -148,7 +95,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     opacity: .5,
     zIndex: 1
-	},
+  },
   userContainer: {
     flexDirection: 'row',
     alignItems: 'center',

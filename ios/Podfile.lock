@@ -245,6 +245,8 @@ PODS:
     - React
   - react-native-image-picker (2.3.1):
     - React
+  - react-native-netinfo (5.9.4):
+    - React
   - react-native-safe-area-context (2.0.3):
     - React
   - React-RCTActionSheet (0.62.2):
@@ -365,6 +367,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -437,6 +440,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-RCTActionSheet:
@@ -507,6 +512,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 512e560d0e985d0e8c479a54a4e5c147a9c83493
   react-native-camera: 9e3d60336e221d62e5b72adf551ca31ff74a94b5
   react-native-image-picker: 668e72d0277dc8c12ae90e835507c1eddd2e4f85
+  react-native-netinfo: eed0fb1d6a9424e98ce686f92aad62ff427d4bc9
   react-native-safe-area-context: ce7e110923a56ba3e3c615d4920ebbe01324326e
   React-RCTActionSheet: f41ea8a811aac770e0cc6e0ad6b270c644ea8b7c
   React-RCTAnimation: 49ab98b1c1ff4445148b72a3d61554138565bad0

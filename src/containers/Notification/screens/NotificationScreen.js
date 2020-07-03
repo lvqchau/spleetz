@@ -22,7 +22,6 @@ class NotificationScreen extends Component {
       useNativeDriver: true,
     });
     return (
-      // <LinearGradient colors={['#3FE1EF', '#24AAD8', '#007FFF']}>
       <LinearGradient 
         end={{ x: 1, y: 1 }}
         start={{ x: 1, y: 0 }}

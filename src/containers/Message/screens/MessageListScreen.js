@@ -127,51 +127,65 @@ export default class MessageListScreen extends Component {
   render() {
     const { route, navigation } = this.props
     return (
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={{
-          flexDirection: 'row',
-          paddingHorizontal: 25, 
-          paddingVertical: 18
-        }}>
+        <SafeAreaView style={{ flex: 1 }}>
           <LinearGradient
-            start={{x:1, y:1}}
-            end={{x:1, y:0}}
-            colors={COLORS.gradientPink}
-            style={{
-              width: 42,
-              height: 42,
-              borderRadius: 42 / 2,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 25
-            }}
-          >
-            <Ionicons name="ios-add" size={42} color={COLORS.white} />
-          </LinearGradient>
-          <View style={{flex: 4}}>
-            <SearchContainer/>
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '40%',
+          }}
+          start={{ x: 1, y: 0 }}
+          end={{ x: 0, y: 0 }}
+          colors={COLORS.gradientPink}
+      >
+      </LinearGradient>
+          <View style={{
+            flexDirection: 'row',
+            paddingHorizontal: 25,
+            paddingVertical: 10,
+            position: 'absolute',
+            top: 44,
+            right: -15,
+            zIndex: 2
+          }}>
+            <LinearGradient
+              colors={COLORS.gradientTurquoise}
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 50 / 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginRight: 25
+              }}
+            >
+              <Ionicons name="ios-add" size={50} color={COLORS.white} />
+            </LinearGradient>
+            {/* <View style={{ flex: 4 }}>
+              <SearchContainer />
+            </View> */}
           </View>
-        </View>
-        <View style={{
-          borderRadius: 30,
-          backgroundColor: COLORS.white,
-          paddingVertical: 20,
-          shadowColor: COLORS.black,
-          shadowOffset: { width: 0, height: 0 },
-          shadowOpacity: 0.2,
-          shadowRadius: 3,
-          elevation: 3,
-          marginBottom: 20*2+10
-        }}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            style={{ paddingHorizontal: 25 }}
-            data={data}
-            renderItem={({ item }) => <GroupItem item={item} route={route} navigation={navigation} />}
-            keyExtractor={item => item.id}
-          />
-        </View>
-      </SafeAreaView>
+          <View style={{
+            borderRadius: 30,
+            backgroundColor: COLORS.white,
+            paddingVertical: 20,
+            shadowColor: COLORS.black,
+            shadowOffset: { width: 0, height: 0 },
+            shadowOpacity: 0.2,
+            shadowRadius: 3,
+            elevation: 3,
+            marginBottom: 20 * 2 + 10 - 44-50,
+            marginTop: 44
+          }}>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              style={{ paddingHorizontal: 25 }}
+              data={data}
+              renderItem={({ item }) => <GroupItem item={item} route={route} navigation={navigation} />}
+              keyExtractor={item => item.id}
+            />
+          </View>
+        </SafeAreaView>
     )
   }
 }
