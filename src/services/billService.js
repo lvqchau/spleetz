@@ -15,6 +15,7 @@ export class billManagingService {
       delete payer.createdAt
       delete payer.phone
       delete payer.email
+      delete payer.id
     })
     .catch(err=>console.log(err.response.data))
     newBill.payerId = accountId
