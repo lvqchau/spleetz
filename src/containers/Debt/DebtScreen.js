@@ -527,8 +527,7 @@ export default class DebtScreen extends Component {
 	}
 
 	componentWillUnmount() {
-		if (this.focusListener != null && this.focusListener?.remove)
-			this.focusListener.remove();
+		this.focusListener()
 	}
 
 	renderGradientButton = (type) => {

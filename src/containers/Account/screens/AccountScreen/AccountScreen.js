@@ -41,8 +41,7 @@ class AccountScreen extends React.Component {
 	}
 
 	componentWillUnmount() {
-		if (this.focusListener != null && this.focusListener?.remove)
-      this.focusListener.remove();
+    this.focusListener()
 	}
 
   _logOut = async () => {

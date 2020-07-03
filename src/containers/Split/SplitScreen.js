@@ -39,7 +39,7 @@ export default class SplitScreen extends Component {
 	}
 
 	componentWillUnmount() {
-		this.focusListener.remove();
+		this.focusListener()
 	}
 
 	checkOutBill = async () => {
