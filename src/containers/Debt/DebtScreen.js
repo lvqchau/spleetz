@@ -74,7 +74,7 @@ export default class DebtScreen extends Component {
 				</View>
 				{
 					isDebt ?
-					    <DebtContainer isLoading={isLoading} userId={userId} friend={friend} data={debt}></DebtContainer>
+					    <DebtContainer getAllItems={this.getAllItems} isLoading={isLoading} userId={userId} friend={friend} data={debt}></DebtContainer>
 						:
 						<BillContainer bills={bills} isLoading={isLoading}></BillContainer>
 				}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Image, ScrollView, ActivityIndicator } from 'react-native'
+import { View, Text, FlatList, Image, ScrollView, ActivityIndicator, ActivityIndicatorBase } from 'react-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import styles from './Debt.component.style'
 import COLORS from '../../assets/colors'
@@ -8,16 +9,22 @@ import LinearGradient from 'react-native-linear-gradient'
 import { data } from '../Notification/screens/NotiData'
 import { getUserInfo } from '../../services/accountGateway'
 import Avatar from '../../components/Avatar'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import axios from '../../services/axios'
+import { acceptBill } from '../../services/billGateway'
 
 export default class DebtContainer extends Component {
 
 	constructor(props) {
 		super(props)
+		this.state = {
+			isPaying: false
+		}
 	}
 
 	getTotalPrice(item) {
 		if (item) {
-			return item.reduce((totalPrice, currentItem) => totalPrice + currentItem.price,0)
+			return item.reduce((totalPrice, currentItem) => totalPrice + currentItem.price, 0)
 		}
 		else return 0
 	}
@@ -38,19 +45,26 @@ export default class DebtContainer extends Component {
 		}
 	}
 
+	_acceptBill = async (billId, debtId) => {
+		this.setState({ isPaying: true })
+		await acceptBill(billId, debtId)
+		this.props.getAllItems()
+		this.setState({ isPaying: false })
+	}
+
 	getUser(accountId) {
-		const {friend} = this.props
+		const { friend } = this.props
 		let tmp = friend.find(user => user.accountId === accountId)
 		return tmp
-	 }
-	 
-	renderDebtDetail(userId, item){
-		if (userId === item.borrowerId){
+	}
+
+	renderDebtDetail(userId, item) {
+		if (userId === item.borrowerId) {
 			const user = this.getUser(item.payerId)
 			if (user)
-				return(
+				return (
 					<View>
-						<Avatar source={user.avatarUrl} size={36} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
+						<Avatar source={user.avatarUrl} size={36} style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
 						<Text style={styles.debtStatus}>You owe
 							<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text> to
 							<Text style={styles.debtInfo}> {user.fullname.split(' ')[0]}</Text>
@@ -61,17 +75,39 @@ export default class DebtContainer extends Component {
 		else {
 			const user = this.getUser(item.borrowerId)
 			if (user)
-				return(
+				return (
 					<View>
-						<Avatar source={user.avatarUrl} size={36} style={{borderColor: 'white', borderWidth: 1, marginRight: 5}}/>
-						<Text style={styles.debtStatus}>You lend
+						<Avatar source={user.avatarUrl} size={36} style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
+						<View style={{ flexDirection: 'row', justifyContent: 'space-between', 'alignItems': 'center' }}>
+							<Text style={styles.debtStatus}>You lend
 							<Text style={styles.debtInfo}> {user.fullname.split(' ')[0]}</Text>
-							<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text>
-						</Text>
-					</View>
+								<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text>
+							</Text>
+							<View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-end' }}>
+								{
+									// this.state.isPaying ?
+									// 	<ActivityIndicatorBase size={25} color="#0000ff" />
+									// 	:
+									// 	<>
+											// {
+												item.status === 'undone'
+													?
+													<TouchableOpacity onPress={() => this._acceptBill(item.billId, item.id)} >
+														<Text style={{ color: COLORS.aqua }}>PAID</Text>
+													</TouchableOpacity>
+													:
+													<View>
+														<Ionicons name="ios-checkmark" size={30} color={COLORS.green} />
+													</View>
+										// 	}
+										// </>
+								}
+							</View>
+						</View>
+					</View >
 				)
 		}
-		return(<></>)
+		return (<></>)
 	}
 
 	renderDebtItem(item, index) {
@@ -92,16 +128,16 @@ export default class DebtContainer extends Component {
 						<Text style={styles.dateText}>{date.getDate()}</Text>
 					</LinearGradient>
 				</View>
-			 	<View style={styles.debtContainer}>
-			 		<View style={[styles.flexRow, { marginBottom: 5, flex: 1, alignItems: 'center' }]}>
-			 			<MaterialIcon name='location-on' size={18} color={COLORS.black}></MaterialIcon>
-			 			<Text style={styles.addressText}>{item.location || 'Ama kitchen'}</Text>
-			 		</View>
-			 		{this.renderDebtDetail(userId, item)}
+				<View style={styles.debtContainer}>
+					<View style={[styles.flexRow, { marginBottom: 5, flex: 1, alignItems: 'center' }]}>
+						<MaterialIcon name='location-on' size={18} color={COLORS.black}></MaterialIcon>
+						<Text style={styles.addressText}>{item.location || 'Ama kitchen'}</Text>
+					</View>
+					{this.renderDebtDetail(userId, item)}
 				</View>
 			</View>
 		)
-	}	
+	}
 
 	render() {
 		const { data, isLoading } = this.props
