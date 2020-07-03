@@ -1,26 +1,15 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Image, ScrollView, ActivityIndicator, ActivityIndicatorBase } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator } from 'react-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import styles from './Debt.component.style'
 import COLORS from '../../assets/colors'
 import LinearGradient from 'react-native-linear-gradient'
-import { data } from '../Notification/screens/NotiData'
-import { getUserInfo } from '../../services/accountGateway'
-import Avatar from '../../components/Avatar'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import axios from '../../services/axios'
 import { acceptBill } from '../../services/billGateway'
+import Avatar from '../../components/Avatar'
+import DebtItem from './DebtItem'
 
 export default class DebtContainer extends Component {
-
-	constructor(props) {
-		super(props)
-		this.state = {
-			isPaying: false
-		}
-	}
 
 	getTotalPrice(item) {
 		if (item) {
@@ -46,10 +35,8 @@ export default class DebtContainer extends Component {
 	}
 
 	_acceptBill = async (billId, debtId) => {
-		this.setState({ isPaying: true })
 		await acceptBill(billId, debtId)
 		this.props.getAllItems()
-		this.setState({ isPaying: false })
 	}
 
 	getUser(accountId) {
@@ -76,35 +63,7 @@ export default class DebtContainer extends Component {
 			const user = this.getUser(item.borrowerId)
 			if (user)
 				return (
-					<View>
-						<Avatar source={user.avatarUrl} size={36} style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
-						<View style={{ flexDirection: 'row', justifyContent: 'space-between', 'alignItems': 'center' }}>
-							<Text style={styles.debtStatus}>You lend
-							<Text style={styles.debtInfo}> {user.fullname.split(' ')[0]}</Text>
-								<Text style={[styles.debtInfo, styles.moneyInfo]}> {this.displayPrice(this.getTotalPrice(item.items))}</Text>
-							</Text>
-							<View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-end' }}>
-								{
-									// this.state.isPaying ?
-									// 	<ActivityIndicatorBase size={25} color="#0000ff" />
-									// 	:
-									// 	<>
-											// {
-												item.status === 'undone'
-													?
-													<TouchableOpacity onPress={() => this._acceptBill(item.billId, item.id)} >
-														<Text style={{ color: COLORS.aqua }}>PAID</Text>
-													</TouchableOpacity>
-													:
-													<View>
-														<Ionicons name="ios-checkmark" size={30} color={COLORS.green} />
-													</View>
-										// 	}
-										// </>
-								}
-							</View>
-						</View>
-					</View >
+					<DebtItem displayPrice={this.displayPrice} getTotalPrice={this.getTotalPrice} user={user} item={item} _acceptBill={this._acceptBill}/>
 				)
 		}
 		return (<></>)
