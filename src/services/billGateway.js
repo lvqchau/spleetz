@@ -57,10 +57,7 @@ const getBillsOfSelf = async () => {
       myBills.push({ ...myBill, payer, borrowers, total })
     }
   })
-  console.log(myBills)
   return myBills.reverse()
-
-  // return myBills
 }
 
 const getBill = async () => {
