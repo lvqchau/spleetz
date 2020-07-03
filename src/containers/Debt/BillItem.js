@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 import { FlatList, TouchableOpacity, View, Text, StyleSheet } from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
 import LinearGradient from 'react-native-linear-gradient'
@@ -9,7 +9,7 @@ import displayPrice from '../../utils/displayPrice'
 import { ScrollView } from 'react-native-gesture-handler'
 import { displayDate } from '../../utils/displayDate'
 
-export default class BillItem extends Component {
+export default class BillItem extends PureComponent {
 
   constructor(props) {
     super(props)
@@ -19,15 +19,15 @@ export default class BillItem extends Component {
   }
 
   render() {
-    const { bill, index } = this.props
+    const { bill, index, key } = this.props
     let { isSpanning } = this.state
     const { items, borrowers, payer, location, category, date, debtCount, total } = bill
     let colorGrad = COLORS.gradientGreen
     if (index % 3 === 0) colorGrad = COLORS.gradientPurple
     else if (index % 2 === 0) colorGrad = COLORS.gradientPink
     return (
-      <>
-        <View style={[styles.badge, { backgroundColor: debtCount === 0 ? COLORS.black : COLORS.green }]}></View>
+      <View key={key}>
+        <View style={[styles.badge, { backgroundColor: debtCount === 0 ? COLORS.lightgray : COLORS.green }]}></View>
         <LinearGradient
           end={{ x: 1, y: 0 }}
           start={{ x: 0, y: 1 }}
@@ -61,12 +61,13 @@ export default class BillItem extends Component {
                   data={borrowers}
                   renderItem={({ index, item }) =>
                     <Avatar
-                      id={index}
+                      id={'item' + index.toString()}
                       source={item.avatarUrl}
                       size={26}
                       style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
                   }
-                  listKey={(item, index) => 'Item' + index.toString()}
+                  keyExtractor={(item, index) => 'item' + index.toString()}
+                  listKey={(item, index) => 'item' + index.toString()}
                 />
               </ScrollView>
             </View>
@@ -89,37 +90,57 @@ export default class BillItem extends Component {
                 <ScrollView
                   style={{
                     // width: '60%',
-                    marginBottom: 10
+                    marginBottom: 20
                   }}
                 >
                   <FlatList
                     // style={styles.flexRow}
                     data={items}
+                    listKey={(item, index) => 'itemF' + index.toString()}
                     renderItem={({ index, item }) => {
                       return (
-                        <View style={{ flexDirection: 'row' }}>
-                          <Text style={{
-                            flex: 1,
-                            color: COLORS.white,
-                            marginBottom: 5
-                          }}>{item.quantity}</Text>
-                          <Text style={{
-                            color: COLORS.white,
-                            flex: 4,
-                            marginBottom: 5
-                          }}>{item.name}</Text>
-                          <Text style={{
-                            color: COLORS.white,
-                            flex: 2,
-                            fontFamily: 'Montserrat-Bold',
-                            textAlign: 'right',
-                            alignItems: 'stretch',
-                            marginBottom: 5
-                          }}>{displayPrice(item.price)}</Text>
+                        <View style={{ marginVertical: 5 }} key={'itemF' + index.toString()}>
+                          <View style={{ flexDirection: 'row' }}>
+                            <Text style={{
+                              width: '12%',
+                              color: COLORS.white,
+                              marginBottom: 5
+                            }}>{item.quantity}00</Text>
+                            <Text style={{
+                              color: COLORS.white,
+                              flex: 4,
+                              marginBottom: 5,
+                              marginRight: 5
+                            }}>{item.name}</Text>
+                            <Text style={{
+                              color: COLORS.white,
+                              flex: 2,
+                              fontFamily: 'Montserrat-Bold',
+                              textAlign: 'right',
+                              alignItems: 'stretch',
+                              marginBottom: 5
+                            }}>{displayPrice(item.price)}</Text>
+                          </View>
+                          <View style={{ marginLeft: '12%' }}>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                              <FlatList
+                                style={styles.flexRow}
+                                data={item.borrower}
+                                renderItem={({ index, item }) => {
+                                  return (
+                                    <View key={'itemB' + index.toString()}>
+                                      <Avatar source={item.avatarUrl} key={item.avatarUrl} size={24} style={{ borderColor: 'white', borderWidth: 1, marginRight: 5 }} />
+                                    </View>
+                                  )
+                                }}
+                                keyExtractor={(item, index) => 'itemB' + index.toString()}
+                                listKey={(item, index) => 'itemB' + index.toString()}
+                              />
+                            </ScrollView>
+                          </View>
                         </View>
                       )
                     }}
-                    listKey={(item, index) => 'ItemF' + index.toString()}
                   />
                 </ScrollView>
             }
@@ -139,7 +160,7 @@ export default class BillItem extends Component {
           </View>
           <Text style={styles.categoryText}>{category}</Text>
         </LinearGradient>
-      </>
+      </View>
     )
   }
 }

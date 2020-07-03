@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 
 import DebtContainer from './DebtContainer'
 import BillContainer from './BillContainer'
@@ -8,6 +8,7 @@ import styles from './Debt.component.style'
 import LinearGradient from 'react-native-linear-gradient'
 import COLORS from '../../assets/colors'
 import { getBillsOfSelf } from '../../services/billGateway'
+import { withNavigationFocus } from 'react-navigation'
 
 const mockData = {
 	debt: [
@@ -504,33 +505,41 @@ export default class DebtScreen extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			isLoading: false,
 			isDebt: false,
-			bills: []
+			bills: null
 		}
 	}
 
-	
-	async componentDidMount(){
-		const { navigation } = this.props
-		this.focusListener = navigation.addListener('focus', async () => {
+	getAllItems = async () => {
+		await this.setState({ isDebt: false })
 			const myBills = await getBillsOfSelf()
-			await this.setState({bills: myBills})
+			this.setState({ bills: myBills, isLoading: false })
+	}
+
+	async componentDidMount() {
+		await this.setState({ isLoading: true })
+		const { navigation } = this.props
+		await this.getAllItems()
+		this.focusListener = navigation.addListener('focus', async () => {
+			await this.getAllItems()
 		})
 	}
 
 	componentWillUnmount() {
 		if (this.focusListener != null && this.focusListener?.remove)
-      this.focusListener.remove();
+			this.focusListener.remove();
 	}
 
 	renderGradientButton = (type) => {
 		if (type === "debt") isDebt = this.state.isDebt
 		else isDebt = !this.state.isDebt
 		return (
-			<TouchableOpacity 
+			<TouchableOpacity
 				activeOpacity={.7}
-				style={{flex: 1}}
-				onPress={() => this.setState({ isDebt })}>
+				style={{ flex: 1 }}
+				onPress={() => this.setState({ isDebt })}
+			>
 				<LinearGradient
 					start={{ x: 1, y: 1 }}
 					end={{ x: 0, y: 1 }}
@@ -544,18 +553,19 @@ export default class DebtScreen extends Component {
 	}
 
 	render() {
-		const { debt, bill } = mockData
-		const { bills } = this.state
+		const { debt } = mockData
+		const { bills, isLoading } = this.state
 		return (
 			<SafeAreaView style={{ flex: 1 }}>
 				<View style={styles.topButtonContainer}>
 					{this.renderGradientButton('debt')}
 					{this.renderGradientButton('bill')}
 				</View>
-				{isDebt ?
-					<DebtContainer data={debt}></DebtContainer>
-					:
-					<BillContainer bills={bills}></BillContainer>
+				{
+					isDebt ?
+						<DebtContainer data={debt} isLoading={isLoading}></DebtContainer>
+						:
+						<BillContainer bills={bills} isLoading={isLoading}></BillContainer>
 				}
 			</SafeAreaView>
 		)

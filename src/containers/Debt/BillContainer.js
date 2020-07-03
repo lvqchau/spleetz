@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import { SafeAreaView, StyleSheet, FlatList } from 'react-native'
+import React, { Component, PureComponent } from 'react'
+import { SafeAreaView, StyleSheet, FlatList, View, ActivityIndicator } from 'react-native'
 
 import COLORS from '../../assets/colors'
 import BillItem from './BillItem'
 
-class BillContainer extends Component {
+class BillContainer extends PureComponent {
 
   constructor(props) {
     super(props)
@@ -14,20 +14,36 @@ class BillContainer extends Component {
   }
 
   renderBillItem = (item, index) => {
-    console.log('item, index', item, index)
-    return <BillItem key={index} bill={item} index={index}></BillItem>
+    return <BillItem key={index.toString()} bill={item} index={index}></BillItem>
   }
 
   render() {
-    const { bills } = this.props
+    const { bills, isLoading } = this.props
     return (
-      <SafeAreaView style={styles.billContainer}>
-        <FlatList
-          data={bills}
-          renderItem={({ index, item }) => this.renderBillItem(item, index)}
-          keyExtractor={(item, index) => 'Bill' + index.toString()}
-        />
-      </SafeAreaView>
+      <>
+        {
+          isLoading ?
+            <ActivityIndicator size={25} color="#0000ff" />
+            :
+            <>
+              {
+                bills == null
+                  ?
+                  <ActivityIndicator size={25} color="#0000ff" />
+                  :
+                  <SafeAreaView style={styles.billContainer}>
+                    <FlatList
+                      data={bills}
+                      renderItem={({ index, item }) => <View key={index.toString()}>{this.renderBillItem(item, index)}</View>}
+                      keyExtractor={(item, index) => index.toString()}
+                    />
+                  </SafeAreaView>
+
+              }
+            </>
+
+        }
+      </>
     )
   }
 }
@@ -69,7 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 2
   },
-	categoryText: {
+  categoryText: {
     position: 'absolute',
     bottom: -12,
     right: -5,
@@ -79,7 +95,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     opacity: .5,
     zIndex: 1
-	},
+  },
   userContainer: {
     flexDirection: 'row',
     alignItems: 'center',

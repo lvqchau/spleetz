@@ -18,16 +18,16 @@ const getBillsOfSelf = async () => {
   const accountId = await AsyncStorage.getItem('userId')
   let bills = await getBill()
   let myBills = []
-
+  
   await bills.forEach(async bill => {
     let total = 0
     let allBorrowers = []
     let borrowers = []
-    let payer = {}
+    let payer = bill.payer
     let isPayer = false
 
     // TOTAL
-    total = bill.items.reduce((billTotal, item) => {
+    total = await bill.items.reduce((billTotal, item) => {
       if (item.price === 0 || item.quantity === 0) {
         billTotal += 0
       } else {
@@ -36,29 +36,17 @@ const getBillsOfSelf = async () => {
       return billTotal
     }, 0)
 
-    // console.log('total: ', total)
     // BORROWERS
-    bill.items.forEach(item => {
-      item.borrower.forEach(person => {
+    bill.items.forEach(async item => {
+      item.borrower.forEach(async person => {
         allBorrowers.push(person)
       })
     })
 
     borrowers = allBorrowers.filter((value, index, self) => self.indexOf(value) === index)
-
-    // PAYER
-    await accountService.getUserInfoService(bill.payerId)
-      .then(async res => {
-        payer = {
-          accountId: res.data.id,
-          fullname: res.data.fullname,
-          username: res.data.username,
-          avatarUrl: res.data.avatarUrl
-        }
-      })
-      .catch(err => console.log(err.response.data))
+    
     // PUSH TO MYBILLS
-    await bill.items.forEach(async item => {
+    bill.items.forEach(async item => {
       let indexF = item.borrower.findIndex(person => person.accountId === accountId)
       if (indexF !== -1 || bill.payerId === accountId) {
         isPayer = true
@@ -68,11 +56,13 @@ const getBillsOfSelf = async () => {
     if (isPayer) {
       let myBill = { ...bill }
       delete myBill.payerId
-      await myBills.push({ ...myBill, payer, borrowers, total })
+      myBills.push({ ...myBill, payer, borrowers, total })
     }
+    console.log("myBills", myBills)
   })
-  
   return myBills
+
+  // return myBills
 }
 
 const getBill = async () => {

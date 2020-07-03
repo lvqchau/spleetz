@@ -25,6 +25,7 @@ const signUp = async (user) => {
     userId: null,
     accessToken: null
   }
+  
   await accountService.signUpService(user)
     .then(async (res) => {
       let account = {}
@@ -80,7 +81,6 @@ const getUserInfo = async (accountId) => {
       }
     })
     .catch(err => console.log(err.response.data))
-    
   return user
 }
 

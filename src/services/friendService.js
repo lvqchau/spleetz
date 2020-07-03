@@ -7,7 +7,7 @@ export class friendManagingService {
   initFriendService = async () => {
     const accountId = await AsyncStorage.getItem('userId')
 
-    return axios({
+    return await axios({
       url: `${baseURL}/friends`,
       method: 'POST',
       data: { accountId }
@@ -29,7 +29,7 @@ export class friendManagingService {
 
     friends.push({accountId: friendId})
     
-    return axios({
+    return await axios({
       method: 'PUT',
       url: `${baseURL}/friends/${friendshipId}`,
       data: {

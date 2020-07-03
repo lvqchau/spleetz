@@ -3,9 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import SplitScreen from '../containers/Split/SplitScreen'
 import NotificationScreen from '../containers/Notification/screens/NotificationScreen'
-import MessageScreen from '../containers/Message/screens/MessageRoomScreen'
 import DebtScreen from '../containers/Debt/DebtScreen'
 import { navigationRef } from './RootNavigation'
 import AccountNavigator from '../containers/Account/navigator/AccountNavigator'
@@ -52,7 +50,7 @@ export default class MyTabs extends React.Component {
 
 		return (
 			<Tab.Navigator
-				initialRouteName='Bill'
+				initialRouteName='Split'
 				tabBarOptions={{
 					showLabel: false,
 				}}
@@ -70,7 +68,7 @@ export default class MyTabs extends React.Component {
 					name='Bill'
 					listeners={{
 						tabPress: e => {
-							navigationRef.current.navigate('Profile')
+							navigationRef.current.navigate('Bill')
 						}
 					}}
 					component={DebtScreen}

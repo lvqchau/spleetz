@@ -1,16 +1,13 @@
 import React from 'react'
-import { Text, TouchableOpacity, SafeAreaView, View, StyleSheet, Dimensions, TextInput, FlatList, ScrollView, ActivityIndicator } from 'react-native'
+import { Text, SafeAreaView, View, StyleSheet, Dimensions, TextInput, FlatList, ActivityIndicator } from 'react-native'
 import HeaderNavigator from '../../components/HeaderNavigator'
 import COLORS from '../../../../assets/colors';
 import FriendItem from './FriendItem';
-import { data } from './FriendData'
-import SearchContainer from '../../../../components/SearchContainer';
 import { getFriend } from '../../../../services/accountGateway'
 import { searchFriend, addFriend } from '../../../../services/friendGateway'
-import LinearGradient from 'react-native-linear-gradient';
 import FriendAdd from './FriendAdd';
 
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 class FriendScreen extends React.Component {
 
@@ -114,7 +111,8 @@ class FriendScreen extends React.Component {
           <Text style={styles.title}>Your friends</Text>
           {
             friendList === null ? 
-            <Text>Loading...</Text> :
+            <ActivityIndicator size={25} color="#0000ff" /> 
+            :
             friendList.length === 0 ? 
             <Text>You have no friends, add some</Text>
             :

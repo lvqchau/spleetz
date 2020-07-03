@@ -11,7 +11,7 @@ export class debtManagingService {
 		newDebt.startDate = date
 		date.setDate(date.getDate() + 7)
 		newDebt.remindDate = date
-    return axios({
+    return await axios({
       url: `${baseURL}/debts`,
       method: 'POST',
       data: newDebt
@@ -19,7 +19,7 @@ export class debtManagingService {
   }
   
   getDebtService = async () => {
-    return axios({
+    return await axios({
       method: 'GET',
       url: `${baseURL}/debts`
     })

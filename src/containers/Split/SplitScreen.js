@@ -9,7 +9,7 @@ import styles from './Split.component.style'
 import COLORS from '../../assets/colors'
 import BillContainer from './BillContainer'
 import CategoryComponent from './components/CategoryComponent'
-import { getFriend } from '../../services/accountGateway'
+import { getFriend, getUserInfo } from '../../services/accountGateway'
 import { createBill } from '../../services/billGateway'
 import { createDebtDetail } from '../../services/debtDetailGateway'
 import Input from '../../components/FormModal/Input'
@@ -200,7 +200,6 @@ export default class SplitScreen extends Component {
 			price: 5000,
 			borrower: []
 		}
-		console.log(defaultItem)
 		originalData.push(defaultItem)
 		data.push(defaultItem)
 

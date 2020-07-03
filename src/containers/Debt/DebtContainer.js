@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, Image, ScrollView } from 'react-native'
+import { View, Text, FlatList, Image, ScrollView, ActivityIndicator } from 'react-native'
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 import styles from './Debt.component.style'
@@ -96,15 +96,20 @@ export default class DebtContainer extends Component {
 	}
 
 	render() {
-		const { data } = this.props
+		const { data, isLoading } = this.props
 		return (
 			<View style={{ flex: 1 }}>
-				<FlatList
-					data={data}
-					renderItem={
-						({ index, item }) => this.renderDebtItem(item, index)
-					}
-				/>
+				{
+					isLoading ?
+						<ActivityIndicator size={25} color="#0000ff" />
+						:
+						<FlatList
+							data={data}
+							renderItem={
+								({ index, item }) => this.renderDebtItem(item, index)
+							}
+						/>
+				}
 			</View>
 		)
 	}

@@ -8,6 +8,9 @@ import COLORS from './src/assets/colors'
 import { navigationRef } from './src/navigator/RootNavigation'
 import AppNavigator from './src/navigator/AppNavigator'
 import AccessStack from './src/navigator/AccessNavigator'
+import { YellowBox } from 'react-native';
+YellowBox.ignoreWarnings(['Warning: ...']);
+console.disableYellowBox = true;
 
 const MyTheme = {
   ...DefaultTheme,
