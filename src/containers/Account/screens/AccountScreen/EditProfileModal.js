@@ -15,9 +15,12 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { updateUser } from '../../../../services/accountGateway.js'
 import AsyncStorage from '@react-native-community/async-storage'
 
-const ID = 'AKIAYMWV4MCCZD3KP2QN'
-const secretKey = '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'
+const ID = 'AKIAYMWV4MCCRFIQJFAN'
+const secretKey = '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'
 const region = 'ap-southeast-1'
+// const ID = 'AKIAYMWV4MCCZD3KP2QN'
+// const secretKey = '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'
+// const region = 'ap-southeast-1'
 
 const styles = StyleSheet.create({
   container: {
