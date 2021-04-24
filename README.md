@@ -1,4 +1,5 @@
 # Spleetz
+Final project of CS422 - Software Analysis and Design
 
 ### Team members
 Long Vũ Quỳnh Châu - 1751054
@@ -11,11 +12,18 @@ Spleetz will divide the bill based on the food and the people added to that spec
 
 In the future, the app may provide extra functionality for invoice OCR to reduce the time someone has to type their bills.
 
-### Application
+##Demo
+Below are 2 small demo of Spleetz:
+- Original Demo: https://www.youtube.com/watch?v=v1_6oP8ki_M
+- Second Demo for changing avatar: https://www.youtube.com/watch?v=1HiRWI_tV-k
+
+### Technology
 Spleetz is built using React Native, and Firebase
+
 
 ### Functionalities
 - Signin/Signup
+- Account: The user can change their avatar, and change other basic information in the Profile page
 - Add friend: For faster access to friends, the user can add people to their friendlist with username
 - Create a bill: The list provide a way for users to enter text, change quantity, and select people from their friendlist to the current item
 - Bill category: Besides Food, there are 3 other categories such as Housing, Shopping, Others
